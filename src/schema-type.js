@@ -1,4 +1,4 @@
-import IconPicker from "./picker.js";
+import IconPicker from "./picker";
 
 export default {
   title: "MyTool",
