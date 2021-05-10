@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid, Button, Box, Container } from "@sanity/ui";
+import React, { useState } from "react";
+import { Grid, Button, Box, Container, Text } from "@sanity/ui";
 
 const SearchResults = ({ results, selected, renderIcon, onSelect }) => {
   return (
@@ -12,13 +12,13 @@ const SearchResults = ({ results, selected, renderIcon, onSelect }) => {
                 <Button
                   fontSize={[2, 2, 3]}
                   /* icon={AddIcon} */
-                  key={result}
+                  key={result.name}
                   mode="ghost"
                   padding={[3, 3, 4]}
                   tone="default"
                   text={renderIcon(result)}
                   onClick={() => onSelect(result)}
-                  selected={result === selected}
+                  selected={selected && result.name === selected.name}
                 />
               );
             })}

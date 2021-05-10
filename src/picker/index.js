@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PatchEvent, set, unset } from "part:@sanity/form-builder/patch-event";
-import * as Icons from "framework7-icons/react";
+import { Badge } from "@sanity/ui";
+
 import FormField from "part:@sanity/components/formfields/default";
 import Popup from "./Popup";
 import SearchBar from "./SearchBar";
@@ -8,6 +9,11 @@ import SearchResults from "./SearchResults";
 import Nav from "./navigation";
 
 import styles from "framework7-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import * as f7Icons from "framework7-icons/react";
+import * as faIcons from "@fortawesome/free-solid-svg-icons";
 
 function pascalToSnakeCase(string) {
   return string
@@ -17,7 +23,6 @@ function pascalToSnakeCase(string) {
     .replace(/^_/, "");
 }
 
-// const iconsArray = [Icons.Airplane, Icons.Alarm, Icons.AntCircleFill];
 const IconPicker = React.forwardRef((props, ref) => {
   const { type, value, onChange } = props;
   const [selected, setSelected] = useState(null);
@@ -26,17 +31,61 @@ const IconPicker = React.forwardRef((props, ref) => {
   const [queryResults, setQueryResults] = useState([]);
   const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    const icons = Object.values(Icons).map(({ name }) =>
-      pascalToSnakeCase(name)
-    );
+  function getFaIcons() {
+    const icons = Object.keys(faIcons)
+      .map((icon) => faIcons[icon])
+      .filter((icon) => typeof icon.iconName !== "undefined");
 
-    setSelected(value);
+    library.add(...icons);
+
+    return icons
+      .map(({ iconName, icon }) => ({
+        from: "fa",
+        name: iconName,
+      }))
+      .splice(0, 10);
+  }
+  function getF7Icons() {
+    const icons = Object.values(f7Icons)
+      .map(({ name }) => ({
+        from: "f7",
+        name: pascalToSnakeCase(name),
+        icon: null,
+      }))
+      .splice(0, 10);
+    return icons;
+  }
+  function getIconByValue(value, icons) {
+    const found = icons.find((icon) => icon.name === value);
+    return found || null;
+  }
+
+  useEffect(() => {
+    const icons = [...getF7Icons(), ...getFaIcons()];
+
+    setSelected(getIconByValue(value, icons));
     setIcons(icons);
     setQueryResults(icons);
   }, []);
-  const renderIcon = (prefix) => {
-    return <i className={styles["f7-icons"]}>{prefix}</i>;
+  const renderIcon = (icon) => {
+    console.log("renderIcon", icon);
+    if (!icon) return null;
+
+    if (icon.from === "f7")
+      return (
+        <span>
+          <i className={styles["f7-icons"]}>{icon.name}</i>
+          <Badge tone="primary">F7</Badge>
+        </span>
+      );
+
+    if (icon.from === "fa")
+      return (
+        <span>
+          <FontAwesomeIcon icon={icon.name} />
+          <Badge tone="primary">FA</Badge>
+        </span>
+      );
   };
 
   const unsetIcon = () => {
@@ -45,9 +94,9 @@ const IconPicker = React.forwardRef((props, ref) => {
   };
 
   const setIcon = (icon) => {
-    if (icon === selected) return unsetIcon();
+    if (selected && icon.name === selected.name) return unsetIcon();
 
-    onChange(PatchEvent.from(set(icon)));
+    onChange(PatchEvent.from(set(icon.name)));
     setSelected(icon);
   };
 
@@ -61,7 +110,7 @@ const IconPicker = React.forwardRef((props, ref) => {
   const onQueryChange = (e) => {
     const value = e.target.value;
 
-    const results = icons.filter((icon) => icon.indexOf(value) >= 0);
+    const results = icons.filter((icon) => icon.name.indexOf(value) >= 0);
     setQueryResults(results);
     setQuery(value);
   };
