@@ -68,7 +68,6 @@ const IconPicker = React.forwardRef((props, ref) => {
     setQueryResults(icons);
   }, []);
   const renderIcon = (icon) => {
-    console.log("renderIcon", icon);
     if (!icon) return null;
 
     if (icon.from === "f7")
