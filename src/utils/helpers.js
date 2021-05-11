@@ -1,7 +1,14 @@
+import { PROVIDERS } from "../config";
+
 export function pascalToSnakeCase(string) {
   return string
     .replace(/(?:^|\.?)([A-Z])/g, function (x, y) {
       return "_" + y.toLowerCase();
     })
     .replace(/^_/, "");
+}
+
+export function getSelectedProviders(options = {}) {
+  if (!options.providers) return [PROVIDERS.default.prefix];
+  return [PROVIDERS.default.prefix, ...options.providers];
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge } from "@sanity/ui";
+import { PROVIDERS } from "../config";
 
 import * as f7Icons from "framework7-icons/react";
 import styles from "framework7-icons";
@@ -9,55 +9,43 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { pascalToSnakeCase } from "./helpers";
 
-const PREFIXES = ["font-awesome", "framework7-icons"];
-const LIBRARIES = {
-  "font-awesome": {
-    getter: getFaIcons,
-    prefix: "font-awesome",
+const GENERATORS = {
+  [PROVIDERS.fontAwesome.prefix]: () => {
+    const icons = Object.keys(faIcons)
+      .map((icon) => faIcons[icon])
+      .filter((icon) => typeof icon.iconName !== "undefined");
+
+    library.add(...icons);
+
+    return icons
+      .map(({ iconName }) => ({
+        from: PROVIDERS.fontAwesome.prefix,
+        name: iconName,
+      }))
+      .splice(0, 10);
   },
-  "framework7-icons": {
-    getter: getF7Icons,
-    prefix: "framework7-icons",
+  [PROVIDERS.framework7.prefix]: () => {
+    const icons = Object.values(f7Icons).map(({ name }) => ({
+      from: PROVIDERS.framework7.prefix,
+      name: pascalToSnakeCase(name),
+    }));
+    return icons.splice(0, 10);
   },
 };
 
-function getFaIcons() {
-  const icons = Object.keys(faIcons)
-    .map((icon) => faIcons[icon])
-    .filter((icon) => typeof icon.iconName !== "undefined");
-
-  library.add(...icons);
-
-  return icons
-    .map(({ iconName }) => ({
-      from: PREFIXES[0],
-      name: iconName,
-    }))
-    .splice(0, 10);
-}
-function getF7Icons() {
-  const icons = Object.values(f7Icons)
-    .map(({ name }) => ({
-      from: PREFIXES[1],
-      name: pascalToSnakeCase(name),
-    }))
-    .splice(0, 10);
-  return icons;
-}
-
 export function getIcons(options = {}) {
-  const libs = options.libs;
+  const providers = options.providers;
   let icons = [];
 
-  if (libs) {
-    libs.forEach((lib) => {
-      if (LIBRARIES[lib]) icons = [...icons, ...LIBRARIES[lib].getter()];
+  if (providers) {
+    providers.forEach((provider) => {
+      if (GENERATORS[provider]) icons = [...icons, ...GENERATORS[provider]()];
     });
   }
 
   if (!icons.length) {
-    Object.values(LIBRARIES).forEach((lib) => {
-      icons = [...icons, ...lib.getter()];
+    Object.values(GENERATORS).forEach((providerIcons) => {
+      icons = [...icons, ...providerIcons()];
     });
   }
 
@@ -67,9 +55,9 @@ export function getIcons(options = {}) {
 export const renderIcon = (icon) => {
   if (!icon) return null;
 
-  if (icon.from === PREFIXES[1])
+  if (icon.from === PROVIDERS.framework7.prefix)
     return <i className={styles["f7-icons"]}>{icon.name}</i>;
 
-  if (icon.from === PREFIXES[0])
+  if (icon.from === PROVIDERS.fontAwesome.prefix)
     return <FontAwesomeIcon icon={icon.name} size="lg" />;
 };
