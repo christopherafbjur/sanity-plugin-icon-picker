@@ -19,14 +19,14 @@ const GENERATORS = {
 
     return icons
       .map(({ iconName }) => ({
-        from: PROVIDERS.fontAwesome.prefix,
+        provider: PROVIDERS.fontAwesome.prefix,
         name: iconName,
       }))
       .splice(0, 10);
   },
   [PROVIDERS.framework7.prefix]: () => {
     const icons = Object.values(f7Icons).map(({ name }) => ({
-      from: PROVIDERS.framework7.prefix,
+      provider: PROVIDERS.framework7.prefix,
       name: pascalToSnakeCase(name),
     }));
     return icons.splice(0, 10);
@@ -55,9 +55,9 @@ export function getIcons(options = {}) {
 export const renderIcon = (icon) => {
   if (!icon) return null;
 
-  if (icon.from === PROVIDERS.framework7.prefix)
+  if (icon.provider === PROVIDERS.framework7.prefix)
     return <i className={styles["f7-icons"]}>{icon.name}</i>;
 
-  if (icon.from === PROVIDERS.fontAwesome.prefix)
+  if (icon.provider === PROVIDERS.fontAwesome.prefix)
     return <FontAwesomeIcon icon={icon.name} size="lg" />;
 };
