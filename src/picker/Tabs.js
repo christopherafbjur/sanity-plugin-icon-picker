@@ -9,7 +9,7 @@ import {
   Card,
   Box,
 } from "@sanity/ui";
-import { getSelectedProviders } from "../utils/helpers";
+import { getSelectedProviders, providerFromPrefix } from "../utils/helpers";
 
 const Tabs = ({ children, options }) => {
   const [id, setId] = useState(PROVIDERS.default.prefix);
@@ -30,39 +30,42 @@ const Tabs = ({ children, options }) => {
       </React.Fragment>
     );
   };
-  const generateTabList = (providers) => {
+  const generateTabList = (prefixes) => {
     return (
       <TabList space={1}>
-        {providers.map((provider) => (
-          <Tab
-            key={provider}
-            aria-controls={`${provider}-panel`}
-            /* icon={EditIcon} */
-            id={`${provider}-tab`}
-            label={`${provider}`}
-            onClick={() => handleClick(provider)}
-            selected={id === provider}
-            space={2}
-          />
-        ))}
+        {prefixes.map((prefix) => {
+          const { title } = providerFromPrefix(prefix);
+          return (
+            <Tab
+              key={prefix}
+              aria-controls={`${prefix}-panel`}
+              /* icon={EditIcon} */
+              id={`${prefix}-tab`}
+              label={`${title}`}
+              onClick={() => handleClick(prefix)}
+              selected={id === prefix}
+              space={2}
+            />
+          );
+        })}
       </TabList>
     );
   };
-  const generateTabPanels = (providers) => {
+  const generateTabPanels = (prefixes) => {
     return (
       <React.Fragment>
-        {providers.map((provider) => {
-          const filter =
-            provider !== PROVIDERS.default.prefix ? provider : null;
+        {prefixes.map((prefix) => {
+          const filter = prefix !== PROVIDERS.default.prefix ? prefix : null;
+          const { title } = providerFromPrefix(prefix);
           return (
             <TabPanel
-              key={provider}
-              aria-labelledby={`${provider}-tab`}
-              hidden={id !== provider}
-              id={`${provider}-panel`}
+              key={prefix}
+              aria-labelledby={`${prefix}-tab`}
+              hidden={id !== prefix}
+              id={`${prefix}-panel`}
             >
               <Card marginTop={2} padding={4} radius={2}>
-                <Heading>{provider}</Heading>
+                <Heading>{title}</Heading>
                 <Box marginTop={4}>
                   {React.cloneElement(children, { filter: filter })}
                 </Box>

@@ -12,3 +12,9 @@ export function getSelectedProviders(options = {}) {
   if (!options.providers) return [PROVIDERS.default.prefix];
   return [PROVIDERS.default.prefix, ...options.providers];
 }
+
+export function providerFromPrefix(prefix) {
+  return Object.values(PROVIDERS).find(
+    (provider) => provider.prefix === prefix
+  );
+}
