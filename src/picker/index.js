@@ -41,7 +41,9 @@ const IconPicker = React.forwardRef((props, ref) => {
   const setIcon = (icon) => {
     if (selected && icon.name === selected.name) return unsetIcon();
 
-    onChange(PatchEvent.from(set(icon)));
+    onChange(
+      PatchEvent.from(set({ provider: icon.provider, prefix: icon.prefix }))
+    );
     setSelected(icon);
   };
 

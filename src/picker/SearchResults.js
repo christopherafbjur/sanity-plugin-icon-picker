@@ -10,10 +10,10 @@ const SearchResults = ({ results, selected, renderIcon, onSelect, filter }) => {
     <Box marginTop={4}>
       <Grid rows={4} columns={[2, 3, 4, 6]} gap={[2, 2, 2, 2]}>
         {results &&
-          filtered(results).map((result) => {
+          filtered(results).map((result, i) => {
             return (
               <Tooltip
-                key={result.name}
+                key={`${result.name}-${i}`}
                 content={
                   <Box padding={2}>
                     <Text muted size={1}>

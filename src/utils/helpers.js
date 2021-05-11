@@ -8,6 +8,15 @@ export function pascalToSnakeCase(string) {
     .replace(/^_/, "");
 }
 
+export function pascalToKebabCase(string) {
+  return string
+    .replace(/(?:^|\.?)([A-Z])/g, function (x, y) {
+      return "-" + y.toLowerCase();
+    })
+    .replace(/^-/, "")
+    .toLowerCase();
+}
+
 export function getSelectedProviders(options = {}) {
   if (!options.providers) return [PROVIDERS.default.prefix];
   return [PROVIDERS.default.prefix, ...options.providers];
