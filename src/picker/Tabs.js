@@ -20,7 +20,7 @@ const Tabs = ({ children, options }) => {
   };
 
   const generateContent = (providers) => {
-    if (providers.length < 2)
+    if (providers.length < 3)
       return React.cloneElement(children, { filter: null });
 
     return (
