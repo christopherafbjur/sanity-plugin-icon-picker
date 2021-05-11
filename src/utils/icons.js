@@ -9,9 +9,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { pascalToSnakeCase } from "./helpers";
 
+const PREFIXES = ["font-awesome", "framework7-icons"];
 const LIBRARIES = {
-  "font-awesome": getFaIcons,
-  "f7-icons": getF7Icons,
+  "font-awesome": {
+    getter: getFaIcons,
+    prefix: "font-awesome",
+  },
+  "framework7-icons": {
+    getter: getF7Icons,
+    prefix: "framework7-icons",
+  },
 };
 
 function getFaIcons() {
@@ -22,8 +29,8 @@ function getFaIcons() {
   library.add(...icons);
 
   return icons
-    .map(({ iconName, icon }) => ({
-      from: "fa",
+    .map(({ iconName }) => ({
+      from: PREFIXES[0],
       name: iconName,
     }))
     .splice(0, 10);
@@ -31,7 +38,7 @@ function getFaIcons() {
 function getF7Icons() {
   const icons = Object.values(f7Icons)
     .map(({ name }) => ({
-      from: "f7",
+      from: PREFIXES[1],
       name: pascalToSnakeCase(name),
     }))
     .splice(0, 10);
@@ -44,13 +51,13 @@ export function getIcons(options = {}) {
 
   if (libs) {
     libs.forEach((lib) => {
-      if (LIBRARIES[lib]) icons = [...icons, ...LIBRARIES[lib]()];
+      if (LIBRARIES[lib]) icons = [...icons, ...LIBRARIES[lib].getter()];
     });
   }
 
   if (!icons.length) {
-    Object.values(LIBRARIES).forEach((getLib) => {
-      icons = [...icons, ...getLib()];
+    Object.values(LIBRARIES).forEach((lib) => {
+      icons = [...icons, ...lib.getter()];
     });
   }
 
@@ -60,19 +67,9 @@ export function getIcons(options = {}) {
 export const renderIcon = (icon) => {
   if (!icon) return null;
 
-  if (icon.from === "f7")
-    return (
-      <span>
-        <i className={styles["f7-icons"]}>{icon.name}</i>
-        <Badge tone="primary">F7</Badge>
-      </span>
-    );
+  if (icon.from === PREFIXES[1])
+    return <i className={styles["f7-icons"]}>{icon.name}</i>;
 
-  if (icon.from === "fa")
-    return (
-      <span>
-        <FontAwesomeIcon icon={icon.name} />
-        <Badge tone="primary">FA</Badge>
-      </span>
-    );
+  if (icon.from === PREFIXES[0])
+    return <FontAwesomeIcon icon={icon.name} size="lg" />;
 };

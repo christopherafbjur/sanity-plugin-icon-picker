@@ -6,12 +6,14 @@ import Popup from "./Popup";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import Nav from "./navigation";
+import Tabs from "./Tabs";
+
+import { studioTheme, ThemeProvider } from "@sanity/ui";
 
 import { getIcons, renderIcon } from "../utils/icons";
 
 const IconPicker = React.forwardRef((props, ref) => {
   const { type, value, onChange } = props;
-  console.log("VALUE IS", value);
   const [selected, setSelected] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [icons, setIcons] = useState([]);
@@ -25,8 +27,6 @@ const IconPicker = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     const icons = getIcons(type.options);
-
-    console.log("ICONS", icons);
 
     setSelected(getIconByValue(value, icons));
     setIcons(icons);
@@ -81,12 +81,14 @@ const IconPicker = React.forwardRef((props, ref) => {
 
       <Popup onClose={closePopup} isOpen={isPopupOpen}>
         <SearchBar value={query} onChange={onQueryChange} />
-        <SearchResults
-          results={queryResults}
-          selected={selected}
-          onSelect={setIcon}
-          renderIcon={renderIcon}
-        />
+        <Tabs options={type.options}>
+          <SearchResults
+            results={queryResults}
+            selected={selected}
+            onSelect={setIcon}
+            renderIcon={renderIcon}
+          />
+        </Tabs>
       </Popup>
     </FormField>
   );
