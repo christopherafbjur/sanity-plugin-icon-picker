@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { PatchEvent, set, unset } from "part:@sanity/form-builder/patch-event";
-import { Badge } from "@sanity/ui";
 
 import FormField from "part:@sanity/components/formfields/default";
 import Popup from "./Popup";
@@ -8,84 +7,31 @@ import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import Nav from "./navigation";
 
-import styles from "framework7-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import * as f7Icons from "framework7-icons/react";
-import * as faIcons from "@fortawesome/free-solid-svg-icons";
-
-function pascalToSnakeCase(string) {
-  return string
-    .replace(/(?:^|\.?)([A-Z])/g, function (x, y) {
-      return "_" + y.toLowerCase();
-    })
-    .replace(/^_/, "");
-}
+import { getIcons, renderIcon } from "../utils/icons";
 
 const IconPicker = React.forwardRef((props, ref) => {
   const { type, value, onChange } = props;
+  console.log("VALUE IS", value);
   const [selected, setSelected] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [icons, setIcons] = useState([]);
   const [queryResults, setQueryResults] = useState([]);
   const [query, setQuery] = useState("");
 
-  function getFaIcons() {
-    const icons = Object.keys(faIcons)
-      .map((icon) => faIcons[icon])
-      .filter((icon) => typeof icon.iconName !== "undefined");
-
-    library.add(...icons);
-
-    return icons
-      .map(({ iconName, icon }) => ({
-        from: "fa",
-        name: iconName,
-      }))
-      .splice(0, 10);
-  }
-  function getF7Icons() {
-    const icons = Object.values(f7Icons)
-      .map(({ name }) => ({
-        from: "f7",
-        name: pascalToSnakeCase(name),
-        icon: null,
-      }))
-      .splice(0, 10);
-    return icons;
-  }
   function getIconByValue(value, icons) {
     const found = icons.find((icon) => icon.name === value);
     return found || null;
   }
 
   useEffect(() => {
-    const icons = [...getF7Icons(), ...getFaIcons()];
+    const icons = getIcons(type.options);
+
+    console.log("ICONS", icons);
 
     setSelected(getIconByValue(value, icons));
     setIcons(icons);
     setQueryResults(icons);
   }, []);
-  const renderIcon = (icon) => {
-    if (!icon) return null;
-
-    if (icon.from === "f7")
-      return (
-        <span>
-          <i className={styles["f7-icons"]}>{icon.name}</i>
-          <Badge tone="primary">F7</Badge>
-        </span>
-      );
-
-    if (icon.from === "fa")
-      return (
-        <span>
-          <FontAwesomeIcon icon={icon.name} />
-          <Badge tone="primary">FA</Badge>
-        </span>
-      );
-  };
 
   const unsetIcon = () => {
     onChange(PatchEvent.from(unset()));
@@ -95,7 +41,7 @@ const IconPicker = React.forwardRef((props, ref) => {
   const setIcon = (icon) => {
     if (selected && icon.name === selected.name) return unsetIcon();
 
-    onChange(PatchEvent.from(set(icon.name)));
+    onChange(PatchEvent.from(set(icon)));
     setSelected(icon);
   };
 
