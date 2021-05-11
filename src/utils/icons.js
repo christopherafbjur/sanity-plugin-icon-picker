@@ -29,7 +29,7 @@ const GENERATORS = {
     const icons = Object.values(f7Icons).map(({ name }) => ({
       provider: PROVIDERS.framework7.prefix,
       name: pascalToSnakeCase(name),
-      prefix: name, //TODO control the casing here for what the user wants (kebab, pascal, snake etc)
+      prefix: pascalToSnakeCase(name), //TODO control the casing here for what the user wants (kebab, pascal, snake etc)
     }));
     return icons.splice(0, 10);
   },
