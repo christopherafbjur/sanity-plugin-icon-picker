@@ -8,8 +8,6 @@ import SearchResults from "./SearchResults";
 import Nav from "./navigation";
 import Tabs from "./Tabs";
 
-import { studioTheme, ThemeProvider } from "@sanity/ui";
-
 import { getIcons, renderIcon } from "../utils/icons";
 
 const IconPicker = React.forwardRef((props, ref) => {
@@ -86,9 +84,9 @@ const IconPicker = React.forwardRef((props, ref) => {
         <Tabs options={type.options}>
           <SearchResults
             results={queryResults}
+            renderIcon={renderIcon}
             selected={selected}
             onSelect={setIcon}
-            renderIcon={renderIcon}
           />
         </Tabs>
       </Popup>

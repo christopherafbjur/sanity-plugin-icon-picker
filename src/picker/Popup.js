@@ -11,11 +11,7 @@ const Popup = ({ onClose, children, isOpen }) => {
       zOffset={1000}
       width={100}
     >
-      <Box padding={4}>
-        <Card padding={[3, 3, 4]} paddingBottom={[8, 8, 9]}>
-          {children}
-        </Card>
-      </Box>
+      <Box padding={4}>{children}</Box>
     </Dialog>
   );
 };

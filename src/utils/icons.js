@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { pascalToSnakeCase } from "./helpers";
 
+const DBG_COUNT = Infinity;
+
 const GENERATORS = {
   [PROVIDERS.fontAwesome.prefix]: () => {
     const icons = Object.keys(faIcons)
@@ -23,7 +25,7 @@ const GENERATORS = {
         name: iconName,
         prefix: iconName, //TODO control the casing here for what the user wants (kebab, pascal, snake etc)
       }))
-      .splice(0, 10);
+      .splice(0, DBG_COUNT);
   },
   [PROVIDERS.framework7.prefix]: () => {
     const icons = Object.values(f7Icons).map(({ name }) => ({
@@ -31,7 +33,7 @@ const GENERATORS = {
       name: pascalToSnakeCase(name),
       prefix: pascalToSnakeCase(name), //TODO control the casing here for what the user wants (kebab, pascal, snake etc)
     }));
-    return icons.splice(0, 10);
+    return icons.splice(0, DBG_COUNT);
   },
 };
 
@@ -51,7 +53,7 @@ export function getIcons(options = {}) {
     });
   }
 
-  return icons.splice(0, 30);
+  return icons.splice(0, DBG_COUNT * 2);
 }
 
 export const renderIcon = (icon) => {
