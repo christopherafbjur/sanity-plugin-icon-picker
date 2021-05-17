@@ -26,7 +26,6 @@ const Wrapper = styled.section`
 `;
 
 const SearchResults = ({ results, renderIcon, selected, onSelect, filter }) => {
-  const COL_WIDTH = 50;
   const [filtered, setFiltered] = useState([]);
   const COLUMNS_COUNT = useMedia(
     // Media queries
@@ -50,7 +49,7 @@ const SearchResults = ({ results, renderIcon, selected, onSelect, filter }) => {
   const createIconButton = (icon) => {
     return (
       <Button
-        key={icon.id}
+        key={icon.name}
         mode="ghost"
         padding={[3, 3, 4]}
         onClick={() => onSelect(icon)}
