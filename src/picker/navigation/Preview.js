@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@sanity/ui";
 
 const Preview = ({ onClick, selected, renderIcon }) => {
+  console.log("PREVIEW", selected);
   return (
     <Button
       fontSize={[2, 2, 3]}

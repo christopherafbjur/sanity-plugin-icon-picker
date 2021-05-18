@@ -9,6 +9,7 @@ const SearchBar = ({ value, onChange }) => {
       padding={[3, 3, 4]}
       value={value}
       onChange={onChange}
+      mode="bleed"
     />
   );
 };

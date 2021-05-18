@@ -1,4 +1,9 @@
 import { PROVIDERS } from "../config";
+import { pascalCase } from "change-case";
+
+export function toPascal(str) {
+  return pascalCase(str);
+}
 
 export function pascalToSnakeCase(string) {
   return string

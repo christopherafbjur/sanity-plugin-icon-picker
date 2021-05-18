@@ -53,7 +53,7 @@ const SearchResults = ({ results, renderIcon, selected, onSelect, filter }) => {
         mode="ghost"
         padding={[3, 3, 4]}
         onClick={() => onSelect(icon)}
-        text={renderIcon(icon)}
+        text={<icon.component />}
         selected={selected && icon.name === selected.name}
       />
     );

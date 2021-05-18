@@ -1,39 +1,47 @@
 import React from "react";
 import { PROVIDERS } from "../config";
 
-import * as f7Icons from "framework7-icons/react";
 import styles from "framework7-icons";
-import * as faIcons from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as reactIconsFa from "react-icons/fa";
+import faList from "../data/fa/index";
+import f7List from "../data/f7/index";
+import { toPascal } from "./helpers";
 
-import { pascalToSnakeCase } from "./helpers";
+console.log("RA", Object.keys(reactIconsFa).length);
+console.log("FALIST", faList.length);
+console.log("converted", toPascal("fa-" + faList[0]));
+
+/* const undefinedIcons = faList.filter((name) => {
+  return !reactIconsFa[toPascal("fa-" + name)];
+});
+console.log("THESE ARE UNDEFINED", undefinedIcons); */
 
 const DBG_COUNT = Infinity;
 
 const GENERATORS = {
   [PROVIDERS.fontAwesome.prefix]: () => {
-    const icons = Object.keys(faIcons)
-      .map((icon) => faIcons[icon])
-      .filter((icon) => typeof icon.iconName !== "undefined");
-
-    library.add(...icons);
-
-    return icons
-      .map(({ iconName }) => ({
-        provider: PROVIDERS.fontAwesome.prefix,
-        name: iconName,
-        prefix: iconName, //TODO control the casing here for what the user wants (kebab, pascal, snake etc)
-      }))
+    return faList
+      .map((name) => {
+        return {
+          provider: PROVIDERS.fontAwesome.prefix,
+          name: name,
+          prefix: name,
+          component: reactIconsFa[toPascal("fa-" + name)],
+        };
+      })
       .splice(0, DBG_COUNT);
   },
   [PROVIDERS.framework7.prefix]: () => {
-    const icons = Object.values(f7Icons).map(({ name }) => ({
-      provider: PROVIDERS.framework7.prefix,
-      name: pascalToSnakeCase(name),
-      prefix: pascalToSnakeCase(name), //TODO control the casing here for what the user wants (kebab, pascal, snake etc)
-    }));
-    return icons.splice(0, DBG_COUNT);
+    return f7List
+      .map((name) => {
+        return {
+          provider: PROVIDERS.framework7.prefix,
+          name: name,
+          prefix: name,
+          component: () => <i className={styles["f7-icons"]}>{name}</i>,
+        };
+      })
+      .splice(0, DBG_COUNT);
   },
 };
 
@@ -59,9 +67,10 @@ export function getIcons(options = {}) {
 export const renderIcon = (icon) => {
   if (!icon) return null;
 
-  if (icon.provider === PROVIDERS.framework7.prefix)
-    return <i className={styles["f7-icons"]}>{icon.name}</i>;
+  /* if (icon.provider === PROVIDERS.framework7.prefix)
+    return <i className={styles["f7-icons"]}>{icon.name}</i>; */
 
-  if (icon.provider === PROVIDERS.fontAwesome.prefix)
-    return <FontAwesomeIcon icon={icon.name} size="lg" />;
+  return <icon.component />;
+  /* if (icon.provider === PROVIDERS.fontAwesome.prefix)
+    return <FontAwesomeIcon icon={icon.name} size="lg" />; */
 };
