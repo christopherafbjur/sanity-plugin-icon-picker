@@ -21,11 +21,11 @@ function listToMatrix(list, elementsPerSubArray) {
 }
 
 const Wrapper = styled.section`
-  min-height: 300px;
+  min-height: 200px;
   width: 100%;
 `;
 
-const SearchResults = ({ results, renderIcon, selected, onSelect, filter }) => {
+const SearchResults = ({ results, selected, onSelect, filter }) => {
   const [filtered, setFiltered] = useState([]);
   const COLUMNS_COUNT = useMedia(
     // Media queries
@@ -61,7 +61,12 @@ const SearchResults = ({ results, renderIcon, selected, onSelect, filter }) => {
 
   const Row = ({ index, style }) => {
     return (
-      <Grid key={index.toString()} style={style} columns={[1, 2, 4, 6]}>
+      <Grid
+        key={index.toString()}
+        style={style}
+        columns={[1, 2, 4, 6]}
+        gap={[1, 1, 1, 1]}
+      >
         {filtered[index].map(createIconButton)}
       </Grid>
     );

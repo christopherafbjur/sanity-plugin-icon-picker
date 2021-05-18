@@ -26,10 +26,6 @@ const Tabs = ({ children, options }) => {
         setId(providers[0]);
       }
     }
-    /* providers = providers.length < 3 ? [...providers.slice(1)] : providers; */
-    console.log("providers is now", providers);
-    /* if (providers.length < 3)
-      return React.cloneElement(children, { filter: null }); */
 
     return (
       <React.Fragment>
