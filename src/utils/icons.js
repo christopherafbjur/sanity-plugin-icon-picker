@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcons from "@fortawesome/free-solid-svg-icons";
 import faList from "../data/fa/index";
 
-import { toCamel } from "./helpers";
+import { toCamel, getAcceptedProviders } from "./helpers";
 
 const DBG_COUNT = Infinity;
 
@@ -62,7 +62,7 @@ const GENERATORS = {
 };
 
 export function getIcons(options = {}) {
-  const providers = options.providers;
+  const providers = getAcceptedProviders(options.providers);
   let icons = [];
 
   if (providers) {
