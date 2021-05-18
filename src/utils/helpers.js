@@ -33,8 +33,24 @@ export function pascalToKebabCase(string) {
 }
 
 export function getSelectedProviders(options = {}) {
-  if (!options.providers) return [PROVIDERS.default.prefix];
-  return [PROVIDERS.default.prefix, ...options.providers];
+  /* if (!options.providers) return [PROVIDERS.default.prefix]; */
+  return [PROVIDERS.default.prefix, ...getAcceptedProviders(options.providers)];
+}
+
+export function getAcceptedProviders(providers = []) {
+  const filterOutDefault = (provider) => provider.prefix !== "all-icons";
+  const mapPrefixes = (provider) => provider.prefix;
+  const available = Object.values(PROVIDERS)
+    .filter(filterOutDefault)
+    .map(mapPrefixes);
+
+  const filtered = [...providers].filter(function (e) {
+    return this.indexOf(e) >= 0;
+  }, available);
+
+  if (!providers.length) return available;
+
+  return filtered;
 }
 
 export function providerFromPrefix(prefix) {
