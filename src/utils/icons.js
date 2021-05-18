@@ -1,32 +1,49 @@
 import React from "react";
 import { PROVIDERS } from "../config";
 
+//Framework7
 import styles from "framework7-icons";
-import * as reactIconsFa from "react-icons/fa";
-import faList from "../data/fa/index";
 import f7List from "../data/f7/index";
-import { toPascal } from "./helpers";
 
-console.log("RA", Object.keys(reactIconsFa).length);
-console.log("FALIST", faList.length);
-console.log("converted", toPascal("fa-" + faList[0]));
+//Material Design
+import * as mdIcons from "@mdi/js";
+import MaterialDesignIcon from "@mdi/react";
+import mdList from "../data/md/index";
 
-/* const undefinedIcons = faList.filter((name) => {
-  return !reactIconsFa[toPascal("fa-" + name)];
-});
-console.log("THESE ARE UNDEFINED", undefinedIcons); */
+//Font Awesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as faIcons from "@fortawesome/free-solid-svg-icons";
+import faList from "../data/fa/index";
+
+import { toCamel } from "./helpers";
 
 const DBG_COUNT = Infinity;
 
 const GENERATORS = {
   [PROVIDERS.fontAwesome.prefix]: () => {
+    const myList = faList.map((item) => faIcons[toCamel("fa-" + item)]);
+    library.add(...myList);
+
     return faList
       .map((name) => {
         return {
           provider: PROVIDERS.fontAwesome.prefix,
           name: name,
-          prefix: name,
-          component: reactIconsFa[toPascal("fa-" + name)],
+          component: () => <FontAwesomeIcon icon={name}></FontAwesomeIcon>,
+        };
+      })
+      .splice(0, DBG_COUNT);
+  },
+  [PROVIDERS.materialDesign.prefix]: () => {
+    return mdList
+      .map((name) => {
+        const path = mdIcons[toCamel(name)];
+
+        return {
+          provider: PROVIDERS.materialDesign.prefix,
+          name: name,
+          component: () => <MaterialDesignIcon size={1} path={path} />,
         };
       })
       .splice(0, DBG_COUNT);
@@ -37,7 +54,6 @@ const GENERATORS = {
         return {
           provider: PROVIDERS.framework7.prefix,
           name: name,
-          prefix: name,
           component: () => <i className={styles["f7-icons"]}>{name}</i>,
         };
       })

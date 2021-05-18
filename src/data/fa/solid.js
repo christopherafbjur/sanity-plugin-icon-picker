@@ -1,3 +1,4 @@
+//From this cheat sheet https://fontawesome.com/cheatsheet/free/solid
 export default [
   "ad",
   "address-book",
@@ -52,8 +53,8 @@ export default [
   "backspace",
   "backward",
   "bacon",
-  /* "bacteria", */
-  /* "bacterium", */
+  "bacteria",
+  "bacterium",
   "bahai",
   "balance-scale",
   "balance-scale-left",
@@ -102,7 +103,7 @@ export default [
   "bowling-ball",
   "box",
   "box-open",
-  /* "box-tissue", */
+  "box-tissue",
   "boxes",
   "braille",
   "brain",
@@ -261,7 +262,7 @@ export default [
   "dice-two",
   "digital-tachograph",
   "directions",
-  /* "disease", */
+  "disease",
   "divide",
   "dizzy",
   "dna",
@@ -313,7 +314,7 @@ export default [
   "fan",
   "fast-backward",
   "fast-forward",
-  /* "faucet", */
+  "faucet",
   "fax",
   "feather",
   "feather-alt",
@@ -418,9 +419,9 @@ export default [
   "hamsa",
   "hand-holding",
   "hand-holding-heart",
-  /* "hand-holding-medical", */
+  "hand-holding-medical",
   "hand-holding-usd",
-  /* "hand-holding-water", */
+  "hand-holding-water",
   "hand-lizard",
   "hand-middle-finger",
   "hand-paper",

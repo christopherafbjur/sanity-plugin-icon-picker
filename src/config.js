@@ -11,4 +11,8 @@ export const PROVIDERS = {
     prefix: "font-awesome",
     title: "Font Awesome",
   },
+  materialDesign: {
+    prefix: "material-design-icons",
+    title: "Material Design",
+  },
 };

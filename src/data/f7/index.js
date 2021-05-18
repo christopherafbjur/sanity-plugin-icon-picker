@@ -1,3 +1,5 @@
+//From this cheat sheet https://framework7.io/icons/
+
 export default [
   "airplane",
   "alarm",

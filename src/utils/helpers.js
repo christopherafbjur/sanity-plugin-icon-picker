@@ -1,8 +1,18 @@
 import { PROVIDERS } from "../config";
-import { pascalCase } from "change-case";
+import { pascalCase, camelCase } from "change-case";
 
 export function toPascal(str) {
   return pascalCase(str);
+}
+
+export function toCamel(str) {
+  return camelCase(str, {
+    transform: (input, index) => {
+      if (index === 0) return input.toLowerCase();
+      if (Number(input)) return input;
+      return pascalCase(input);
+    },
+  });
 }
 
 export function pascalToSnakeCase(string) {

@@ -11,15 +11,15 @@ import Tabs from "./Tabs";
 import { getIcons, renderIcon } from "../utils/icons";
 
 const IconPicker = React.forwardRef((props, ref) => {
-  const { type, value, onChange } = props;
+  const { type, value = {}, onChange } = props;
   const [selected, setSelected] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [icons, setIcons] = useState([]);
   const [queryResults, setQueryResults] = useState([]);
   const [query, setQuery] = useState("");
 
-  function getIconByValue(value, icons) {
-    const found = icons.find((icon) => icon.name === value);
+  function getIconByValue({ name }, icons) {
+    const found = icons.find((icon) => icon.name === name);
     return found || null;
   }
 
@@ -40,7 +40,7 @@ const IconPicker = React.forwardRef((props, ref) => {
     if (selected && icon.name === selected.name) return unsetIcon();
 
     onChange(
-      PatchEvent.from(set({ provider: icon.provider, prefix: icon.prefix }))
+      PatchEvent.from(set({ provider: icon.provider, name: icon.name }))
     );
     setSelected(icon);
   };
@@ -53,11 +53,11 @@ const IconPicker = React.forwardRef((props, ref) => {
   };
 
   const onQueryChange = (e) => {
-    const value = e.target.value;
+    const query = e.target.value;
 
-    const results = icons.filter((icon) => icon.name.indexOf(value) >= 0);
+    const results = icons.filter((icon) => icon.name.indexOf(query) >= 0);
     setQueryResults(results);
-    setQuery(value);
+    setQuery(query);
   };
   const handlePreviewClick = () => {
     setIsPopupOpen(true);
