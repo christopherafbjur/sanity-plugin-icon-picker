@@ -6,17 +6,19 @@ import {
   MenuItem,
   MenuDivider,
 } from "@sanity/ui";
+import { AddIcon } from "@sanity/icons";
 
 const Menu = ({ onClick, selected }) => {
   return (
     <>
       {!selected && (
         <Button
-          fontSize={[2, 2, 3]}
+          icon={AddIcon}
+          fontSize={[1, 1, 2]}
           mode="ghost"
-          padding={[3, 3, 4]}
+          padding={[2, 2, 3]}
           tone="default"
-          text={"Add"}
+          text={"Add icon"}
           onClick={() => onClick("add")}
         />
       )}
@@ -24,9 +26,8 @@ const Menu = ({ onClick, selected }) => {
         <MenuButton
           button={
             <Button
-              fontSize={[2, 2, 3]}
               mode="ghost"
-              padding={[3, 3, 4]}
+              padding={[2, 2, 3]}
               tone="default"
               text={<selected.component />}
             />
