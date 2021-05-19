@@ -9,7 +9,7 @@ const Popup = ({ onClose, children, isOpen }) => {
       id="icon-popup"
       onClose={onClose}
       zOffset={1000}
-      width={100}
+      width={1}
     >
       <Box padding={4}>{children}</Box>
     </Dialog>
