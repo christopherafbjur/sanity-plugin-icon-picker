@@ -36,6 +36,10 @@ const SearchResults = ({ results, selected, onSelect, filter }) => {
     1
   );
 
+  useEffect(() => {
+    updateIcons(COLUMNS_COUNT);
+  }, [results]);
+
   const getFiltered = (items) => {
     if (!filter) return items;
     return items.filter((item) => item.provider === filter);
