@@ -72,10 +72,7 @@ const IconPicker = React.forwardRef((props, ref) => {
     if (action === actions[1]) return openPopup();
     if (action === actions[2]) return unsetIcon();
   };
-  const handleButtonClick = (addIcon) => {
-    if (addIcon) return openPopup();
-    unsetIcon();
-  };
+
   const onTabClick = () => {
     if (!loading) {
       setLoading(true);
@@ -97,6 +94,7 @@ const IconPicker = React.forwardRef((props, ref) => {
             selected={selected}
             onSelect={setIcon}
             loading={loading}
+            query={query}
           />
         </Tabs>
       </Popup>

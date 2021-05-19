@@ -26,7 +26,14 @@ const Wrapper = styled.section`
   position: relative;
 `;
 
-const SearchResults = ({ results, selected, onSelect, filter, loading }) => {
+const SearchResults = ({
+  results,
+  selected,
+  onSelect,
+  filter,
+  loading,
+  query,
+}) => {
   const [filtered, setFiltered] = useState([]);
   const COLUMNS_COUNT = useMedia(
     // Media queries
@@ -92,7 +99,7 @@ const SearchResults = ({ results, selected, onSelect, filter, loading }) => {
           <Spinner muted />
         </Flex>
       )}
-      {!loading && (
+      {!loading && !!filtered.length && (
         <AutoSizer onResize={onResize}>
           {({ height, width }) => (
             <List
@@ -105,6 +112,15 @@ const SearchResults = ({ results, selected, onSelect, filter, loading }) => {
             </List>
           )}
         </AutoSizer>
+      )}
+      {!loading && !filtered.length && (
+        <Flex
+          align="center"
+          justify="center"
+          style={{ width: "100%", height: "100%", position: "absolute" }}
+        >
+          {`No results found for "${query}"`}
+        </Flex>
       )}
     </Wrapper>
   );
