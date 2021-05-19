@@ -21,8 +21,9 @@ const Tabs = ({ children, options, onClick }) => {
   };
 
   const generateContent = (providers) => {
-    if (providers.length < 3) {
+    if (providers.length === 2) {
       providers = [...providers.slice(1)];
+
       if (id === PROVIDERS.default.prefix) {
         setId(providers[0]);
       }
