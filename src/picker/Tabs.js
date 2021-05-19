@@ -11,12 +11,13 @@ import {
 } from "@sanity/ui";
 import { getSelectedProviders, providerFromPrefix } from "../utils/helpers";
 
-const Tabs = ({ children, options }) => {
+const Tabs = ({ children, options, onClick }) => {
   const [id, setId] = useState(PROVIDERS.default.prefix);
   const selectedProviders = getSelectedProviders(options);
 
   const handleClick = (id) => {
     setId(id);
+    onClick();
   };
 
   const generateContent = (providers) => {

@@ -8,6 +8,7 @@ const SearchBar = ({ value, onChange }) => {
       fontSize={[2, 2, 3, 4]}
       padding={[3, 3, 4]}
       value={value}
+      placeholder="Search Icons"
       onChange={onChange}
       mode="bleed"
     />

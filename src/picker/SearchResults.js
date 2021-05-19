@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import styled from "styled-components";
-import { Button, Grid, Box } from "@sanity/ui";
+import { Button, Grid, Flex, Spinner } from "@sanity/ui";
 
 function listToMatrix(list, elementsPerSubArray) {
   var matrix = [],
@@ -23,9 +23,10 @@ function listToMatrix(list, elementsPerSubArray) {
 const Wrapper = styled.section`
   min-height: 200px;
   width: 100%;
+  position: relative;
 `;
 
-const SearchResults = ({ results, selected, onSelect, filter }) => {
+const SearchResults = ({ results, selected, onSelect, filter, loading }) => {
   const [filtered, setFiltered] = useState([]);
   const COLUMNS_COUNT = useMedia(
     // Media queries
@@ -55,9 +56,9 @@ const SearchResults = ({ results, selected, onSelect, filter }) => {
       <Button
         key={icon.name}
         mode="ghost"
-        padding={[3, 3, 4]}
         onClick={() => onSelect(icon)}
         text={<icon.component />}
+        style={{ marginTop: "5px" }}
         selected={selected && icon.name === selected.name}
       />
     );
@@ -82,18 +83,29 @@ const SearchResults = ({ results, selected, onSelect, filter }) => {
 
   return (
     <Wrapper>
-      <AutoSizer onResize={onResize}>
-        {({ height, width }) => (
-          <List
-            height={height}
-            itemCount={filtered.length}
-            itemSize={70}
-            width={width}
-          >
-            {Row}
-          </List>
-        )}
-      </AutoSizer>
+      {loading && (
+        <Flex
+          align="center"
+          justify="center"
+          style={{ width: "100%", height: "100%", position: "absolute" }}
+        >
+          <Spinner muted />
+        </Flex>
+      )}
+      {!loading && (
+        <AutoSizer onResize={onResize}>
+          {({ height, width }) => (
+            <List
+              height={height}
+              itemCount={filtered.length}
+              itemSize={45}
+              width={width}
+            >
+              {Row}
+            </List>
+          )}
+        </AutoSizer>
+      )}
     </Wrapper>
   );
 };

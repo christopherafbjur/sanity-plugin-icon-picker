@@ -20,6 +20,8 @@ import { toCamel, getAcceptedProviders } from "./helpers";
 
 const DBG_COUNT = Infinity;
 
+const GLOBAL_ICON_STYLE = { width: "20px", height: "20px", fontSize: "20px" };
+
 const GENERATORS = {
   [PROVIDERS.fontAwesome.prefix]: () => {
     const myList = faList.map((item) => faIcons[toCamel("fa-" + item)]);
@@ -30,7 +32,12 @@ const GENERATORS = {
         return {
           provider: PROVIDERS.fontAwesome.prefix,
           name: name,
-          component: () => <FontAwesomeIcon icon={name}></FontAwesomeIcon>,
+          component: () => (
+            <FontAwesomeIcon
+              style={GLOBAL_ICON_STYLE}
+              icon={name}
+            ></FontAwesomeIcon>
+          ),
         };
       })
       .splice(0, DBG_COUNT);
@@ -43,7 +50,9 @@ const GENERATORS = {
         return {
           provider: PROVIDERS.materialDesign.prefix,
           name: name,
-          component: () => <MaterialDesignIcon size={1} path={path} />,
+          component: () => (
+            <MaterialDesignIcon style={GLOBAL_ICON_STYLE} path={path} />
+          ),
         };
       })
       .splice(0, DBG_COUNT);
@@ -54,7 +63,11 @@ const GENERATORS = {
         return {
           provider: PROVIDERS.framework7.prefix,
           name: name,
-          component: () => <i className={styles["f7-icons"]}>{name}</i>,
+          component: () => (
+            <i className={styles["f7-icons"]} style={GLOBAL_ICON_STYLE}>
+              {name}
+            </i>
+          ),
         };
       })
       .splice(0, DBG_COUNT);

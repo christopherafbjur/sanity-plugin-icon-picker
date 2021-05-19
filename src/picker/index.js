@@ -7,16 +7,19 @@ import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import Nav from "./navigation";
 import Tabs from "./Tabs";
+import Menu from "./Menu";
 
-import { getIcons, renderIcon } from "../utils/icons";
+import { getIcons } from "../utils/icons";
+
+const LOADING_TIMER_MS = 400;
 
 const IconPicker = React.forwardRef((props, ref) => {
   const { type, value = {}, onChange } = props;
   const [selected, setSelected] = useState(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(true);
-  const [icons, setIcons] = useState([]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [queryResults, setQueryResults] = useState([]);
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   function getIconByValue({ name }, icons) {
     const found = icons.find((icon) => icon.name === name);
@@ -24,12 +27,19 @@ const IconPicker = React.forwardRef((props, ref) => {
   }
 
   useEffect(() => {
-    const icons = getIcons(type.options);
+    if (!loading) {
+      setLoading(true);
+    }
+    const timeoutId = setTimeout(() => {
+      const icons = getIcons(type.options);
+      const results = icons.filter((icon) => icon.name.indexOf(query) >= 0);
 
-    setSelected(getIconByValue(value, icons));
-    setIcons(icons);
-    setQueryResults(icons);
-  }, []);
+      setSelected(getIconByValue(value, icons));
+      setQueryResults(results);
+      setLoading(false);
+    }, LOADING_TIMER_MS);
+    return () => clearTimeout(timeoutId);
+  }, [query]);
 
   const unsetIcon = () => {
     onChange(PatchEvent.from(unset()));
@@ -54,39 +64,39 @@ const IconPicker = React.forwardRef((props, ref) => {
 
   const onQueryChange = (e) => {
     const query = e.target.value;
-
-    const results = icons.filter((icon) => icon.name.indexOf(query) >= 0);
-    setQueryResults(results);
     setQuery(query);
   };
-  const handlePreviewClick = () => {
-    setIsPopupOpen(true);
+  const handlePreviewClick = (action) => {
+    const actions = ["add", "edit", "delete"];
+    if (action === actions[0]) return setIsPopupOpen(true);
+    if (action === actions[1]) return openPopup();
+    if (action === actions[2]) return unsetIcon();
   };
-
   const handleButtonClick = (addIcon) => {
     if (addIcon) return openPopup();
     unsetIcon();
   };
+  const onTabClick = () => {
+    if (!loading) {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, LOADING_TIMER_MS);
+    }
+  };
 
   return (
     <FormField label={type.title} description={type.description}>
-      <Nav.Container>
-        <Nav.Preview
-          selected={selected}
-          onClick={handlePreviewClick}
-          renderIcon={renderIcon}
-        />
-        <Nav.Button selected={selected} onClick={handleButtonClick} />
-      </Nav.Container>
+      <Menu onClick={handlePreviewClick} selected={selected} />
 
       <Popup onClose={closePopup} isOpen={isPopupOpen}>
         <SearchBar value={query} onChange={onQueryChange} />
-        <Tabs options={type.options}>
+        <Tabs options={type.options} onClick={onTabClick}>
           <SearchResults
             results={queryResults}
-            renderIcon={renderIcon}
             selected={selected}
             onSelect={setIcon}
+            loading={loading}
           />
         </Tabs>
       </Popup>

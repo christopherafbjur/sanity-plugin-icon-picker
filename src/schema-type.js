@@ -6,8 +6,8 @@ export default {
   type: "object",
   fields: [
     {
-      title: "From",
-      name: "from",
+      title: "Provider",
+      name: "provider",
       type: "string",
     },
     {
