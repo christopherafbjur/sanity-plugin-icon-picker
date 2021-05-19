@@ -1,7 +1,7 @@
 {
   "name": "sanity-plugin-icon-picker",
   "version": "1.0.0",
-  "description": "Select icons for your project with ease",
+  "description": "An Icon Picker plugin for Sanity",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
