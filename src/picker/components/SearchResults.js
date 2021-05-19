@@ -2,23 +2,9 @@ import React, { useState, useEffect } from "react";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import styled from "styled-components";
-import { Button, Grid, Flex, Spinner } from "@sanity/ui";
-
-function listToMatrix(list, elementsPerSubArray) {
-  var matrix = [],
-    i,
-    k;
-
-  for (i = 0, k = -1; i < list.length; i++) {
-    if (i % elementsPerSubArray === 0) {
-      k++;
-      matrix[k] = [];
-    }
-    matrix[k].push(list[i]);
-  }
-
-  return matrix;
-}
+import { Button, Grid, Flex, Spinner, Text } from "@sanity/ui";
+import useMedia from "../hooks/useMedia";
+import { listToMatrix } from "../../utils/helpers";
 
 const Wrapper = styled.section`
   min-height: 200px;
@@ -84,7 +70,7 @@ const SearchResults = ({
     );
   };
 
-  const onResize = ({ width, height }) => {
+  const onResize = () => {
     updateIcons(COLUMNS_COUNT);
   };
 
@@ -96,7 +82,7 @@ const SearchResults = ({
           justify="center"
           style={{ width: "100%", height: "100%", position: "absolute" }}
         >
-          <Spinner muted />
+          <Spinner size={4} muted />
         </Flex>
       )}
       {!loading && !!filtered.length && (
@@ -119,7 +105,7 @@ const SearchResults = ({
           justify="center"
           style={{ width: "100%", height: "100%", position: "absolute" }}
         >
-          {`No results found for "${query}"`}
+          <Text>{`No results found for "${query}"`}</Text>
         </Flex>
       )}
     </Wrapper>
@@ -127,32 +113,3 @@ const SearchResults = ({
 };
 
 export default SearchResults;
-
-function useMedia(queries, values, defaultValue) {
-  // Array containing a media query list for each query
-  const mediaQueryLists = queries.map((q) => window.matchMedia(q));
-  // Function that gets value based on matching media query
-  const getValue = () => {
-    // Get index of first media query that matches
-    const index = mediaQueryLists.findIndex((mql) => mql.matches);
-    // Return related value or defaultValue if none
-    return typeof values[index] !== "undefined" ? values[index] : defaultValue;
-  };
-  // State and setter for matched value
-  const [value, setValue] = useState(getValue);
-  useEffect(
-    () => {
-      // Event listener callback
-      // Note: By defining getValue outside of useEffect we ensure that it has ...
-      // ... current values of hook args (as this hook callback is created once on mount).
-      const handler = () => setValue(getValue);
-      // Set a listener for each media query with above handler as callback.
-      mediaQueryLists.forEach((mql) => mql.addListener(handler));
-      // Remove listeners on cleanup
-      return () =>
-        mediaQueryLists.forEach((mql) => mql.removeListener(handler));
-    },
-    [] // Empty array ensures effect is only run on mount and unmount
-  );
-  return value;
-}

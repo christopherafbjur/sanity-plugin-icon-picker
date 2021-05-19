@@ -1,7 +1,7 @@
 {
-  "name": "icon-picker",
+  "name": "sanity-plugin-icon-picker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Select icons for your project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/christopherafbjur/sanity-plugin-icon-picker.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "sanity",
+    "plugin",
+    "icon",
+    "custom input",
+    "sanity field"
+  ],
+  "author": "Christopher Af Bjur",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/christopherafbjur/sanity-plugin-icon-picker/issues"
   },

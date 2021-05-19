@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { PatchEvent, set, unset } from "part:@sanity/form-builder/patch-event";
 
 import FormField from "part:@sanity/components/formfields/default";
-import Popup from "./Popup";
-import SearchBar from "./SearchBar";
-import SearchResults from "./SearchResults";
-import Nav from "./navigation";
-import Tabs from "./Tabs";
-import Menu from "./Menu";
+import Popup from "./components/Popup";
+import SearchBar from "./components/SearchBar";
+import SearchResults from "./components/SearchResults";
+import Tabs from "./components/Tabs";
+import Menu from "./components/Menu";
 
 import { getIcons } from "../utils/icons";
 
@@ -33,7 +32,7 @@ const IconPicker = React.forwardRef((props, ref) => {
     const timeoutId = setTimeout(() => {
       const icons = getIcons(type.options);
       const results = icons.filter((icon) => icon.name.indexOf(query) >= 0);
-
+      console.log("results", results);
       setSelected(getIconByValue(value, icons));
       setQueryResults(results);
       setLoading(false);
@@ -60,6 +59,7 @@ const IconPicker = React.forwardRef((props, ref) => {
   };
   const closePopup = () => {
     setIsPopupOpen(false);
+    setQuery("");
   };
 
   const onQueryChange = (e) => {

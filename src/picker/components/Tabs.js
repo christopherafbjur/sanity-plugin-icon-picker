@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PROVIDERS } from "../config";
+import { PROVIDERS } from "../../config";
 import {
   Container,
   TabList,
@@ -9,7 +9,7 @@ import {
   Card,
   Box,
 } from "@sanity/ui";
-import { getSelectedProviders, providerFromPrefix } from "../utils/helpers";
+import { getSelectedProviders, providerFromPrefix } from "../../utils/helpers";
 
 const Tabs = ({ children, options, onClick }) => {
   const [id, setId] = useState(PROVIDERS.default.prefix);

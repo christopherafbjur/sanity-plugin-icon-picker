@@ -33,7 +33,6 @@ export function pascalToKebabCase(string) {
 }
 
 export function getSelectedProviders(options = {}) {
-  /* if (!options.providers) return [PROVIDERS.default.prefix]; */
   return [PROVIDERS.default.prefix, ...getAcceptedProviders(options.providers)];
 }
 
@@ -57,4 +56,20 @@ export function providerFromPrefix(prefix) {
   return Object.values(PROVIDERS).find(
     (provider) => provider.prefix === prefix
   );
+}
+
+export function listToMatrix(list, elementsPerSubArray) {
+  var matrix = [],
+    i,
+    k;
+
+  for (i = 0, k = -1; i < list.length; i++) {
+    if (i % elementsPerSubArray === 0) {
+      k++;
+      matrix[k] = [];
+    }
+    matrix[k].push(list[i]);
+  }
+
+  return matrix;
 }
