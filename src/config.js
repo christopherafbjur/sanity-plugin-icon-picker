@@ -4,15 +4,15 @@ export const PROVIDERS = {
     title: "All Icons",
   },
   framework7: {
-    prefix: "framework7-icons",
+    prefix: "f7",
     title: "Framework7",
   },
   fontAwesome: {
-    prefix: "font-awesome",
+    prefix: "fa",
     title: "Font Awesome",
   },
   materialDesign: {
-    prefix: "material-design-icons",
+    prefix: "mdi",
     title: "Material Design",
   },
 };
