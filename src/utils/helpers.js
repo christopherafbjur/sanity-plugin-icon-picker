@@ -1,10 +1,6 @@
 import { PROVIDERS } from "../config";
 import { pascalCase, camelCase } from "change-case";
 
-export function toPascal(str) {
-  return pascalCase(str);
-}
-
 export function toCamel(str) {
   return camelCase(str, {
     transform: (input, index) => {
@@ -13,23 +9,6 @@ export function toCamel(str) {
       return pascalCase(input);
     },
   });
-}
-
-export function pascalToSnakeCase(string) {
-  return string
-    .replace(/(?:^|\.?)([A-Z])/g, function (x, y) {
-      return "_" + y.toLowerCase();
-    })
-    .replace(/^_/, "");
-}
-
-export function pascalToKebabCase(string) {
-  return string
-    .replace(/(?:^|\.?)([A-Z])/g, function (x, y) {
-      return "-" + y.toLowerCase();
-    })
-    .replace(/^-/, "")
-    .toLowerCase();
 }
 
 export function getSelectedProviders(options = {}) {
