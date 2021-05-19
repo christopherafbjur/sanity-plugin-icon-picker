@@ -4,7 +4,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import styled from "styled-components";
 import { Button, Grid, Flex, Spinner, Text } from "@sanity/ui";
 import useMedia from "../hooks/useMedia";
-import { listToMatrix } from "../../utils/helpers";
+import { listToMatrix } from "../utils/helpers";
 
 const Wrapper = styled.section`
   min-height: 200px;

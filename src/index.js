@@ -8,7 +8,7 @@ import SearchResults from "./components/SearchResults";
 import Tabs from "./components/Tabs";
 import Menu from "./components/Menu";
 
-import { getIcons } from "../utils/icons";
+import { getIcons } from "./utils/icons";
 
 const LOADING_TIMER_MS = 400;
 
@@ -32,7 +32,6 @@ const IconPicker = React.forwardRef((props, ref) => {
     const timeoutId = setTimeout(() => {
       const icons = getIcons(type.options);
       const results = icons.filter((icon) => icon.name.indexOf(query) >= 0);
-      console.log("results", results);
       setSelected(getIconByValue(value, icons));
       setQueryResults(results);
       setLoading(false);

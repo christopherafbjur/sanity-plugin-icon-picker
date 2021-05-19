@@ -1,4 +1,4 @@
-import IconPicker from "./picker";
+import IconPicker from "./index";
 
 export default {
   title: "Icon Picker",
