@@ -1,8 +1,8 @@
 # sanity-plugin-icon-picker
 
-Icon picker for Sanity which let you select icons from a set of icon providers. Currently supported providers are Font Awesome (fa), Framework7 Icons (f7) & Material Design Icons (mdi).
+Icon picker for Sanity which let you select icons from a set of icon providers. Currently supported providers are Font Awesome (fa), Framework7 Icons (f7), Material Design Icons (mdi), and Sanity Icons (sa).
 
-![image](https://user-images.githubusercontent.com/13018273/118869136-4df73400-b8e5-11eb-85c4-6534994ccd95.png)
+![image](https://user-images.githubusercontent.com/45116528/119020168-2642b300-b95b-11eb-8685-c5720afee57f.png)
 
 ## Installation
 
@@ -30,7 +30,7 @@ You can define which icon providers you want to use by providing their provider 
     name: "icon",
     type: "iconPicker",
     options: {
-        providers: ["f7", "fa", "mdi"]
+        providers: ["f7", "fa", "mdi", "sa"]
     }
 }
 ```

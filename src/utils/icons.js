@@ -16,6 +16,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcons from "@fortawesome/free-solid-svg-icons";
 import faList from "../data/fa/index";
 
+//Sanity Icons
+import * as saIcons from "@sanity/icons";
+
 import { toCamel, getAcceptedProviders } from "./helpers";
 
 const GLOBAL_ICON_STYLE = { width: "20px", height: "20px", fontSize: "20px" };
@@ -60,6 +63,17 @@ const GENERATORS = {
           <i className={styles["f7-icons"]} style={GLOBAL_ICON_STYLE}>
             {name}
           </i>
+        ),
+      };
+    });
+  },
+  [PROVIDERS.sanity.prefix]: () => {
+    return Object.entries(saIcons.icons).map(icon => {
+      return {
+        provider: PROVIDERS.sanity.prefix,
+        name: icon[0],
+        component: () => (
+          icon[1].render({width: "1.5em"})
         ),
       };
     });
