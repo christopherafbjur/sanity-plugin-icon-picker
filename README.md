@@ -30,7 +30,7 @@ You can define which icon providers you want to use by providing their provider 
     name: "icon",
     type: "iconPicker",
     options: {
-        providers: ["f7", "fa", "mdi"]
+        providers: ["f7", "fa", "mdi", "sanity"]
     }
 }
 ```

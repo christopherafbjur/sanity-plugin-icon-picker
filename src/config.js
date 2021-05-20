@@ -15,4 +15,8 @@ export const PROVIDERS = {
     prefix: "mdi",
     title: "Material Design",
   },
+  sanity: {
+    prefix: "sa",
+    title: "Sanity Icons",
+  },
 };
