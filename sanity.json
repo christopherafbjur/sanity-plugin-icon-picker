@@ -10,7 +10,7 @@
     },
     {
       "implements": "part:sanity-plugin-icon-picker/preview",
-      "path": "utils/icons.js"
+      "path": "utils/public/preview.js"
     }
   ]
 }
