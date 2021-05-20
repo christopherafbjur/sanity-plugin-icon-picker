@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { PatchEvent, set, unset } from "part:@sanity/form-builder/patch-event";
+import {
+  PatchEvent,
+  setIfMissing,
+  set,
+  unset,
+} from "part:@sanity/form-builder/patch-event";
 
 import FormField from "part:@sanity/components/formfields/default";
 import Popup from "./components/Popup";
@@ -49,7 +54,13 @@ const IconPicker = React.forwardRef((props, ref) => {
     if (selected && icon.name === selected.name) return unsetIcon();
 
     onChange(
-      PatchEvent.from(set({ provider: icon.provider, name: icon.name }))
+      PatchEvent.from([
+        setIfMissing({
+          _type: type.name,
+        }),
+        set(icon.provider, ["provider"]),
+        set(icon.name, ["name"]),
+      ])
     );
     setSelected(icon);
   };
