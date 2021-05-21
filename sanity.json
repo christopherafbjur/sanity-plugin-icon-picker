@@ -7,6 +7,10 @@
     {
       "implements": "part:@sanity/base/schema-type",
       "path": "schemaType.js"
+    },
+    {
+      "implements": "part:sanity-plugin-icon-picker/preview",
+      "path": "utils/public/preview.js"
     }
   ]
 }
