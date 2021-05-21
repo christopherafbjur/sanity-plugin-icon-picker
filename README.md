@@ -12,7 +12,7 @@ sanity install icon-picker
 
 ## Usage
 
-```
+```js
 {
     title: "Icon",
     name: "icon",
@@ -24,7 +24,7 @@ sanity install icon-picker
 
 You can define which icon providers you want to use by providing their provider id in the `providers` array. If not defined, the Icon Picker defaults to display all providers and icons.
 
-```
+```js
 {
     title: "Icon",
     name: "icon",
@@ -32,6 +32,35 @@ You can define which icon providers you want to use by providing their provider 
     options: {
         providers: ["f7", "fa", "mdi", "sa"]
     }
+}
+```
+
+## Helper functions
+
+In order to render the icon component as preview media, we can import a helper method.
+
+```js
+import preview from "part:sanity-plugin-icon-picker/preview";
+```
+
+We can then render the icon by passing the selected name and provider to this method which will return an icon component.
+
+```js
+{
+...
+    preview: {
+        select: {
+          provider: "icon.provider",
+          name: "icon.name",
+        },
+        prepare(icon) {
+          return {
+            title: icon.provider,
+            subtitle: icon.name,
+            media: preview(icon),
+          };
+        },
+      }
 }
 ```
 
