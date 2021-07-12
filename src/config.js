@@ -11,6 +11,10 @@ export const PROVIDERS = {
     prefix: "fa",
     title: "Font Awesome",
   },
+  fontAwesomeBrands: {
+    prefix: "fab",
+    title: "Font Awesome Brands"
+  },
   materialDesign: {
     prefix: "mdi",
     title: "Material Design",
