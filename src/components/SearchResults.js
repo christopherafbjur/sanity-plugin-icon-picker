@@ -47,12 +47,14 @@ const SearchResults = ({
   const createIconButton = (icon) => {
     return (
       <Button
-        key={icon.name}
+        key={icon.provider.concat(icon.name)}
         mode="ghost"
         onClick={() => onSelect(icon)}
         text={<icon.component />}
         style={{ marginTop: "5px" }}
-        selected={selected && icon.name === selected.name}
+        selected={
+          selected.provider === icon.provider && icon.name === selected.name
+        }
       />
     );
   };
