@@ -53,7 +53,9 @@ const SearchResults = ({
         text={<icon.component />}
         style={{ marginTop: "5px" }}
         selected={
-          selected.provider === icon.provider && icon.name === selected.name
+          selected &&
+          selected.provider === icon.provider &&
+          icon.name === selected.name
         }
       />
     );
