@@ -19,4 +19,8 @@ export const PROVIDERS = {
     prefix: "sa",
     title: "Sanity Icons",
   },
+  hero: {
+    prefix: "hi",
+    title: "Hero Icons",
+  },
 };
