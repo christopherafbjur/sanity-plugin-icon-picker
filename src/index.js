@@ -37,7 +37,9 @@ const IconPicker = React.forwardRef((props, ref) => {
     }
     const timeoutId = setTimeout(() => {
       const icons = getIcons(type.options);
-      const results = icons.filter((icon) => icon.name.indexOf(query) >= 0);
+      const results = icons.filter(
+        (icon) => icon.name.toLowerCase().indexOf(query) >= 0
+      );
       setSelected(getIconByValue(value, icons));
       setQueryResults(results);
       setLoading(false);
