@@ -1,6 +1,5 @@
 import { PROVIDERS } from "../config";
 import { pascalCase, camelCase } from "change-case";
-import decamelize from "decamelize";
 
 export function toCamel(str) {
   return camelCase(str, {
@@ -10,17 +9,6 @@ export function toCamel(str) {
       return pascalCase(input);
     },
   });
-}
-
-export function decamelizeString(name, separator = "") {
-  //Solve case where unable to decamelize camelized number followed by character such as 500Px which decamelized would be 500-px which is incorrect should be 500px. Open issue can be found here https://github.com/sindresorhus/decamelize/issues/26
-  name = name.replace(/^([0-9]*)([A-Z].*)/, function () {
-    const start = arguments[1];
-    const rest = arguments[2];
-    return start + rest[0].toLowerCase() + rest.slice(1);
-  });
-
-  return decamelize(name, { separator });
 }
 
 export function getSelectedProviders(options = {}) {
