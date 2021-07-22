@@ -5,7 +5,7 @@ import * as Fa from "react-icons/fa";
 
 function convertFormat(name, options) {
   //FORMAT REFERENCE: https://fontawesome.com/v5/cheatsheet/free/
-  if (options.useReactIconsFormat) return name;
+  if (options.namingConvention === "react-icons") return name;
 
   const separator = "-";
   const SPECIAL_NAMES = {
