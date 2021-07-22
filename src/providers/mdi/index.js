@@ -1,21 +1,41 @@
 import React from "react";
-import { toCamel } from "../../utils/helpers";
+import decamelize from "decamelize";
+import { IconContext } from "react-icons";
+import * as Mdi from "react-icons/md";
 
-//Material Design
-import * as mdIcons from "@mdi/js";
-import MaterialDesignIcon from "@mdi/react";
-import iconList from "./icons";
-const iconStyle = { width: "20px", height: "20px", fontSize: "20px" };
+function convertFormat(name, options) {
+  //FORMAT REFERENCE https://fonts.google.com/icons?selected=Material+Icons
+  if (options.useReactIconsFormat) return name;
+
+  const separator = "_";
+
+  //Remove react icon prefixes/identifiers Fa/FaReg (regular)
+  name = name.replace(/^(Md)(.*$)/, "$2");
+
+  //Separate letters followed by numbers (decamelize defaults to omitting separation of letter followed by number)
+  name = name.replace(/([a-z])([0-9])/i, `$1${separator}$2`);
+
+  //3D is a special case which should not be decamelized as 3_d (default)
+  name = name.replace(/3D/, (match) => match.toLowerCase());
+
+  return decamelize(name, { separator });
+}
 
 export default function (provider) {
-  return () =>
-    iconList.map((name) => {
-      const path = mdIcons[toCamel(name)];
-
+  return (options = {}) => {
+    const icons = Object.keys(Mdi).map((name) => {
+      const Icon = Mdi[name];
       return {
         provider,
-        name,
-        component: () => <MaterialDesignIcon style={iconStyle} path={path} />,
+        name: convertFormat(name, options),
+        component: () => (
+          <IconContext.Provider value={{ size: "20px" }}>
+            <Icon />
+          </IconContext.Provider>
+        ),
       };
     });
+    console.log(icons);
+    return icons;
+  };
 }
