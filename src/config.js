@@ -23,4 +23,8 @@ export const PROVIDERS = {
     prefix: "hi",
     title: "Hero Icons",
   },
+  feather: {
+    prefix: "fi",
+    title: "Feather Icons",
+  },
 };
