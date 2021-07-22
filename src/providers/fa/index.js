@@ -1,25 +1,32 @@
 import React from "react";
-import { toCamel } from "../../utils/helpers";
+import { IconContext } from "react-icons";
+import * as Fa from "react-icons/fa";
+import { decamelizeString } from "../../utils/helpers";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as faIcons from "@fortawesome/free-solid-svg-icons";
-import iconList from "./icons";
+function convertFormat(name, options) {
+  if (options.useReactIconsFormat) return name;
 
-const libList = iconList.map((item) => faIcons[toCamel("fa-" + item)]);
-const iconStyle = { width: "20px", height: "20px", fontSize: "20px" };
+  //Remove react icon prefixes/identifiers Fa/FaReg (regular)
+  name = name.replace(/^(FaReg|Fa)(.*$)/, "$2");
 
-library.add(...libList);
+  return decamelizeString(name, "-");
+}
 
 export default function (provider) {
-  return () =>
-    iconList.map((name) => {
+  return (options = {}) => {
+    const icons = Object.keys(Fa).map((name) => {
+      const Icon = Fa[name];
       return {
         provider,
-        name,
+        name: convertFormat(name, options),
         component: () => (
-          <FontAwesomeIcon style={iconStyle} icon={name}></FontAwesomeIcon>
+          <IconContext.Provider value={{ size: "20px" }}>
+            <Icon />
+          </IconContext.Provider>
         ),
       };
     });
+    console.log(icons);
+    return icons;
+  };
 }
