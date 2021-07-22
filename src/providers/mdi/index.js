@@ -9,7 +9,7 @@ function convertFormat(name, options) {
 
   const separator = "_";
 
-  //Remove react icon prefixes/identifiers Fa/FaReg (regular)
+  //Remove react icon prefixes/identifiers Md
   name = name.replace(/^(Md)(.*$)/, "$2");
 
   //Separate letters followed by numbers (decamelize defaults to omitting separation of letter followed by number)
@@ -35,7 +35,6 @@ export default function (provider) {
         ),
       };
     });
-    console.log(icons);
     return icons;
   };
 }
