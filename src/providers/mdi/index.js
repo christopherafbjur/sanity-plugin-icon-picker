@@ -5,7 +5,7 @@ import * as Mdi from "react-icons/md";
 
 function convertFormat(name, options) {
   //FORMAT REFERENCE https://fonts.google.com/icons?selected=Material+Icons
-  if (options.outputFormat === "react-icons") return name;
+  if (options.outputFormat === "react") return name;
 
   const separator = "_";
 

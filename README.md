@@ -39,7 +39,7 @@ You can define which icon providers you want to use by providing their provider 
 
 ### Output Format
 
-You can format the output data in accordance with your front-end project. If you're using [React Icons](https://github.com/react-icons/react-icons) you can set the `outputFormat` to `react-icons`. If you ommit this option, the output format will be in accordance with every single provider's icon naming convention.
+You can format the output data in accordance with your front-end project. If you're using React you can set the `outputFormat` to `react`. If you ommit this option, the output format will be in accordance with every single provider's icon naming convention.
 
 ```js
 {
@@ -47,7 +47,7 @@ You can format the output data in accordance with your front-end project. If you
     name: "icon",
     type: "iconPicker",
     options: {
-        outputFormat: 'react-icons',
+        outputFormat: 'react',
     }
 }
 ```

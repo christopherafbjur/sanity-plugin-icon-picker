@@ -5,7 +5,7 @@ import * as Hi from "react-icons/hi";
 
 function convertFormat(name, options) {
   //FORMAT REFERENCE https://github.com/tailwindlabs/heroicons
-  if (options.outputFormat === "react-icons") return name;
+  if (options.outputFormat === "react") return name;
 
   const separator = "-";
 
