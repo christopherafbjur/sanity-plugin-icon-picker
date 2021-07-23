@@ -1,15 +1,4 @@
 import { PROVIDERS } from "../config";
-import { pascalCase, camelCase } from "change-case";
-
-export function toCamel(str) {
-  return camelCase(str, {
-    transform: (input, index) => {
-      if (index === 0) return input.toLowerCase();
-      if (Number(input)) return input;
-      return pascalCase(input);
-    },
-  });
-}
 
 export function getSelectedProviders(options = {}) {
   return [PROVIDERS.default.prefix, ...getAcceptedProviders(options.providers)];
