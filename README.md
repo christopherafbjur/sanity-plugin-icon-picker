@@ -2,7 +2,7 @@
 
 Icon picker for Sanity which let you select icons from a set of icon providers.
 
-![image](https://user-images.githubusercontent.com/45116528/119020168-2642b300-b95b-11eb-8685-c5720afee57f.png)
+![image](https://github.com/christopherafbjur/sanity-plugin-icon-picker/blob/main/promo.png?raw=true)
 
 ## Installation
 
@@ -24,7 +24,7 @@ sanity install icon-picker
 
 ### Providers
 
-You can define which icon providers you want to use by providing their provider id in the `providers` array. If not defined, the Icon Picker defaults to display all providers and icons.
+Define which icon providers you want to use by providing their provider id in the `providers` array. If not defined, the Icon Picker defaults to display all providers and icons.
 
 ```js
 {
@@ -39,7 +39,7 @@ You can define which icon providers you want to use by providing their provider 
 
 ### Output Format
 
-You can format the output data in accordance with your front-end project. If you're using React you can set the `outputFormat` to `react`. If you ommit this option, the output format will be in accordance with every single provider's icon naming convention.
+Format the output data in accordance with your front-end project. If you're using React you can set the `outputFormat` to `react`. If you ommit this option, the output format will be in accordance with every single provider's icon naming convention.
 
 ```js
 {
@@ -48,6 +48,21 @@ You can format the output data in accordance with your front-end project. If you
     type: "iconPicker",
     options: {
         outputFormat: 'react',
+    }
+}
+```
+
+### Filter
+
+Filter out a subset of icons to be used by specifying a filter. A filter can be either an exact match of a string (case insensitive) or a regular expression. Supports both the react naming convention of an icon name as well as default naming conventions for each icon provider. This means that defining for instance the Font Awesome icon `arrow-circle-up` is equal to defining the react version `FaArrowCircleUp`.
+
+```js
+{
+    title: "Icon",
+    name: "icon",
+    type: "iconPicker",
+    options: {
+        filter: ['FaBeer', 'FaDocker', /^arrow/i],
     }
 }
 ```

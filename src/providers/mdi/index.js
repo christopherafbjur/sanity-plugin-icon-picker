@@ -1,5 +1,6 @@
 import React from "react";
 import decamelize from "decamelize";
+import { createTags } from "../../utils/helpers";
 import { IconContext } from "react-icons";
 import * as Mdi from "react-icons/md";
 
@@ -33,6 +34,7 @@ export default function (provider) {
             <Icon />
           </IconContext.Provider>
         ),
+        tags: createTags(name, convertFormat),
       };
     });
     return icons;

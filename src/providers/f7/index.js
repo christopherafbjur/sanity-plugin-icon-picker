@@ -1,10 +1,11 @@
 import React from "react";
 import decamelize from "decamelize";
+import { createTags } from "../../utils/helpers";
 
 import styles from "framework7-icons";
 import * as F7 from "framework7-icons/react";
 
-function convertFormat(name, options) {
+function convertFormat(name, options = {}) {
   if (options.outputFormat === "react") return name;
 
   const separator = "_";
@@ -30,6 +31,7 @@ export default function (provider) {
             {icon}
           </i>
         ),
+        tags: createTags(name, convertFormat),
       };
     });
 }

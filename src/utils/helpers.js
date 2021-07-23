@@ -52,3 +52,10 @@ export function listToMatrix(list, elementsPerSubArray) {
 
   return matrix;
 }
+
+//Creates tags that can be applied to icon objects for subset filtering with support for adding both react names and default names
+export function createTags(name, formatFn) {
+  const reactName = formatFn(name, { outputFormat: "react" });
+  const defaultName = formatFn(name, {});
+  return [reactName, defaultName];
+}

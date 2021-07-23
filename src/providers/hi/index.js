@@ -2,6 +2,7 @@ import React from "react";
 import decamelize from "decamelize";
 import { IconContext } from "react-icons";
 import * as Hi from "react-icons/hi";
+import { createTags } from "../../utils/helpers";
 
 function convertFormat(name, options) {
   //FORMAT REFERENCE https://github.com/tailwindlabs/heroicons
@@ -30,6 +31,7 @@ export default function (provider) {
             <Icon />
           </IconContext.Provider>
         ),
+        tags: createTags(name, convertFormat),
       };
     });
     return icons;

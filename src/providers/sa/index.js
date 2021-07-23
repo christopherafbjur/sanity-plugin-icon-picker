@@ -1,4 +1,5 @@
 import * as saIcons from "@sanity/icons";
+import { createTags } from "../../utils/helpers";
 
 function convertFormat(icon, options) {
   if (options.outputFormat === "react")
@@ -13,6 +14,7 @@ export default function (provider) {
         provider,
         name: convertFormat(icon, options),
         component: () => icon[1].render({ width: "1.5em" }),
+        tags: createTags(icon, convertFormat),
       };
     });
 }
