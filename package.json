@@ -3,6 +3,10 @@
   "version": "1.1.0",
   "description": "An Icon Picker plugin for Sanity",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "sanity.json"
+  ],
   "scripts": {
     "build": "babel src --out-dir dist",
     "prepublishOnly": "npm run build"
