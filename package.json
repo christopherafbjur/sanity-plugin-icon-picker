@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-icon-picker",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "An Icon Picker plugin for Sanity",
   "main": "dist/index.js",
   "files": [
