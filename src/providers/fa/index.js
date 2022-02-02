@@ -19,7 +19,7 @@ function convertFormat(name, options) {
 
   if (SPECIAL_NAMES[name]) return SPECIAL_NAMES[name];
 
-  return decamelize(name, { separator });
+  return decamelize(name, separator);
 }
 
 export default function (provider) {

@@ -19,7 +19,7 @@ function convertFormat(name, options) {
   //3D is a special case which should not be decamelized as 3_d (default)
   name = name.replace(/3D/, (match) => match.toLowerCase());
 
-  return decamelize(name, { separator });
+  return decamelize(name, separator);
 }
 
 export default function (provider) {
