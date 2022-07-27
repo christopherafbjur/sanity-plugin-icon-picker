@@ -3,6 +3,10 @@ export const PROVIDERS = {
     prefix: "all-icons",
     title: "All Icons",
   },
+  feather: {
+    prefix: "fi",
+    title: "Feather Icons",
+  },
   framework7: {
     prefix: "f7",
     title: "Framework7",
@@ -10,6 +14,10 @@ export const PROVIDERS = {
   fontAwesome: {
     prefix: "fa",
     title: "Font Awesome",
+  },
+  hero: {
+    prefix: "hi",
+    title: "Hero Icons",
   },
   materialDesign: {
     prefix: "mdi",
@@ -19,12 +27,8 @@ export const PROVIDERS = {
     prefix: "sa",
     title: "Sanity Icons",
   },
-  hero: {
-    prefix: "hi",
-    title: "Hero Icons",
-  },
-  feather: {
-    prefix: "fi",
-    title: "Feather Icons",
+  simpleicons: {
+    prefix: "si",
+    title: "Simple Icons",
   },
 };
