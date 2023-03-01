@@ -21,11 +21,7 @@ export default function (provider) {
       return {
         provider,
         name: convertFormat(name, options),
-        component: () => (
-          <IconContext.Provider value={{ size: "20px" }}>
-            <Icon />
-          </IconContext.Provider>
-        ),
+        component: () => <Icon />,
         tags: createTags(name, convertFormat),
       };
     });
