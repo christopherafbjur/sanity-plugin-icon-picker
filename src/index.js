@@ -12,9 +12,11 @@ import SearchBar from "./components/SearchBar";
 import SearchResults from "./components/SearchResults";
 import Tabs from "./components/Tabs";
 import Menu from "./components/Menu";
+import { IconContext } from "react-icons";
 
 import { getIcons } from "./utils/icons";
 import { Card } from "@sanity/ui";
+import { ICON_WIDTH, ICON_HEIGHT } from "./constants";
 
 const LOADING_TIMER_MS = 400;
 
@@ -98,24 +100,28 @@ const IconPicker = React.forwardRef((props, ref) => {
   return (
     <FormField label={type.title} description={type.description}>
       <Card ref={ref}>
-        <Menu
-          reference={ref}
-          onClick={handlePreviewClick}
-          selected={selected}
-        />
+        <IconContext.Provider
+          value={{ style: { width: ICON_WIDTH, height: ICON_HEIGHT } }}
+        >
+          <Menu
+            reference={ref}
+            onClick={handlePreviewClick}
+            selected={selected}
+          />
 
-        <Popup onClose={closePopup} isOpen={isPopupOpen}>
-          <SearchBar value={query} onChange={onQueryChange} />
-          <Tabs options={type.options} onClick={onTabClick}>
-            <SearchResults
-              results={queryResults}
-              selected={selected}
-              onSelect={setIcon}
-              loading={loading}
-              query={query}
-            />
-          </Tabs>
-        </Popup>
+          <Popup onClose={closePopup} isOpen={isPopupOpen}>
+            <SearchBar value={query} onChange={onQueryChange} />
+            <Tabs options={type.options} onClick={onTabClick}>
+              <SearchResults
+                results={queryResults}
+                selected={selected}
+                onSelect={setIcon}
+                loading={loading}
+                query={query}
+              />
+            </Tabs>
+          </Popup>
+        </IconContext.Provider>
       </Card>
     </FormField>
   );
