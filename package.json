@@ -33,7 +33,7 @@
     "@sanity/ui": "^0.37.2",
     "decamelize": "3.2.0",
     "framework7-icons": "^4.0.2",
-    "react-icons": "^4.2.0",
+    "react-icons": "^4.7.1",
     "react-virtualized-auto-sizer": "^1.0.5",
     "react-window": "^1.8.6"
   },

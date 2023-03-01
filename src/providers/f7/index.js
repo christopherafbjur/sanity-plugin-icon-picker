@@ -4,6 +4,7 @@ import { createTags } from "../../utils/helpers";
 
 import styles from "framework7-icons";
 import * as F7 from "framework7-icons/react";
+import { ICON_WIDTH, ICON_HEIGHT } from "../../constants";
 
 function convertFormat(name, options = {}) {
   if (options.outputFormat === "react") return name;
@@ -16,7 +17,7 @@ function convertFormat(name, options = {}) {
   return decamelize(name, separator);
 }
 
-const iconStyle = { width: "20px", height: "20px", fontSize: "20px" };
+const iconStyle = { width: ICON_WIDTH, height: ICON_HEIGHT, fontSize: "20px" };
 
 export default function (provider) {
   return (options = {}) =>
