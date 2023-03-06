@@ -9,7 +9,7 @@ Icon picker for Sanity which let you select icons from a set of icon providers.
 ## Installation
 
 ```sh
-sanity install icon-picker
+npm install sanity-plugin-icon-picker
 ```
 
 ## Usage
@@ -17,13 +17,13 @@ sanity install icon-picker
 Add it as a plugin in `sanity.config.ts` (or .js):
 
 ```ts
-import {defineConfig} from 'sanity'
-import {iconPicker} from 'sanity-plugin-icon-picker'
+import { defineConfig } from "sanity";
+import { iconPicker } from "sanity-plugin-icon-picker";
 
 export default defineConfig({
   //...
   plugins: [iconPicker()],
-})
+});
 ```
 
 Use the type in your schemas.
@@ -100,7 +100,7 @@ Filter out a subset of icons to be used by specifying a filter. A filter can be 
 In order to render the icon component as preview media, we can import a helper method.
 
 ```js
-import {preview} from 'sanity-plugin-icon-picker'
+import { preview } from "sanity-plugin-icon-picker";
 ```
 
 We can then render the icon by passing the selected name and provider to this method which will return an icon component.
@@ -129,7 +129,7 @@ We can then render the icon by passing the selected name and provider to this me
 Yes you can! Simply install the older version of this plugin
 
 ```sh
-sanity install icon-picker@2.1.0
+npm install sanity-plugin-icon-picker@2.1.0
 ```
 
 Then refer to the [old documentation](https://github.com/christopherafbjur/sanity-plugin-icon-picker/blob/72ba11830b73b729b6b3c1c254bde3c686032972/README.md)
