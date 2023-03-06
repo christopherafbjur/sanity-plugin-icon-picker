@@ -1,16 +1,8 @@
 {
-  "paths": {
-    "source": "./src",
-    "compiled": "./dist"
-  },
   "parts": [
     {
-      "implements": "part:@sanity/base/schema-type",
-      "path": "schemaType.js"
-    },
-    {
-      "implements": "part:sanity-plugin-icon-picker/preview",
-      "path": "utils/public/preview.js"
+      "implements": "part:@sanity/base/sanity-root",
+      "path": "./v2-incompatible.js"
     }
   ]
 }
