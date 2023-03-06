@@ -1,16 +1,32 @@
 # sanity-plugin-icon-picker
 
+> This is a **Sanity Studio v3** plugin.
+
 Icon picker for Sanity which let you select icons from a set of icon providers.
 
 ![image](https://github.com/christopherafbjur/sanity-plugin-icon-picker/blob/main/promo.png?raw=true)
 
 ## Installation
 
-```
+```sh
 sanity install icon-picker
 ```
 
 ## Usage
+
+Add it as a plugin in `sanity.config.ts` (or .js):
+
+```ts
+import {defineConfig} from 'sanity'
+import {iconPicker} from 'sanity-plugin-icon-picker'
+
+export default defineConfig({
+  //...
+  plugins: [iconPicker()],
+})
+```
+
+Use the type in your schemas.
 
 ```js
 {
@@ -84,7 +100,7 @@ Filter out a subset of icons to be used by specifying a filter. A filter can be 
 In order to render the icon component as preview media, we can import a helper method.
 
 ```js
-import preview from "part:sanity-plugin-icon-picker/preview";
+import {preview} from 'sanity-plugin-icon-picker'
 ```
 
 We can then render the icon by passing the selected name and provider to this method which will return an icon component.
@@ -108,7 +124,24 @@ We can then render the icon by passing the selected name and provider to this me
 }
 ```
 
+## Can I use this plugin for Sanity Studio v2?
+
+Yes you can! Simply install the older version of this plugin
+
+```sh
+sanity install icon-picker@2.1.0
+```
+
+Then refer to the [old documentation](https://github.com/christopherafbjur/sanity-plugin-icon-picker/blob/72ba11830b73b729b6b3c1c254bde3c686032972/README.md)
+
 ## License
 
-MIT © Christopher Af Bjur
-See LICENSE
+[MIT](LICENSE) © Christopher Af Bjur
+
+## Develop & test
+
+This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
+with default configuration for build & watch scripts.
+
+See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
+on how to run this plugin with hotreload in the studio.
