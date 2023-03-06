@@ -47,7 +47,8 @@
     "link-watch": "plugin-kit link-watch",
     "lint": "eslint .",
     "prepublishOnly": "run-s build",
-    "watch": "pkg-utils watch --strict"
+    "watch": "pkg-utils watch --strict",
+    "test": "echo \"No test specified\""
   },
   "dependencies": {
     "@sanity/incompatible-plugin": "^1.0.4",
