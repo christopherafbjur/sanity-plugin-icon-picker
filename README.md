@@ -124,7 +124,9 @@ We can then render the icon by passing the selected name and provider to this me
 }
 ```
 
-## Can I use this plugin for Sanity Studio v2?
+## FAQ
+
+### Can I use this plugin for Sanity Studio v2?
 
 Yes you can! Simply install the older version of this plugin
 
@@ -132,7 +134,34 @@ Yes you can! Simply install the older version of this plugin
 npm install sanity-plugin-icon-picker@2.1.0
 ```
 
-Then refer to the [old documentation](https://github.com/christopherafbjur/sanity-plugin-icon-picker/blob/72ba11830b73b729b6b3c1c254bde3c686032972/README.md)
+Then refer to the [old documentation](https://github.com/christopherafbjur/sanity-plugin-icon-picker/blob/72ba11830b73b729b6b3c1c254bde3c686032972/README.md) and follow everything except the install step.
+
+### How can I consume the data returned from Sanity Studio in my React app?
+
+Here's a really simple example of how you could consume the data to render a Font Awesome icon from it. Note that in this example I'm using the option `outputFormat: 'react'` for the icon picker in the studio as mentioned [here](https://github.com/christopherafbjur/sanity-plugin-icon-picker#output-format).
+
+```js
+import * as Icons from "react-icons/fa";
+
+// Sanity data mock
+const data = {
+  _type: "iconPicker",
+  name: "FaBeer",
+  provider: "fa",
+  _updatedAt: "2021-07-25T02:30:43.141Z",
+};
+
+const DynamicFontAwesomeIcon = ({ name }) => Icons[name];
+
+export default function App() {
+  const Icon = DynamicFontAwesomeIcon(data);
+  return (
+    <div className="App">
+      <Icon />
+    </div>
+  );
+}
+```
 
 ## License
 
