@@ -85,6 +85,8 @@ const IconPicker = ({schemaType, value = {}, onChange}: ObjectInputProps) => {
     }
   }
 
+  const showTabs = schemaType.options?.providers?.length > 1
+
   return (
     <Card>
       <IconContext.Provider value={{style: {width: ICON_WIDTH, height: ICON_HEIGHT}}}>
@@ -92,7 +94,17 @@ const IconPicker = ({schemaType, value = {}, onChange}: ObjectInputProps) => {
 
         <Popup onClose={closePopup} isOpen={isPopupOpen}>
           <SearchBar value={query} onChange={onQueryChange} />
-          <Tabs options={schemaType.options} onClick={onTabClick}>
+          {showTabs ? (
+            <Tabs options={schemaType.options} onClick={onTabClick}>
+              <SearchResults
+                results={queryResults}
+                selected={selected}
+                onSelect={setIcon}
+                loading={loading}
+                query={query}
+              />
+            </Tabs>
+          ) : (
             <SearchResults
               results={queryResults}
               selected={selected}
@@ -100,7 +112,7 @@ const IconPicker = ({schemaType, value = {}, onChange}: ObjectInputProps) => {
               loading={loading}
               query={query}
             />
-          </Tabs>
+          )}
         </Popup>
       </IconContext.Provider>
     </Card>
