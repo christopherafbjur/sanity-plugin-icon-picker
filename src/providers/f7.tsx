@@ -1,4 +1,3 @@
-import 'framework7-icons'
 import * as F7 from 'framework7-icons/react'
 import decamelize from 'decamelize'
 import {createTags} from '../utils/helpers'
@@ -19,16 +18,11 @@ const iconStyle = {width: ICON_WIDTH, height: ICON_HEIGHT, fontSize: '20px'}
 export default function (provider: string) {
   return (options = {}): IconObjectArray =>
     Object.keys(F7).map((name) => {
-      const icon = convertFormat(name, {})
+      const Component = F7[name];
       return {
         provider,
         name: convertFormat(name, options),
-        component: () => (
-          //Cannot simply generate the F7 SVG components here yet because of a bug: https://github.com/framework7io/framework7-icons/issues/48
-          <i className="f7-icons" style={iconStyle}>
-            {icon}
-          </i>
-        ),
+        component: () => <Component style={iconStyle} />,
         tags: createTags(name, convertFormat),
       }
     })
