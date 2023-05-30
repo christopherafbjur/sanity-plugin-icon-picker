@@ -54,7 +54,9 @@
     "@sanity/incompatible-plugin": "^1.0.4",
     "decamelize": "3.2.0",
     "framework7-icons": "^5.0.5",
+    "pretty-format": "^29.5.0",
     "react-icons": "^4.8.0",
+    "react-test-renderer": "^18.2.0",
     "react-virtualized-auto-sizer": "^1.0.5",
     "react-window": "^1.8.6",
     "sanity": "^3"
@@ -63,6 +65,7 @@
     "@sanity/pkg-utils": "^2.2.6",
     "@sanity/plugin-kit": "^3.1.7",
     "@types/react": "^18.0.28",
+    "@types/react-test-renderer": "^18.0.0",
     "@types/react-virtualized-auto-sizer": "^1.0.1",
     "@types/react-window": "^1.8.5",
     "@types/styled-components": "^5.1.26",

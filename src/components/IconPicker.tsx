@@ -10,6 +10,7 @@ import Menu, {Action, MenuClickCallback} from './Menu'
 import {IconContext} from 'react-icons'
 import {getIcons} from '../utils/icons'
 import {IconObject, IconObjectArray} from '../types'
+import { iconToSvgString } from '../utils/svgs';
 
 function getIconByValue(name: string, icons: IconObjectArray) {
   const found = icons.find((icon) => icon.name === name)
@@ -52,9 +53,10 @@ const IconPicker = ({schemaType, value = {}, onChange}: ObjectInputProps) => {
       }),
       set(icon.name, ['name']),
       set(icon.provider, ['provider']),
+      schemaType.options.storeSvg ? set(iconToSvgString(icon), ['svg']) : unset(['svg'])
     ])
 
-    return setSelected(icon)
+    setSelected(icon)
   }
 
   const openPopup = () => {
