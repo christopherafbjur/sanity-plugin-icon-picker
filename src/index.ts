@@ -1,6 +1,6 @@
 import {definePlugin, defineField} from 'sanity'
 import IconPicker from './components/IconPicker'
-export * from './utils/public/preview'
+export * from './utils/public/utils'
 
 export const iconPicker = definePlugin(() => {
   return {
@@ -28,4 +28,4 @@ export const iconPicker = definePlugin(() => {
       ],
     },
   }
-})
+});
