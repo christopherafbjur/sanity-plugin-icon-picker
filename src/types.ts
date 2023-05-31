@@ -1,9 +1,15 @@
 import {ReactElement} from 'react'
 
+interface CustomProvider {
+  title: string
+  prefix: string
+  icons: (options: IconPickerOptions) => IconObject[]
+}
 export interface IconPickerOptions {
   providers?: string[]
   outputFormat?: string
   filter?: (string | RegExp)[]
+  customProviders?: CustomProvider[]
 }
 
 export interface IconObject {

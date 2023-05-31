@@ -35,5 +35,11 @@ export function getIcons(options: IconPickerOptions = {}): IconObjectArray {
     })
   }
 
+  if(options.customProviders){
+    options.customProviders.forEach(provider => {
+      icons = [...icons, ...provider.icons(options)]
+    })
+  }
+
   return getFiltered(icons, options)
 }
