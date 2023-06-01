@@ -31,3 +31,9 @@ export interface Provider {
   prefix: string
   title: string
 }
+
+export interface ProviderConfiguration {
+  title: string
+  prefix: string
+  icons: (options?: IconPickerOptions) => IconObjectArray
+}

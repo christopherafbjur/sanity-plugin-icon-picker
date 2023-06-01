@@ -1,48 +1,62 @@
-import {PROVIDERS} from '../config'
-import {FormatFunction, IconObjectArray, Provider, IconPickerOptions} from '../types'
+import PROVIDERS from "../providers";
+import { ALL_PROVIDERS_PREFIX } from "../constants/config";
+import {
+  IconObjectArray,
+  IconPickerOptions,
+  ProviderConfiguration,
+} from "../types";
 
-export function getSelectedProviders(options: IconPickerOptions = {}): string[] {
-  return [PROVIDERS.default.prefix, ...getAcceptedProviders(options.providers)]
+export function getProviderPrefixes(options: IconPickerOptions = {}): string[] {
+  return [ALL_PROVIDERS_PREFIX, ...getSupportedProviderPrefixes(options)];
 }
 
-export function getAcceptedProviders(providers: string[] = []): string[] {
-  const filterOutDefault = (provider: Provider) => provider.prefix !== 'all-icons'
-  const mapPrefixes = (provider: Provider) => provider.prefix
-  const available: string[] = Object.values(PROVIDERS).filter(filterOutDefault).map(mapPrefixes)
+export function getSupportedProviderPrefixes(
+  options: IconPickerOptions
+): string[] {
+  const supportedPrefixes = PROVIDERS.map((provider) => provider.prefix);
+  const customPrefixes = (options.customProviders || []).map(
+    (provider) => provider.prefix
+  );
+  let prefixes: string[] = [];
 
-  const filtered = [...providers].filter(function (e) {
-    return available.indexOf(e) >= 0
-  }, available)
+  if (options.providers) {
+    prefixes = [...options.providers].filter((p) =>
+      supportedPrefixes.includes(p)
+    );
+  }
 
-  if (!providers.length) return available
+  if (options.customProviders) {
+    prefixes = [...prefixes, ...customPrefixes];
+  }
 
-  return filtered
+  if (!prefixes.length) return supportedPrefixes;
+
+  return prefixes;
 }
 
-export function providerFromPrefix(prefix: string): Provider {
-  return Object.values(PROVIDERS).find((provider) => provider.prefix === prefix) as Provider
+export function providerConfigurationFromPrefix(
+  prefix: string,
+  options: IconPickerOptions
+): ProviderConfiguration {
+  const providers = [...PROVIDERS, ...(options.customProviders || [])];
+  return providers.find(
+    (provider) => provider.prefix === prefix
+  ) as ProviderConfiguration;
 }
 
 export function listToMatrix(
   list: IconObjectArray,
   elementsPerSubArray: number
 ): Array<IconObjectArray> {
-  const matrix: Array<IconObjectArray> = []
+  const matrix: Array<IconObjectArray> = [];
 
   for (let i = 0, k = -1; i < list.length; i++) {
     if (i % elementsPerSubArray === 0) {
-      k++
-      matrix[k] = []
+      k++;
+      matrix[k] = [];
     }
-    matrix[k].push(list[i])
+    matrix[k].push(list[i]);
   }
 
-  return matrix
-}
-
-//Creates tags that can be applied to icon objects for subset filtering with support for adding both react names and default names
-export function createTags(name: string, formatFn: FormatFunction): [string, string] {
-  const reactName = formatFn(name, {outputFormat: 'react'})
-  const defaultName = formatFn(name, {})
-  return [reactName, defaultName]
+  return matrix;
 }

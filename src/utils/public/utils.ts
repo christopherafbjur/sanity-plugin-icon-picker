@@ -10,9 +10,9 @@ export const preview = ({
 }: Pick<IconObject, 'provider' | 'name'>): ReactElement | null => {
   if (!provider) return null
 
-  const icons = PROVIDERS[provider]()
+  const icons = PROVIDERS.find(p => provider === p.prefix)?.icons() || [];
   const found = icons.find((icon) => icon.tags.some((tag) => tag === name))
-  return found?.component()
+  return found?.component() || null;
 }
 
 export const migrateIconName = (name: string, provider: string, format?: 'react') => {

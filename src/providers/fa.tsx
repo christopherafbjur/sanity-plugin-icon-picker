@@ -1,7 +1,7 @@
 import decamelize from 'decamelize'
-import {createTags} from '../utils/helpers'
+import { createTags } from "../utils/tags";
 import * as Fa from 'react-icons/fa'
-import {IconObjectArray, FormatFunction} from '../types'
+import {FormatFunction, ProviderConfiguration} from '../types'
 
 type FaKey = keyof typeof Fa
 
@@ -23,9 +23,13 @@ const convertFormat: FormatFunction = (name, options = {}) => {
   return decamelize(name, separator)
 }
 
-export default function (provider: string) {
-  return (options = {}): IconObjectArray => {
-    const icons = Object.keys(Fa).map((name) => {
+const provider = 'fa';
+
+const configuration: ProviderConfiguration = {
+  title: 'Font Awesome',
+  prefix: provider,
+  icons: (options = {}) => {
+    return Object.keys(Fa).map((name) => {
       const Icon = Fa[name as FaKey]
       return {
         provider,
@@ -34,6 +38,7 @@ export default function (provider: string) {
         tags: createTags(name, convertFormat),
       }
     })
-    return icons
   }
 }
+
+export default configuration;

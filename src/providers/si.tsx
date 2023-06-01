@@ -1,7 +1,7 @@
 import decamelize from 'decamelize'
 import * as Si from 'react-icons/si'
-import {createTags} from '../utils/helpers'
-import {IconObjectArray, FormatFunction} from '../types'
+import { createTags } from "../utils/tags";
+import {FormatFunction, ProviderConfiguration} from '../types'
 
 type SiKey = keyof typeof Si
 
@@ -15,9 +15,12 @@ const convertFormat: FormatFunction = (name, options = {}) => {
   return decamelize(prefix, separator)
 }
 
-export default function (provider: string) {
-  return (options = {}): IconObjectArray => {
-    const icons = Object.keys(Si).map((name) => {
+const provider = 'si';
+const configuration: ProviderConfiguration = {
+  prefix: provider,
+  title: 'Simple Icons',
+  icons: (options = {}) => {
+    return Object.keys(Si).map((name) => {
       const Icon = Si[name as SiKey]
       return {
         provider,
@@ -26,6 +29,7 @@ export default function (provider: string) {
         tags: createTags(name, convertFormat),
       }
     })
-    return icons
   }
 }
+
+export default configuration;
