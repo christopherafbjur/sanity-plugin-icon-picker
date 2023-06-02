@@ -1,46 +1,44 @@
-import PROVIDERS from "../providers";
-import { ALL_PROVIDERS_PREFIX } from "../constants/config";
+import CONFIGURATIONS from "../configurations";
+import { ALL_CONFIGURATIONS_PROVIDER } from "../constants/config";
 import {
   IconObjectArray,
   IconPickerOptions,
   ProviderConfiguration,
 } from "../types";
 
-export function getProviderPrefixes(options: IconPickerOptions = {}): string[] {
-  return [ALL_PROVIDERS_PREFIX, ...getSupportedProviderPrefixes(options)];
+export function getProviders(options: IconPickerOptions = {}): string[] {
+  return [...getSupportedProviders(options)];
 }
 
-export function getSupportedProviderPrefixes(
-  options: IconPickerOptions
-): string[] {
-  const supportedPrefixes = PROVIDERS.map((provider) => provider.prefix);
-  const customPrefixes = (options.customProviders || []).map(
-    (provider) => provider.prefix
+export function getSupportedProviders(options: IconPickerOptions): string[] {
+  const supportedProviders = CONFIGURATIONS.map((config) => config.provider);
+  const customProviders = (options.configurations || []).map(
+    (config) => config.provider
   );
-  let prefixes: string[] = [];
+  let providers: string[] = [];
 
   if (options.providers) {
-    prefixes = [...options.providers].filter((p) =>
-      supportedPrefixes.includes(p)
+    providers = [...options.providers].filter((p) =>
+      supportedProviders.includes(p)
     );
   }
 
-  if (options.customProviders) {
-    prefixes = [...prefixes, ...customPrefixes];
+  if (options.configurations) {
+    providers = [...providers, ...customProviders];
   }
 
-  if (!prefixes.length) return supportedPrefixes;
+  if (!providers.length) return supportedProviders;
 
-  return prefixes;
+  return providers;
 }
 
-export function providerConfigurationFromPrefix(
-  prefix: string,
+export function configurationFromProvider(
+  provider: string,
   options: IconPickerOptions
 ): ProviderConfiguration {
-  const providers = [...PROVIDERS, ...(options.customProviders || [])];
-  return providers.find(
-    (provider) => provider.prefix === prefix
+  const configurations = [...CONFIGURATIONS, ...(options.configurations || [])];
+  return configurations.find(
+    (config) => config.provider === provider
   ) as ProviderConfiguration;
 }
 

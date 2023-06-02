@@ -1,6 +1,11 @@
-import PROVIDERS from "../providers";
-import { getSupportedProviderPrefixes } from "./helpers";
-import type { IconObjectArray, IconPickerOptions, IconObject, ConfigurationIconObject } from "../types";
+import CONFIGURATIONS from "../configurations";
+import { getSupportedProviders } from "./helpers";
+import type {
+  IconObjectArray,
+  IconPickerOptions,
+  IconObject,
+  ConfigurationIconObject,
+} from "../types";
 
 function getFiltered(icons: IconObjectArray, options: IconPickerOptions) {
   const filter = options.filter || [];
@@ -20,41 +25,43 @@ function getFiltered(icons: IconObjectArray, options: IconPickerOptions) {
 }
 
 export function getIcons(options: IconPickerOptions = {}): IconObjectArray {
-  const supportedProviderPrefixes = getSupportedProviderPrefixes(options);
+  const supportedProviders = getSupportedProviders(options);
   let icons: IconObjectArray = [];
 
-  const addIconProvider = (provider: string) => (icon: ConfigurationIconObject): IconObject => {
-    return {
-      ...icon,
-      provider
+  const addIconProvider =
+    (provider: string) =>
+    (icon: ConfigurationIconObject): IconObject => {
+      return {
+        ...icon,
+        provider,
+      };
     };
-  };
 
-  if (supportedProviderPrefixes) {
-    PROVIDERS.filter((provider) =>
-      supportedProviderPrefixes.includes(provider.prefix)
-    ).forEach((provider) => {
+  if (supportedProviders) {
+    CONFIGURATIONS.filter((config) =>
+      supportedProviders.includes(config.provider)
+    ).forEach((config) => {
       icons = [
         ...icons,
-        ...provider.icons(options).map(addIconProvider(provider.prefix)),
+        ...config.icons(options).map(addIconProvider(config.provider)),
       ];
     });
   }
 
   if (!icons.length) {
-    PROVIDERS.forEach((provider) => {
+    CONFIGURATIONS.forEach((config) => {
       icons = [
         ...icons,
-        ...provider.icons(options).map(addIconProvider(provider.prefix)),
+        ...config.icons(options).map(addIconProvider(config.provider)),
       ];
     });
   }
 
-  if (options.customProviders) {
-    options.customProviders.forEach((provider) => {
+  if (options.configurations) {
+    options.configurations.forEach((config) => {
       icons = [
         ...icons,
-        ...provider.icons(options).map(addIconProvider(provider.prefix)),
+        ...config.icons(options).map(addIconProvider(config.provider)),
       ];
     });
   }

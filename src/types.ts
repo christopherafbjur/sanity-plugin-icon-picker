@@ -1,15 +1,10 @@
 import {ReactElement} from 'react'
 
-interface CustomProvider {
-  title: string
-  prefix: string
-  icons: (options: IconPickerOptions) => IconObject[]
-}
 export interface IconPickerOptions {
   providers?: string[]
   outputFormat?: string
   filter?: (string | RegExp)[]
-  customProviders?: CustomProvider[]
+  configurations?: ProviderConfiguration[]
 }
 
 export interface IconObject {
@@ -31,13 +26,8 @@ export type FormatFunction = (
   reactName?: string
 ) => string
 
-export interface Provider {
-  prefix: string
-  title: string
-}
-
 export interface ProviderConfiguration {
   title: string
-  prefix: string
+  provider: string
   icons: (options?: IconPickerOptions) => ConfigurationIconObjectArray
 }

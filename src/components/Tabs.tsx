@@ -8,9 +8,12 @@ import {
   Card,
   Box,
 } from "@sanity/ui";
-import { getProviderPrefixes, providerConfigurationFromPrefix } from "../utils/helpers";
+import { getProviders, configurationFromProvider } from "../utils/helpers";
 import { IconPickerOptions } from "../types";
-import { ALL_PROVIDERS_PREFIX, ALL_PROVIDERS_TITLE } from "../constants/config";
+import {
+  ALL_CONFIGURATIONS_PROVIDER,
+  ALL_CONFIGURATIONS_TITLE,
+} from "../constants/config";
 
 interface ITabs {
   children: ReactElement;
@@ -18,59 +21,63 @@ interface ITabs {
   onClick: () => void;
 }
 
-const providerTitleFromPrefix = (prefix: string, options: IconPickerOptions) => {
-  if (prefix === ALL_PROVIDERS_PREFIX) return ALL_PROVIDERS_TITLE;
-  return providerConfigurationFromPrefix(prefix, options).title;
+const configurationTitleFromProvider = (
+  provider: string,
+  options: IconPickerOptions
+) => {
+  if (provider === ALL_CONFIGURATIONS_PROVIDER) return ALL_CONFIGURATIONS_TITLE;
+  return configurationFromProvider(provider, options).title;
 };
 
 const Tabs = ({ children, options, onClick }: ITabs) => {
-  providerConfigurationFromPrefix;
-  const [id, setId] = useState(ALL_PROVIDERS_PREFIX);
-  const providerPrefixes = getProviderPrefixes(options);
+  configurationFromProvider;
+  const [id, setId] = useState(ALL_CONFIGURATIONS_PROVIDER);
+  const providers = getProviders(options);
 
   const handleClick = (itemId: string) => {
     setId(itemId);
     onClick();
   };
 
-  const generateTabList = (prefixes: string[]) => {
+  const generateTabList = (providers: string[]) => {
     return (
       <TabList space={1}>
-        {prefixes.map((prefix) => {
-          const title = providerTitleFromPrefix(prefix, options);
+        {[ALL_CONFIGURATIONS_PROVIDER, ...providers].map((provider) => {
+          const title = configurationTitleFromProvider(provider, options);
 
           return (
             <Tab
-              key={prefix}
-              aria-controls={`${prefix}-panel`}
-              id={`${prefix}-tab`}
+              key={provider}
+              aria-controls={`${provider}-panel`}
+              id={`${provider}-tab`}
               label={`${title}`}
-              onClick={() => handleClick(prefix)}
-              selected={id === prefix}
+              onClick={() => handleClick(provider)}
+              selected={id === provider}
             />
           );
         })}
       </TabList>
     );
   };
-  const generateTabPanels = (prefixes: string[]) => {
+  const generateTabPanels = (providers: string[]) => {
     return (
       <React.Fragment>
-        {prefixes.map((prefix) => {
-          const filter = prefix === ALL_PROVIDERS_PREFIX ? null : prefix;
+        {[ALL_CONFIGURATIONS_PROVIDER, ...providers].map((provider) => {
+          const filter =
+            provider !== ALL_CONFIGURATIONS_PROVIDER ? provider : null;
 
-          const title = providerTitleFromPrefix(prefix, options);
+          const title = configurationTitleFromProvider(provider, options);
           return (
             <TabPanel
-              key={prefix}
-              aria-labelledby={`${prefix}-tab`}
-              hidden={id !== prefix}
-              id={`${prefix}-panel`}
+              key={provider}
+              aria-labelledby={`${provider}-tab`}
+              hidden={id !== provider}
+              id={`${provider}-panel`}
             >
               <Card marginTop={2} padding={4} radius={2}>
                 <Heading>{title}</Heading>
                 <Box marginTop={4}>
-                  {React.cloneElement(children, { filter: filter })}
+                  {React.cloneElement(children, { filter })}
                 </Box>
               </Card>
             </TabPanel>
@@ -79,27 +86,17 @@ const Tabs = ({ children, options, onClick }: ITabs) => {
       </React.Fragment>
     );
   };
-  const generateContent = (providerPrefixes: string[]) => {
-    let prefixes = providerPrefixes;
-
-    if (prefixes.length === 2) {
-      prefixes = [...providerPrefixes.slice(1)];
-
-      if (id === ALL_PROVIDERS_PREFIX) {
-        setId(prefixes[0]);
-      }
-    }
-
+  const generateContent = (providers: string[]) => {
     return (
       <React.Fragment>
-        {generateTabList(prefixes)}
-        {generateTabPanels(prefixes)}
+        {generateTabList(providers)}
+        {generateTabPanels(providers)}
       </React.Fragment>
     );
   };
   return (
     <Container>
-      <Box marginTop={4}>{generateContent(providerPrefixes)}</Box>
+      <Box marginTop={4}>{generateContent(providers)}</Box>
     </Container>
   );
 };
