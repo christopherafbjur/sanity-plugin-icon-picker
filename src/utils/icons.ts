@@ -1,39 +1,70 @@
-import PROVIDERS from '../providers'
-import {getAcceptedProviders} from './helpers'
-import {IconObjectArray, IconPickerOptions} from '../types'
+import CONFIGURATIONS from "../configurations";
+import { getSupportedProviders } from "./helpers";
+import type {
+  IconObjectArray,
+  IconPickerOptions,
+  IconObject,
+  ConfigurationIconObject,
+} from "../types";
 
 function getFiltered(icons: IconObjectArray, options: IconPickerOptions) {
-  const filter = options.filter || []
+  const filter = options.filter || [];
 
-  if (!filter.length) return icons
+  if (!filter.length) return icons;
 
-  const filtered = icons.filter(({tags}) => {
-    return filter.some((f = '') => {
+  const filtered = icons.filter(({ tags }) => {
+    return filter.some((f = "") => {
       return tags.some((t) => {
-        if (typeof f === 'object') return f.test(t)
-        return f.toLowerCase() === t.toLowerCase()
-      })
-    })
-  })
+        if (typeof f === "object") return f.test(t);
+        return f.toLowerCase() === t.toLowerCase();
+      });
+    });
+  });
 
-  return filtered
+  return filtered;
 }
 
 export function getIcons(options: IconPickerOptions = {}): IconObjectArray {
-  const providers = getAcceptedProviders(options.providers)
-  let icons: IconObjectArray = []
+  const supportedProviders = getSupportedProviders(options);
+  let icons: IconObjectArray = [];
 
-  if (providers) {
-    providers.forEach((provider) => {
-      if (PROVIDERS[provider]) icons = [...icons, ...PROVIDERS[provider](options)]
-    })
+  const addIconProvider =
+    (provider: string) =>
+    (icon: ConfigurationIconObject): IconObject => {
+      return {
+        ...icon,
+        provider,
+      };
+    };
+
+  if (supportedProviders) {
+    CONFIGURATIONS.filter((config) =>
+      supportedProviders.includes(config.provider)
+    ).forEach((config) => {
+      icons = [
+        ...icons,
+        ...config.icons(options).map(addIconProvider(config.provider)),
+      ];
+    });
+  }
+
+  if (options.configurations) {
+    options.configurations.forEach((config) => {
+      icons = [
+        ...icons,
+        ...config.icons(options).map(addIconProvider(config.provider)),
+      ];
+    });
   }
 
   if (!icons.length) {
-    Object.values(PROVIDERS).forEach((providerIcons) => {
-      icons = [...icons, ...providerIcons(options)]
-    })
+    CONFIGURATIONS.forEach((config) => {
+      icons = [
+        ...icons,
+        ...config.icons(options).map(addIconProvider(config.provider)),
+      ];
+    });
   }
 
-  return getFiltered(icons, options)
+  return getFiltered(icons, options);
 }

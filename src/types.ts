@@ -4,6 +4,7 @@ export interface IconPickerOptions {
   providers?: string[]
   outputFormat?: string
   filter?: (string | RegExp)[]
+  configurations?: ProviderConfiguration[]
 }
 
 export interface IconObject {
@@ -13,6 +14,10 @@ export interface IconObject {
   tags: [string, string]
 }
 
+export type ConfigurationIconObject = Omit<IconObject, 'provider'>
+
+type ConfigurationIconObjectArray = Array<ConfigurationIconObject>
+
 export type IconObjectArray = Array<IconObject>
 
 export type FormatFunction = (
@@ -21,7 +26,8 @@ export type FormatFunction = (
   reactName?: string
 ) => string
 
-export interface Provider {
-  prefix: string
+export interface ProviderConfiguration {
   title: string
+  provider: string
+  icons: (options?: IconPickerOptions) => ConfigurationIconObjectArray
 }
