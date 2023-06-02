@@ -22,7 +22,7 @@ const convertFormat: FormatFunction = (name, options = {}) => {
 
 const configuration: ProviderConfiguration = {
   title: "Hero Icons",
-  prefix: "hi",
+  provider: "hi",
   icons: (options = {}) => {
     return Object.keys(Hi).map((name) => {
       const Icon = Hi[name as HiKey];

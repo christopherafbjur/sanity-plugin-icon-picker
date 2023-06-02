@@ -17,7 +17,7 @@ const iconStyle = { width: ICON_WIDTH, height: ICON_HEIGHT, fontSize: "20px" };
 
 const configuration: ProviderConfiguration = {
   title: "Framework7",
-  prefix: "f7",
+  provider: "f7",
   icons: (options = {}) => {
     return Object.keys(F7).map((name) => {
       const Component = F7[name];

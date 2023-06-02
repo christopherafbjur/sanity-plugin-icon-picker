@@ -16,8 +16,8 @@ const convertFormat: FormatFunction = (name, options = {}) => {
 };
 
 const configuration: ProviderConfiguration = {
-  prefix: "si",
   title: "Simple Icons",
+  provider: "si",
   icons: (options = {}) => {
     return Object.keys(Si).map((name) => {
       const Icon = Si[name as SiKey];

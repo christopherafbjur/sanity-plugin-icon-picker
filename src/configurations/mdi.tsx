@@ -34,7 +34,7 @@ const convertFormat: FormatFunction = (name, options = {}) => {
 
 const configuration: ProviderConfiguration = {
   title: "Material Design",
-  prefix: "mdi",
+  provider: "mdi",
   icons: (options = {}) => {
     return Object.keys(Mdi).map((name) => {
       const Icon = Mdi[name as MdiKey];

@@ -15,7 +15,6 @@ const convertFormat: FormatFunction = (name, options = {}) => {
     "500Px": "500px",
   };
 
-  //Remove react icon prefixes/identifiers Fa/FaReg (regular)
   const prefix = name.replace(/^(FaReg|Fa)(.*$)/, "$2");
 
   if (SPECIAL_NAMES[prefix]) return SPECIAL_NAMES[prefix];
@@ -25,7 +24,7 @@ const convertFormat: FormatFunction = (name, options = {}) => {
 
 const configuration: ProviderConfiguration = {
   title: "Font Awesome",
-  prefix: "fa",
+  provider: "fa",
   icons: (options = {}) => {
     return Object.keys(Fa).map((name) => {
       const Icon = Fa[name as FaKey];

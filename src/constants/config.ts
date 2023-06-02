@@ -1,2 +1,2 @@
-export const ALL_PROVIDERS_PREFIX = 'all-icons';
-export const ALL_PROVIDERS_TITLE = 'All Icons'
+export const ALL_CONFIGURATIONS_PROVIDER = 'all-icons';
+export const ALL_CONFIGURATIONS_TITLE = 'All Icons'

@@ -7,14 +7,15 @@ const convertFormat: FormatFunction = (name, options, reactName) => {
   if (options.outputFormat === "react") return reactName || name;
   return name;
 };
-
+console.log('saIcons.icons', saIcons.icons)
 const configuration: ProviderConfiguration = {
   title: "Sanity Icons",
-  prefix: "sa",
+  provider: "sa",
   icons: (options = {}) => {
     return Object.entries(saIcons.icons).map((icon) => {
       const name: string = icon[0];
       const reactName: string = icon[1].render.name.replace(/2$/, "");
+
       return {
         name: convertFormat(name, options, reactName),
         component: () =>

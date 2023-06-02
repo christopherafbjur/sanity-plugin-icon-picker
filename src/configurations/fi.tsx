@@ -21,7 +21,7 @@ const convertFormat: FormatFunction = (name, options = {}) => {
 
 const configuration: ProviderConfiguration = {
   title: "Feather Icons",
-  prefix: "fi",
+  provider: "fi",
   icons: (options = {}) => {
     return Object.keys(Fi).map((name) => {
       const Icon = Fi[name as FiKey];
