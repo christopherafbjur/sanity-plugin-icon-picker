@@ -83,6 +83,48 @@ Filter out a subset of icons to be used by specifying a filter. A filter can be 
 }
 ```
 
+### Configurations
+
+Extend the built in provider configurations by adding your own. Note that if you want to mix built-in provider configurations with your own, you need to [specify them manually](#providers) since all will not be used automatically if a configuration is available.
+
+| Key      | Type       | Description                                                                                                         |
+| -------- | ----------- | ------------------------------------------------------------------------------------------------------------------- |
+| `title`  | String | The title of the icon set which will be displayed in the UI.                                                                                          |
+| `provider` | String      | Stored as icon picker data upon selection.                                                                      |
+| `icons`    | Function  | A function that returns an array of **Icon Object**. |
+| | |
+| **Icon Object** | |  |
+| `name` | String | Stored as icon picker data upon selection. |
+| `component` | Function | A function that returns a React component. This function, when called, renders the icon in the UI. |
+| `tags` | Array of Strings | An array containing the tags for the icon. This can be used for [filtering](#filter). |
+
+
+```js
+import React from 'react'
+import * as CarbonIcons from '@carbon/icons-react'
+...
+...
+{
+  title: 'Icon',
+  name: 'icon',
+  type: 'iconPicker',
+  options: {
+    configurations: [
+      {
+        title: 'Carbon Icons',
+        provider: 'ci',
+        icons: (options) =>
+          Object.entries(CarbonIcons).map(([name, Component]) => ({
+            name,
+            component: () => <Component width="1.5em" height="1em" />,
+            tags: [name],
+          })),
+      },
+    ],
+  },
+},
+```
+
 ## Supported Icon Providers
 
 | Provider                | Prefix | Homepage                                       |
