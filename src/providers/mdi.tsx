@@ -32,15 +32,13 @@ const convertFormat: FormatFunction = (name, options = {}) => {
   return decamelize(prefix, separator);
 };
 
-const provider = "mdi";
 const configuration: ProviderConfiguration = {
   title: "Material Design",
-  prefix: provider,
+  prefix: "mdi",
   icons: (options = {}) => {
     return Object.keys(Mdi).map((name) => {
       const Icon = Mdi[name as MdiKey];
       return {
-        provider,
         name: convertFormat(name, options),
         component: () => <Icon />,
         tags: createTags(name, convertFormat),

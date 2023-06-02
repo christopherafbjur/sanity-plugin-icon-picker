@@ -15,16 +15,13 @@ const convertFormat: FormatFunction = (name, options = {}) => {
 
 const iconStyle = { width: ICON_WIDTH, height: ICON_HEIGHT, fontSize: "20px" };
 
-
-const provider = "f7";
 const configuration: ProviderConfiguration = {
   title: "Framework7",
-  prefix: provider,
+  prefix: "f7",
   icons: (options = {}) => {
     return Object.keys(F7).map((name) => {
       const Component = F7[name];
       return {
-        provider,
         name: convertFormat(name, options),
         component: () => <Component style={iconStyle} />,
         tags: createTags(name, convertFormat),

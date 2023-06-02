@@ -1,35 +1,33 @@
-import decamelize from 'decamelize'
-import * as Si from 'react-icons/si'
+import decamelize from "decamelize";
+import * as Si from "react-icons/si";
 import { createTags } from "../utils/tags";
-import {FormatFunction, ProviderConfiguration} from '../types'
+import { FormatFunction, ProviderConfiguration } from "../types";
 
-type SiKey = keyof typeof Si
+type SiKey = keyof typeof Si;
 
 const convertFormat: FormatFunction = (name, options = {}) => {
-  if (options.outputFormat === 'react') return name
+  if (options.outputFormat === "react") return name;
 
-  const separator = '-'
+  const separator = "-";
 
-  const prefix = name.replace(/^(SiReg|Si)(.*$)/, '$2')
+  const prefix = name.replace(/^(SiReg|Si)(.*$)/, "$2");
 
-  return decamelize(prefix, separator)
-}
+  return decamelize(prefix, separator);
+};
 
-const provider = 'si';
 const configuration: ProviderConfiguration = {
-  prefix: provider,
-  title: 'Simple Icons',
+  prefix: "si",
+  title: "Simple Icons",
   icons: (options = {}) => {
     return Object.keys(Si).map((name) => {
-      const Icon = Si[name as SiKey]
+      const Icon = Si[name as SiKey];
       return {
-        provider,
         name: convertFormat(name, options),
         component: () => <Icon />,
         tags: createTags(name, convertFormat),
-      }
-    })
-  }
-}
+      };
+    });
+  },
+};
 
 export default configuration;

@@ -1,6 +1,6 @@
 import PROVIDERS from "../providers";
 import { getSupportedProviderPrefixes } from "./helpers";
-import { IconObjectArray, IconPickerOptions } from "../types";
+import type { IconObjectArray, IconPickerOptions, IconObject, ConfigurationIconObject } from "../types";
 
 function getFiltered(icons: IconObjectArray, options: IconPickerOptions) {
   const filter = options.filter || [];
@@ -23,23 +23,39 @@ export function getIcons(options: IconPickerOptions = {}): IconObjectArray {
   const supportedProviderPrefixes = getSupportedProviderPrefixes(options);
   let icons: IconObjectArray = [];
 
+  const addIconProvider = (provider: string) => (icon: ConfigurationIconObject): IconObject => {
+    return {
+      ...icon,
+      provider
+    };
+  };
+
   if (supportedProviderPrefixes) {
     PROVIDERS.filter((provider) =>
       supportedProviderPrefixes.includes(provider.prefix)
     ).forEach((provider) => {
-      icons = [...icons, ...provider.icons(options)];
+      icons = [
+        ...icons,
+        ...provider.icons(options).map(addIconProvider(provider.prefix)),
+      ];
     });
   }
 
   if (!icons.length) {
     PROVIDERS.forEach((provider) => {
-      icons = [...icons, ...provider.icons(options)];
+      icons = [
+        ...icons,
+        ...provider.icons(options).map(addIconProvider(provider.prefix)),
+      ];
     });
   }
 
   if (options.customProviders) {
     options.customProviders.forEach((provider) => {
-      icons = [...icons, ...provider.icons(options)];
+      icons = [
+        ...icons,
+        ...provider.icons(options).map(addIconProvider(provider.prefix)),
+      ];
     });
   }
 

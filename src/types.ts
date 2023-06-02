@@ -19,6 +19,10 @@ export interface IconObject {
   tags: [string, string]
 }
 
+export type ConfigurationIconObject = Omit<IconObject, 'provider'>
+
+type ConfigurationIconObjectArray = Array<ConfigurationIconObject>
+
 export type IconObjectArray = Array<IconObject>
 
 export type FormatFunction = (
@@ -35,5 +39,5 @@ export interface Provider {
 export interface ProviderConfiguration {
   title: string
   prefix: string
-  icons: (options?: IconPickerOptions) => IconObjectArray
+  icons: (options?: IconPickerOptions) => ConfigurationIconObjectArray
 }
