@@ -48,8 +48,8 @@ export function getIcons(options: IconPickerOptions = {}): IconObjectArray {
     });
   }
 
-  if (!icons.length) {
-    CONFIGURATIONS.forEach((config) => {
+  if (options.configurations) {
+    options.configurations.forEach((config) => {
       icons = [
         ...icons,
         ...config.icons(options).map(addIconProvider(config.provider)),
@@ -57,8 +57,8 @@ export function getIcons(options: IconPickerOptions = {}): IconObjectArray {
     });
   }
 
-  if (options.configurations) {
-    options.configurations.forEach((config) => {
+  if (!icons.length) {
+    CONFIGURATIONS.forEach((config) => {
       icons = [
         ...icons,
         ...config.icons(options).map(addIconProvider(config.provider)),

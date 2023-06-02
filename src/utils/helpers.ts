@@ -1,5 +1,4 @@
 import CONFIGURATIONS from "../configurations";
-import { ALL_CONFIGURATIONS_PROVIDER } from "../constants/config";
 import {
   IconObjectArray,
   IconPickerOptions,
@@ -19,13 +18,14 @@ export function getSupportedProviders(options: IconPickerOptions): string[] {
 
   if (options.providers) {
     providers = [...options.providers].filter((p) =>
-      supportedProviders.includes(p)
+    supportedProviders.includes(p)
     );
   }
 
   if (options.configurations) {
     providers = [...providers, ...customProviders];
   }
+
 
   if (!providers.length) return supportedProviders;
 

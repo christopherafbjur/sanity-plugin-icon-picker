@@ -24,6 +24,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     if (!loading) {
       setLoading(true);
@@ -88,7 +89,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
     }
   };
 
-  const hideTabs = getProviders().length === 1;
+  const hideTabs = getProviders(schemaType.options).length === 1;
 
   return (
     <Card>
