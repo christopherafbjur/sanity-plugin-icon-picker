@@ -50,6 +50,7 @@
     "link-watch": "plugin-kit link-watch",
     "check-types": "tsc --noEmit",
     "prepublishOnly": "run-s build",
+    "prepare": "husky install",
     "watch": "pkg-utils watch --strict",
     "test": "echo \"No test specified\""
   },
