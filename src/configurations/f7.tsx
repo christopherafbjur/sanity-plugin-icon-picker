@@ -1,8 +1,8 @@
-import * as F7 from 'framework7-icons/react';
 import decamelize from 'decamelize';
+import * as F7 from 'framework7-icons/react';
+import { ICON_HEIGHT, ICON_WIDTH } from '../constants';
 import { createTags } from '../utils/tags';
-import { ICON_WIDTH, ICON_HEIGHT } from '../constants';
-import { FormatFunction, ProviderConfiguration } from '../types';
+import type { FormatFunction, ProviderConfiguration } from '../types';
 
 const convertFormat: FormatFunction = (name, options = {}) => {
   if (options.outputFormat === 'react') return name;

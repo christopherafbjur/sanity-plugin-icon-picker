@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { Dialog, Box } from '@sanity/ui';
+import { Box, Dialog } from '@sanity/ui';
+import type { ReactNode } from 'react';
 
 interface IPopup {
   onClose: () => void;

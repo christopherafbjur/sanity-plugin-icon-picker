@@ -1,6 +1,6 @@
-import { Menu as SanityMenu, MenuButton, Button, MenuItem } from '@sanity/ui';
 import { AddIcon } from '@sanity/icons';
-import { IconObject } from '../types';
+import { Button, MenuButton, MenuItem, Menu as SanityMenu } from '@sanity/ui';
+import type { IconObject } from '../types';
 
 // eslint-disable-next-line no-shadow
 export enum Action {

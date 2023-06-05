@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react';
-import { ObjectInputProps, set, unset, setIfMissing } from 'sanity';
 import { Card } from '@sanity/ui';
-import { ICON_WIDTH, ICON_HEIGHT, LOADING_TIMER_MS } from '../constants';
-import Popup from './Popup';
-import SearchBar, { SearchBarOnChange } from './SearchBar';
-import SearchResults, { SearchResultsOnSelectCallback } from './SearchResults';
-import Tabs from './Tabs';
-import Menu, { Action, MenuClickCallback } from './Menu';
+import React, { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
-import { getIcons } from '../utils/icons';
-import { IconObject, IconObjectArray } from '../types';
+import { set, setIfMissing, unset } from 'sanity';
+import { ICON_HEIGHT, ICON_WIDTH, LOADING_TIMER_MS } from '../constants';
 import { getProviders } from '../utils/helpers';
+import { getIcons } from '../utils/icons';
+import Menu, { Action } from './Menu';
+import Popup from './Popup';
+import SearchBar from './SearchBar';
+import SearchResults from './SearchResults';
+import Tabs from './Tabs';
+import type { MenuClickCallback } from './Menu';
+import type { SearchBarOnChange } from './SearchBar';
+import type { SearchResultsOnSelectCallback } from './SearchResults';
+import type { IconObject, IconObjectArray } from '../types';
+import type { ObjectInputProps } from 'sanity';
 
 function getIconByValue(name: string, icons: IconObjectArray) {
   const found = icons.find((icon) => icon.name === name);
@@ -38,7 +42,6 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
       setLoading(false);
     }, LOADING_TIMER_MS);
     return () => clearTimeout(timeoutId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const unsetIcon = () => {

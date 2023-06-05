@@ -1,7 +1,7 @@
 import decamelize from 'decamelize';
-import { createTags } from '../utils/tags';
 import * as Fa from 'react-icons/fa';
-import { FormatFunction, ProviderConfiguration } from '../types';
+import { createTags } from '../utils/tags';
+import type { FormatFunction, ProviderConfiguration } from '../types';
 
 type FaKey = keyof typeof Fa;
 

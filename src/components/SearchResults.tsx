@@ -1,11 +1,12 @@
-import { useState, useEffect, CSSProperties } from 'react';
-import { FixedSizeList as List } from 'react-window';
+import { Button, Flex, Grid, Spinner, Text } from '@sanity/ui';
+import { useEffect, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList as List } from 'react-window';
 import styled from 'styled-components';
-import { Button, Grid, Flex, Spinner, Text } from '@sanity/ui';
 import useMedia from '../hooks/useMedia';
 import { listToMatrix } from '../utils/helpers';
-import { IconObject, IconObjectArray } from '../types';
+import type { IconObject, IconObjectArray } from '../types';
+import type { CSSProperties } from 'react';
 
 const Wrapper = styled.section`
   min-height: 200px;
@@ -18,7 +19,6 @@ interface ISearchResults {
   results: IconObjectArray;
   selected: IconObject | null;
   onSelect: SearchResultsOnSelectCallback;
-  // eslint-disable-next-line react/require-default-props
   filter?: string;
   loading: boolean;
   query: string;
@@ -44,7 +44,6 @@ const SearchResults = ({
 
   useEffect(() => {
     updateIcons(COLUMNS_COUNT);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [results]);
 
   const getFiltered = (items: IconObjectArray) => {

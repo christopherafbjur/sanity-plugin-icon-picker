@@ -1,11 +1,7 @@
 import decamelize from 'decamelize';
-import { createTags } from '../utils/tags';
 import * as Mdi from 'react-icons/md';
-import {
-  IconObjectArray,
-  FormatFunction,
-  ProviderConfiguration,
-} from '../types';
+import { createTags } from '../utils/tags';
+import type { FormatFunction, ProviderConfiguration } from '../types';
 
 type MdiKey = keyof typeof Mdi;
 

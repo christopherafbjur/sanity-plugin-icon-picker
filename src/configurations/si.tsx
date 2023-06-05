@@ -1,7 +1,7 @@
 import decamelize from 'decamelize';
 import * as Si from 'react-icons/si';
 import { createTags } from '../utils/tags';
-import { FormatFunction, ProviderConfiguration } from '../types';
+import type { FormatFunction, ProviderConfiguration } from '../types';
 
 type SiKey = keyof typeof Si;
 

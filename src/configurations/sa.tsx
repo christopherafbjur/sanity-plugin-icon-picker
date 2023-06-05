@@ -1,7 +1,7 @@
 import * as saIcons from '@sanity/icons';
+import { ICON_HEIGHT, ICON_WIDTH } from '../constants';
 import { createTags } from '../utils/tags';
-import { ICON_WIDTH, ICON_HEIGHT } from '../constants';
-import { FormatFunction, ProviderConfiguration } from '../types';
+import type { FormatFunction, ProviderConfiguration } from '../types';
 
 const convertFormat: FormatFunction = (name, options, reactName) => {
   if (options.outputFormat === 'react') return reactName || name;

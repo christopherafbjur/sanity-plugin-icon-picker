@@ -1,5 +1,5 @@
-import { ChangeEvent } from 'react';
 import { TextInput } from '@sanity/ui';
+import type { ChangeEvent } from 'react';
 
 export type SearchBarOnChange = (e: ChangeEvent<HTMLInputElement>) => void;
 
