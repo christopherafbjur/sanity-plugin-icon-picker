@@ -48,7 +48,7 @@
     "format": "prettier --write --cache --ignore-unknown .",
     "format:check": "prettier --check src",
     "link-watch": "plugin-kit link-watch",
-    "check-types": "tsc -b",
+    "check-types": "tsc --noEmit",
     "prepublishOnly": "run-s build",
     "watch": "pkg-utils watch --strict",
     "test": "echo \"No test specified\""
