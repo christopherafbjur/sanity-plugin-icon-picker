@@ -1,19 +1,20 @@
-import React, { useState, ReactElement } from "react";
 import {
+  Box,
+  Card,
   Container,
+  Heading,
+  Tab,
   TabList,
   TabPanel,
-  Tab,
-  Heading,
-  Card,
-  Box,
-} from "@sanity/ui";
-import { getProviders, configurationFromProvider } from "../utils/helpers";
-import { IconPickerOptions } from "../types";
+} from '@sanity/ui';
+import React, { cloneElement, useState } from 'react';
 import {
   ALL_CONFIGURATIONS_PROVIDER,
   ALL_CONFIGURATIONS_TITLE,
-} from "../constants/config";
+} from '../constants/config';
+import { configurationFromProvider, getProviders } from '../utils/helpers';
+import type { IconPickerOptions } from '../types';
+import type { ReactElement } from 'react';
 
 interface ITabs {
   children: ReactElement;
@@ -30,9 +31,8 @@ const configurationTitleFromProvider = (
 };
 
 const Tabs = ({ children, options, onClick }: ITabs) => {
-  configurationFromProvider;
   const [id, setId] = useState(ALL_CONFIGURATIONS_PROVIDER);
-  const providers = getProviders(options);
+  const allProviders = getProviders(options);
 
   const handleClick = (itemId: string) => {
     setId(itemId);
@@ -64,7 +64,7 @@ const Tabs = ({ children, options, onClick }: ITabs) => {
       <React.Fragment>
         {[ALL_CONFIGURATIONS_PROVIDER, ...providers].map((provider) => {
           const filter =
-            provider !== ALL_CONFIGURATIONS_PROVIDER ? provider : null;
+            provider === ALL_CONFIGURATIONS_PROVIDER ? null : provider;
 
           const title = configurationTitleFromProvider(provider, options);
           return (
@@ -76,9 +76,7 @@ const Tabs = ({ children, options, onClick }: ITabs) => {
             >
               <Card marginTop={2} padding={4} radius={2}>
                 <Heading>{title}</Heading>
-                <Box marginTop={4}>
-                  {React.cloneElement(children, { filter })}
-                </Box>
+                <Box marginTop={4}>{cloneElement(children, { filter })}</Box>
               </Card>
             </TabPanel>
           );
@@ -96,7 +94,7 @@ const Tabs = ({ children, options, onClick }: ITabs) => {
   };
   return (
     <Container>
-      <Box marginTop={4}>{generateContent(providers)}</Box>
+      <Box marginTop={4}>{generateContent(allProviders)}</Box>
     </Container>
   );
 };

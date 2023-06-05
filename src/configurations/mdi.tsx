@@ -1,22 +1,18 @@
-import decamelize from "decamelize";
-import { createTags } from "../utils/tags";
-import * as Mdi from "react-icons/md";
-import {
-  IconObjectArray,
-  FormatFunction,
-  ProviderConfiguration,
-} from "../types";
+import decamelize from 'decamelize';
+import * as Mdi from 'react-icons/md';
+import { createTags } from '../utils/tags';
+import type { FormatFunction, ProviderConfiguration } from '../types';
 
 type MdiKey = keyof typeof Mdi;
 
 const convertFormat: FormatFunction = (name, options = {}) => {
   //FORMAT REFERENCE https://fonts.google.com/icons?selected=Material+Icons
-  if (options.outputFormat === "react") return name;
+  if (options.outputFormat === 'react') return name;
 
-  const separator = "_";
+  const separator = '_';
 
   //Remove react icon prefixes/identifiers Md
-  const reactPrefix = name.replace(/^(Md)(.*$)/, "$2");
+  const reactPrefix = name.replace(/^(Md)(.*$)/, '$2');
 
   //Separate letters followed by numbers (decamelize defaults to omitting separation of letter followed by number)
   const separateLettersPrefix = reactPrefix.replace(
@@ -33,8 +29,8 @@ const convertFormat: FormatFunction = (name, options = {}) => {
 };
 
 const configuration: ProviderConfiguration = {
-  title: "Material Design",
-  provider: "mdi",
+  title: 'Material Design',
+  provider: 'mdi',
   icons: (options = {}) => {
     return Object.keys(Mdi).map((name) => {
       const Icon = Mdi[name as MdiKey];

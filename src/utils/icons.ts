@@ -1,11 +1,11 @@
-import CONFIGURATIONS from "../configurations";
-import { getSupportedProviders } from "./helpers";
+import CONFIGURATIONS from '../configurations';
+import { getSupportedProviders } from './helpers';
 import type {
+  ConfigurationIconObject,
+  IconObject,
   IconObjectArray,
   IconPickerOptions,
-  IconObject,
-  ConfigurationIconObject,
-} from "../types";
+} from '../types';
 
 function getFiltered(icons: IconObjectArray, options: IconPickerOptions) {
   const filter = options.filter || [];
@@ -13,9 +13,9 @@ function getFiltered(icons: IconObjectArray, options: IconPickerOptions) {
   if (!filter.length) return icons;
 
   const filtered = icons.filter(({ tags }) => {
-    return filter.some((f = "") => {
+    return filter.some((f = '') => {
       return tags.some((t) => {
-        if (typeof f === "object") return f.test(t);
+        if (typeof f === 'object') return f.test(t);
         return f.toLowerCase() === t.toLowerCase();
       });
     });

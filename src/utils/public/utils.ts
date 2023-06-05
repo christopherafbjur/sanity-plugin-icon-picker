@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
-import CONFIGURATIONS from "../../configurations";
-import { IconObject } from "../../types";
-import { getIcons } from "../icons";
+import CONFIGURATIONS from '../../configurations';
+import { getIcons } from '../icons';
+import type { IconObject } from '../../types';
+import type { ReactElement } from 'react';
 
 // eslint-disable-next-line react/display-name
 export const preview = ({
   provider,
   name,
-}: Pick<IconObject, "provider" | "name">): ReactElement | null => {
+}: Pick<IconObject, 'provider' | 'name'>): ReactElement | null => {
   if (!provider) return null;
 
   const icons = CONFIGURATIONS.find(
@@ -20,8 +20,8 @@ export const preview = ({
 export const migrateIconName = (
   name: string,
   provider: string,
-  format?: "react"
-) => {
+  format?: 'react'
+): string => {
   const found = getIcons({ outputFormat: format }).find(
     (icon) => icon.provider === provider && icon.tags.includes(name)
   );
@@ -35,5 +35,5 @@ export const migrateIconName = (
     );
   }
   const [reactName, defaultName] = found.tags;
-  return format === "react" ? reactName : defaultName;
+  return format === 'react' ? reactName : defaultName;
 };

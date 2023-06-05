@@ -17,8 +17,8 @@ npm install sanity-plugin-icon-picker
 Add it as a plugin in `sanity.config.ts` (or .js):
 
 ```ts
-import { defineConfig } from "sanity";
-import { iconPicker } from "sanity-plugin-icon-picker";
+import { defineConfig } from 'sanity';
+import { iconPicker } from 'sanity-plugin-icon-picker';
 
 export default defineConfig({
   //...
@@ -87,17 +87,16 @@ Filter out a subset of icons to be used by specifying a filter. A filter can be 
 
 Extend the built in provider configurations by adding your own. Note that if you want to mix built-in provider configurations with your own, you need to [specify them manually](#providers) since all will not be used automatically if a configuration is available.
 
-| Key      | Type       | Description                                                                                                         |
-| -------- | ----------- | ------------------------------------------------------------------------------------------------------------------- |
-| `title`  | String | The title of the icon set which will be displayed in the UI.                                                                                          |
-| `provider` | String      | Stored as icon picker data upon selection.                                                                      |
-| `icons`    | Function  | A function that returns an array of **Icon Object**. |
-| | |
-| **Icon Object** | |  |
-| `name` | String | Stored as icon picker data upon selection. |
-| `component` | Function | A function that returns a React component. This function, when called, renders the icon in the UI. |
-| `tags` | Array of Strings | An array containing the tags for the icon. This can be used for [filtering](#filter). |
-
+| Key             | Type             | Description                                                                                        |
+| --------------- | ---------------- | -------------------------------------------------------------------------------------------------- |
+| `title`         | String           | The title of the icon set which will be displayed in the UI.                                       |
+| `provider`      | String           | Stored as icon picker data upon selection.                                                         |
+| `icons`         | Function         | A function that returns an array of **Icon Object**.                                               |
+|                 |                  |
+| **Icon Object** |                  |                                                                                                    |
+| `name`          | String           | Stored as icon picker data upon selection.                                                         |
+| `component`     | Function         | A function that returns a React component. This function, when called, renders the icon in the UI. |
+| `tags`          | Array of Strings | An array containing the tags for the icon. This can be used for [filtering](#filter).              |
 
 ```js
 import React from 'react'
@@ -142,7 +141,7 @@ import * as CarbonIcons from '@carbon/icons-react'
 In order to render the icon component as preview media, we can import a helper method.
 
 ```js
-import { preview } from "sanity-plugin-icon-picker";
+import { preview } from 'sanity-plugin-icon-picker';
 ```
 
 We can then render the icon by passing the selected name and provider to this method which will return an icon component.
@@ -167,12 +166,13 @@ We can then render the icon by passing the selected name and provider to this me
 ```
 
 ```js
-import { migrateIconName } from 'sanity-plugin-icon-picker'
+import { migrateIconName } from 'sanity-plugin-icon-picker';
 ```
+
 We can use this function to migrate the name to a new `outputFormat`. This can be useful if you added icons in your studio and later decide that you want to use another `outputFormat`. Pass the third parameter `react` if you want to convert the name to `options.outputFormat: 'react'` naming convention. If you want to convert from `react` to default simply leave out the third parameter. Here's an [example of a migration script](https://gist.github.com/christopherafbjur/39e33e914de292fe8b5ae5cbc2ab82aa) where this function might come in handy.
 
 ```js
-migrateIconName('alert-circle', 'fi', 'react')
+migrateIconName('alert-circle', 'fi', 'react');
 ```
 
 ## FAQ
@@ -192,14 +192,14 @@ Then refer to the [old documentation](https://github.com/christopherafbjur/sanit
 Here's a really simple example of how you could consume the data to render a Font Awesome icon from it. Note that in this example I'm using the option `outputFormat: 'react'` for the icon picker in the studio as mentioned [here](https://github.com/christopherafbjur/sanity-plugin-icon-picker#output-format).
 
 ```js
-import * as Icons from "react-icons/fa";
+import * as Icons from 'react-icons/fa';
 
 // Sanity data mock
 const data = {
-  _type: "iconPicker",
-  name: "FaBeer",
-  provider: "fa",
-  _updatedAt: "2021-07-25T02:30:43.141Z",
+  _type: 'iconPicker',
+  name: 'FaBeer',
+  provider: 'fa',
+  _updatedAt: '2021-07-25T02:30:43.141Z',
 };
 
 const DynamicFontAwesomeIcon = ({ name }) => Icons[name];
@@ -215,6 +215,7 @@ export default function App() {
 ```
 
 ### Changing output format doesn't change the data
+
 If you start adding icons to your data with for instance no `options.outputFormat` (default) set and then later decide that you want to use `options.outputFormat: true`, your data will not automagically update. You will either have to re-select each icon in your Studio or run a migration script to update all the icons to the correct output format. Here's an [example of such a migration script](https://gist.github.com/christopherafbjur/39e33e914de292fe8b5ae5cbc2ab82aa).
 
 ## License
