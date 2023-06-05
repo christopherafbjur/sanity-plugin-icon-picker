@@ -43,10 +43,12 @@
   "scripts": {
     "build": "run-s clean && plugin-kit verify-package --silent && pkg-utils build --strict && pkg-utils --strict",
     "clean": "rimraf dist",
+    "lint": "eslint src --fix",
+    "lint:check": "eslint src",
     "format": "prettier --write --cache --ignore-unknown .",
-    "format:check": "prettier --check",
+    "format:check": "prettier --check src",
     "link-watch": "plugin-kit link-watch",
-    "lint": "eslint .",
+    "check-types": "tsc -b",
     "prepublishOnly": "run-s build",
     "watch": "pkg-utils watch --strict",
     "test": "echo \"No test specified\""
@@ -77,6 +79,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.4",
     "prettier-plugin-packagejson": "^2.4.3",
