@@ -1,6 +1,6 @@
-import {definePlugin, defineField} from 'sanity'
-import IconPicker from './components/IconPicker'
-export * from './utils/public/utils'
+import { defineField, definePlugin } from 'sanity';
+import IconPicker from './components/IconPicker';
+export * from './utils/public/utils';
 
 export const iconPicker = definePlugin(() => {
   return {
@@ -11,7 +11,7 @@ export const iconPicker = definePlugin(() => {
           title: 'Icon Picker',
           name: 'iconPicker',
           type: 'object',
-          components: {input: IconPicker},
+          components: { input: IconPicker },
           fields: [
             defineField({
               title: 'Provider',
@@ -27,5 +27,5 @@ export const iconPicker = definePlugin(() => {
         },
       ],
     },
-  }
+  };
 });

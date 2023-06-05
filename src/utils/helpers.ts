@@ -1,9 +1,9 @@
-import CONFIGURATIONS from "../configurations";
-import {
+import CONFIGURATIONS from '../configurations';
+import type {
   IconObjectArray,
   IconPickerOptions,
   ProviderConfiguration,
-} from "../types";
+} from '../types';
 
 export function getProviders(options: IconPickerOptions = {}): string[] {
   return [...getSupportedProviders(options)];
@@ -18,14 +18,13 @@ export function getSupportedProviders(options: IconPickerOptions): string[] {
 
   if (options.providers) {
     providers = [...options.providers].filter((p) =>
-    supportedProviders.includes(p)
+      supportedProviders.includes(p)
     );
   }
 
   if (options.configurations) {
     providers = [...providers, ...customProviders];
   }
-
 
   if (!providers.length) return supportedProviders;
 

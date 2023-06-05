@@ -1,6 +1,6 @@
-import {Menu as SanityMenu, MenuButton, Button, MenuItem} from '@sanity/ui'
-import {AddIcon} from '@sanity/icons'
-import {IconObject} from '../types'
+import { Menu as SanityMenu, MenuButton, Button, MenuItem } from '@sanity/ui';
+import { AddIcon } from '@sanity/icons';
+import { IconObject } from '../types';
 
 // eslint-disable-next-line no-shadow
 export enum Action {
@@ -9,9 +9,15 @@ export enum Action {
   delete = 'delete',
 }
 
-export type MenuClickCallback = (action: Action) => void | Error
+export type MenuClickCallback = (action: Action) => void | Error;
 
-const Menu = ({onClick, selected}: {onClick: MenuClickCallback; selected: IconObject | null}) => {
+const Menu = ({
+  onClick,
+  selected,
+}: {
+  onClick: MenuClickCallback;
+  selected: IconObject | null;
+}) => {
   return (
     <>
       {!selected && (
@@ -28,7 +34,12 @@ const Menu = ({onClick, selected}: {onClick: MenuClickCallback; selected: IconOb
       {selected && (
         <MenuButton
           button={
-            <Button mode="ghost" padding={[2, 2, 3]} tone="default" text={<selected.component />} />
+            <Button
+              mode="ghost"
+              padding={[2, 2, 3]}
+              tone="default"
+              text={<selected.component />}
+            />
           }
           id="menu-button-example"
           menu={
@@ -37,11 +48,11 @@ const Menu = ({onClick, selected}: {onClick: MenuClickCallback; selected: IconOb
               <MenuItem text="Delete" onClick={() => onClick(Action.delete)} />
             </SanityMenu>
           }
-          popover={{placement: 'bottom'}}
+          popover={{ placement: 'bottom' }}
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

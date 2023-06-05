@@ -1,4 +1,4 @@
-import {defineConfig} from '@sanity/pkg-utils'
+import { defineConfig } from '@sanity/pkg-utils';
 
 export default defineConfig({
   legacyExports: true,
@@ -17,4 +17,4 @@ export default defineConfig({
   rollup: {
     plugins: [],
   },
-})
+});

@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { ObjectInputProps, set, unset, setIfMissing } from "sanity";
-import { Card } from "@sanity/ui";
-import { ICON_WIDTH, ICON_HEIGHT, LOADING_TIMER_MS } from "../constants";
-import Popup from "./Popup";
-import SearchBar, { SearchBarOnChange } from "./SearchBar";
-import SearchResults, { SearchResultsOnSelectCallback } from "./SearchResults";
-import Tabs from "./Tabs";
-import Menu, { Action, MenuClickCallback } from "./Menu";
-import { IconContext } from "react-icons";
-import { getIcons } from "../utils/icons";
-import { IconObject, IconObjectArray } from "../types";
-import { getProviders } from "../utils/helpers";
+import { useState, useEffect } from 'react';
+import { ObjectInputProps, set, unset, setIfMissing } from 'sanity';
+import { Card } from '@sanity/ui';
+import { ICON_WIDTH, ICON_HEIGHT, LOADING_TIMER_MS } from '../constants';
+import Popup from './Popup';
+import SearchBar, { SearchBarOnChange } from './SearchBar';
+import SearchResults, { SearchResultsOnSelectCallback } from './SearchResults';
+import Tabs from './Tabs';
+import Menu, { Action, MenuClickCallback } from './Menu';
+import { IconContext } from 'react-icons';
+import { getIcons } from '../utils/icons';
+import { IconObject, IconObjectArray } from '../types';
+import { getProviders } from '../utils/helpers';
 
 function getIconByValue(name: string, icons: IconObjectArray) {
   const found = icons.find((icon) => icon.name === name);
@@ -21,9 +21,8 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
   const [selected, setSelected] = useState<IconObject | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [queryResults, setQueryResults] = useState<IconObjectArray>([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     if (!loading) {
@@ -54,8 +53,8 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
       setIfMissing({
         _type: schemaType.name,
       }),
-      set(icon.name, ["name"]),
-      set(icon.provider, ["provider"]),
+      set(icon.name, ['name']),
+      set(icon.provider, ['provider']),
     ]);
 
     return setSelected(icon);
@@ -66,7 +65,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
   };
   const closePopup = () => {
     setIsPopupOpen(false);
-    setQuery("");
+    setQuery('');
   };
 
   const onQueryChange: SearchBarOnChange = (e) => {
@@ -77,7 +76,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
     if (action === Action.add) return setIsPopupOpen(true);
     if (action === Action.edit) return openPopup();
     if (action === Action.delete) return unsetIcon();
-    return new Error("Unsupported action");
+    return new Error('Unsupported action');
   };
 
   const onTabClick = () => {

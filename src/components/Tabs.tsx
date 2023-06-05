@@ -1,4 +1,4 @@
-import React, { useState, ReactElement } from "react";
+import React, { useState, ReactElement } from 'react';
 import {
   Container,
   TabList,
@@ -7,13 +7,13 @@ import {
   Heading,
   Card,
   Box,
-} from "@sanity/ui";
-import { getProviders, configurationFromProvider } from "../utils/helpers";
-import { IconPickerOptions } from "../types";
+} from '@sanity/ui';
+import { getProviders, configurationFromProvider } from '../utils/helpers';
+import { IconPickerOptions } from '../types';
 import {
   ALL_CONFIGURATIONS_PROVIDER,
   ALL_CONFIGURATIONS_TITLE,
-} from "../constants/config";
+} from '../constants/config';
 
 interface ITabs {
   children: ReactElement;
