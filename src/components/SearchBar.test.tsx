@@ -1,53 +1,61 @@
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
-import { render } from '../test-utils';
+import { render } from '../../test/utils';
 import SearchBar from './SearchBar';
 
-function setup(FormComponent: any, props: any) {
-  let onChange;
+function renderControlledComponent(FormComponent: any, props: any) {
+  let mockOnChange;
   function TestEnvironment() {
     const [value, setValue] = useState(props.value);
 
-    onChange = jest.fn((e) => {
-      setValue(e.target.value);
-    });
+    mockOnChange = jest.fn((e) => setValue(e.target.value));
 
-    return <FormComponent value={value} onChange={onChange} />;
+    return <FormComponent value={value} onChange={mockOnChange} />;
   }
 
   return {
     ...render(<TestEnvironment />),
-    onChange,
+    mockOnChange,
   };
 }
 
 describe('SearchBar', () => {
   const INITIAL_VALUE = 'test123';
+  const mockOnChangeHandler = jest.fn();
 
-  test('renders without error', () => {
+  it('renders correctly', () => {
     const { getByPlaceholderText } = render(
-      <SearchBar value={INITIAL_VALUE} onChange={jest.fn()} />
+      <SearchBar value="" onChange={mockOnChangeHandler} />
     );
-    const input = getByPlaceholderText('Search Icons');
-    expect(input).toBeInTheDocument();
+    expect(getByPlaceholderText('Search Icons')).toBeInTheDocument();
   });
 
-  test('calls onChange successfully', async () => {
-    const TEST_VALUE = 'user123';
+  it('renders value prop', () => {
+    const { getByDisplayValue } = render(
+      <SearchBar value="test value" onChange={mockOnChangeHandler} />
+    );
+    expect(getByDisplayValue('test value')).toBeInTheDocument();
+  });
+
+  it('calls onChange successfully', async () => {
+    const value = 'user123';
     const user = userEvent.setup();
-    const { onChange, getByPlaceholderText } = setup(SearchBar, {
-      value: INITIAL_VALUE,
-    });
+    const { mockOnChange, getByPlaceholderText } = renderControlledComponent(
+      SearchBar,
+      {
+        value: INITIAL_VALUE,
+      }
+    );
 
     const input = getByPlaceholderText('Search Icons');
 
     await user.clear(input);
-    await user.type(input, TEST_VALUE);
+    await user.type(input, value);
 
-    expect(onChange).toHaveBeenCalledWith(
+    expect(mockOnChange).toHaveBeenCalledWith(
       expect.objectContaining({
         target: expect.objectContaining({
-          value: TEST_VALUE,
+          value,
         }),
       })
     );
