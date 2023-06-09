@@ -2,11 +2,12 @@ import userEvent from '@testing-library/user-event';
 import { createMockIconArray, mockIcon, mockIconArray } from '../../test/mocks';
 import { render } from '../../test/utils';
 import SearchResults from './SearchResults';
+import type { AutoSizerProps } from 'react-virtualized-auto-sizer';
 
 jest.mock(
   'react-virtualized-auto-sizer',
   () =>
-    ({ children }: { children: any }) =>
+    ({ children }: AutoSizerProps) =>
       children({ height: 600, width: 600 })
 );
 
