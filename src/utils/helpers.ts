@@ -1,4 +1,8 @@
 import CONFIGURATIONS from '../configurations';
+import {
+  ALL_CONFIGURATIONS_PROVIDER,
+  ALL_CONFIGURATIONS_TITLE,
+} from '../constants/config';
 import type {
   IconObjectArray,
   IconPickerOptions,
@@ -40,6 +44,14 @@ export function configurationFromProvider(
     (config) => config.provider === provider
   ) as ProviderConfiguration;
 }
+
+export const configurationTitleFromProvider = (
+  provider: string,
+  options: IconPickerOptions
+): string => {
+  if (provider === ALL_CONFIGURATIONS_PROVIDER) return ALL_CONFIGURATIONS_TITLE;
+  return configurationFromProvider(provider, options).title;
+};
 
 export function listToMatrix(
   list: IconObjectArray,
