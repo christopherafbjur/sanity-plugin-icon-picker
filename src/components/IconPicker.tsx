@@ -1,19 +1,21 @@
 import { Card } from '@sanity/ui';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { set, setIfMissing, unset } from 'sanity';
 import { ICON_HEIGHT, ICON_WIDTH, LOADING_TIMER_MS } from '../constants';
+import { ALL_CONFIGURATIONS_PROVIDER } from '../constants/config';
+import { OptionsProvider } from '../hooks/useOptions';
 import { getProviders } from '../utils/helpers';
 import { getIcons } from '../utils/icons';
 import Menu, { Action } from './Menu';
 import Popup from './Popup';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
-import Tabs from './Tabs';
+import { TabList, TabPanel, Tabs } from './Tabs';
 import type { MenuClickCallback } from './Menu';
 import type { SearchBarOnChange } from './SearchBar';
 import type { SearchResultsOnSelectCallback } from './SearchResults';
-import type { IconObject, IconObjectArray } from '../types';
+import type { IconObject, IconObjectArray, IconPickerOptions } from '../types';
 import type { ObjectInputProps } from 'sanity';
 
 function getIconByValue(name: string, icons: IconObjectArray) {
@@ -27,13 +29,14 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
   const [queryResults, setQueryResults] = useState<IconObjectArray>([]);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
+  const options: IconPickerOptions = schemaType.options;
 
   useEffect(() => {
     if (!loading) {
       setLoading(true);
     }
     const timeoutId = setTimeout(() => {
-      const icons = getIcons(schemaType.options);
+      const icons = getIcons(options);
       const results = icons.filter(
         (icon) => icon.name.toLowerCase().indexOf(query) >= 0
       );
@@ -91,27 +94,21 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
     }
   };
 
-  const hideTabs = getProviders(schemaType.options).length === 1;
+  const providers = getProviders(options);
+  const tabProviders = [ALL_CONFIGURATIONS_PROVIDER, ...providers];
+  const hideTabs = providers.length === 1;
 
   return (
     <Card>
-      <IconContext.Provider
-        value={{ style: { width: ICON_WIDTH, height: ICON_HEIGHT } }}
-      >
-        <Menu onClick={handleMenuClick} selected={selected} />
+      <OptionsProvider options={options}>
+        <IconContext.Provider
+          value={{ style: { width: ICON_WIDTH, height: ICON_HEIGHT } }}
+        >
+          <Menu onClick={handleMenuClick} selected={selected} />
 
-        <Popup onClose={closePopup} isOpen={isPopupOpen}>
-          <SearchBar value={query} onChange={onQueryChange} />
-          {hideTabs ? (
-            <SearchResults
-              results={queryResults}
-              selected={selected}
-              onSelect={setIcon}
-              loading={loading}
-              query={query}
-            />
-          ) : (
-            <Tabs options={schemaType.options} onClick={onTabClick}>
+          <Popup onClose={closePopup} isOpen={isPopupOpen}>
+            <SearchBar value={query} onChange={onQueryChange} />
+            {hideTabs ? (
               <SearchResults
                 results={queryResults}
                 selected={selected}
@@ -119,10 +116,28 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
                 loading={loading}
                 query={query}
               />
-            </Tabs>
-          )}
-        </Popup>
-      </IconContext.Provider>
+            ) : (
+              <Tabs>
+                <TabList providers={tabProviders} onClick={onTabClick} />
+                <>
+                  {tabProviders.map((provider) => (
+                    <TabPanel key={provider} provider={provider}>
+                      <SearchResults
+                        results={queryResults}
+                        selected={selected}
+                        onSelect={setIcon}
+                        loading={loading}
+                        query={query}
+                        filter={provider}
+                      />
+                    </TabPanel>
+                  ))}
+                </>
+              </Tabs>
+            )}
+          </Popup>
+        </IconContext.Provider>
+      </OptionsProvider>
     </Card>
   );
 };

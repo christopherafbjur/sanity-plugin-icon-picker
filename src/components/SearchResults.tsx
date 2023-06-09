@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
 import styled from 'styled-components';
+import { ALL_CONFIGURATIONS_PROVIDER } from '../constants/config';
 import useMedia from '../hooks/useMedia';
 import { listToMatrix } from '../utils/helpers';
 import type { IconObject, IconObjectArray } from '../types';
@@ -47,7 +48,7 @@ const SearchResults = ({
   }, [results]);
 
   const getFiltered = (items: IconObjectArray) => {
-    if (!filter) return items;
+    if (!filter || filter === ALL_CONFIGURATIONS_PROVIDER) return items;
     return items.filter((item) => item.provider === filter);
   };
   function updateIcons(cols: number) {
