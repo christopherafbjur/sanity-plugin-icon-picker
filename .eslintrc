@@ -30,7 +30,12 @@
       }
     ],
     "import/namespace": ["error", { "allowComputed": true }],
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "@typescript-eslint/consistent-type-imports": "error",
     "react/jsx-no-bind": ["error", { "allowArrowFunctions": true }],
     "react/react-in-jsx-scope": "off",
