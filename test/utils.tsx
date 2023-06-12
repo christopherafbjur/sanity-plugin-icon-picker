@@ -4,14 +4,32 @@ import React from 'react';
 import type { RenderOptions } from '@testing-library/react';
 import type { ReactElement } from 'react';
 
-const AllProviders = ({ children }: { children: React.ReactNode }) => {
+interface AllProvidersProps {
+  children: React.ReactElement;
+  innerWrapper?: React.JSXElementConstructor<{
+    children: React.ReactElement;
+  }>;
+}
+
+const AllProviders = ({ children, innerWrapper }: AllProvidersProps) => {
+  const InnerWrapper = innerWrapper;
+
+  if (InnerWrapper)
+    return (
+      <ThemeProvider theme={studioTheme}>
+        <InnerWrapper>{children}</InnerWrapper>
+      </ThemeProvider>
+    );
   return <ThemeProvider theme={studioTheme}>{children}</ThemeProvider>;
 };
 
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
-) => render(ui, { wrapper: AllProviders, ...options });
+const customRender = (ui: ReactElement, options: RenderOptions = {}) => {
+  const { wrapper, ...rest } = options;
+  return render(ui, {
+    wrapper: (props) => <AllProviders {...props} innerWrapper={wrapper} />,
+    ...rest,
+  });
+};
 
 // eslint-disable-next-line import/export
 export * from '@testing-library/react';
