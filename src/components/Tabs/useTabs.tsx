@@ -24,7 +24,7 @@ export const TabsProvider = ({ children }: { children: ReactElement }) => {
 export const useTabs = (): ITabsContext => {
   const context = useContext(TabsContext);
   if (context === undefined) {
-    throw new Error('useMyValue must be used within a MyProvider');
+    throw new Error('useTabs must be used within a TabsProvider');
   }
   return context;
 };
