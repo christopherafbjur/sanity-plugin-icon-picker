@@ -52,8 +52,13 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
     setSelected(null);
   };
 
-  const setIcon: SearchResultsOnSelectCallback = (icon) => {
+  const setIcon: SearchResultsOnSelectCallback = (
+    icon: IconObject,
+    ele: HTMLButtonElement
+  ) => {
     if (selected && icon.name === selected.name) return unsetIcon();
+
+    const svgString = ele.getElementsByTagName('svg')[0].outerHTML;
 
     onChange([
       setIfMissing({
@@ -61,6 +66,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
       }),
       set(icon.name, ['name']),
       set(icon.provider, ['provider']),
+      schemaType.options.storeSvg ? set(svgString, ['svg']) : unset(['svg']),
     ]);
 
     return setSelected(icon);
