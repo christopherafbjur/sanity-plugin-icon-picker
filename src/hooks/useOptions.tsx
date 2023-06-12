@@ -5,12 +5,12 @@ import type { ReactNode } from 'react';
 const OptionsContext = createContext<IconPickerOptions | undefined>(undefined);
 
 interface OptionsProviderProps {
-  options: IconPickerOptions;
+  options?: IconPickerOptions;
   children: ReactNode;
 }
 
 export const OptionsProvider = ({
-  options,
+  options = {},
   children,
 }: OptionsProviderProps) => {
   const [value] = useState<IconPickerOptions>(options);
