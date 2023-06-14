@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { mockIcon } from '../../test/mocks';
+import { createMockIcon } from '../../test/mocks';
 import { render } from '../../test/utils';
 import Menu, { Action } from './Menu';
 
@@ -14,9 +14,7 @@ describe('Menu', () => {
   });
 
   it('renders menu button when selected is not null', async () => {
-    const selected = {
-      ...mockIcon,
-    };
+    const selected = createMockIcon();
     const user = userEvent.setup();
     const { getByText, getByRole } = render(
       <Menu onClick={mockOnClick} selected={selected} />
@@ -39,9 +37,7 @@ describe('Menu', () => {
 
   it('calls onClick with correct action when edit menu item is clicked', async () => {
     const user = userEvent.setup();
-    const selected = {
-      ...mockIcon,
-    };
+    const selected = createMockIcon();
     const { getByText, getByRole } = render(
       <Menu onClick={mockOnClick} selected={selected} />
     );
@@ -52,9 +48,7 @@ describe('Menu', () => {
 
   it('calls onClick with correct action when delete menu item is clicked', async () => {
     const user = userEvent.setup();
-    const selected = {
-      ...mockIcon,
-    };
+    const selected = createMockIcon();
     const { getByText, getByRole } = render(
       <Menu onClick={mockOnClick} selected={selected} />
     );

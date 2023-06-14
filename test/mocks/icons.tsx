@@ -1,21 +1,19 @@
 import { FaBeer } from 'react-icons/fa';
+import type { IconObject } from '../../src/types';
 
-export const mockIcon = {
+type MockIcon = Partial<IconObject>;
+
+export const createMockIcon = (icon: MockIcon = {}) => ({
   provider: 'te',
   name: 'Test',
   component: () => <FaBeer />,
   tags: ['FaBeer', 'beer'],
-};
+  ...icon,
+});
 
-export const mockIconArray = new Array(10).fill(null).map(() => mockIcon);
+export const mockIconArray = new Array(10)
+  .fill(null)
+  .map(() => createMockIcon());
 
-export const createMockIconArray = (
-  numberOfIcons: number,
-  { provider }: { provider: string } = { provider: 'te' }
-) =>
-  new Array(numberOfIcons).fill(null).map(() => ({
-    provider: provider,
-    name: 'Test',
-    component: () => <FaBeer />,
-    tags: ['FaBeer', 'beer'],
-  }));
+export const createMockIconArray = (numberOfIcons: number, icon: MockIcon) =>
+  new Array(numberOfIcons).fill(null).map(() => createMockIcon(icon));

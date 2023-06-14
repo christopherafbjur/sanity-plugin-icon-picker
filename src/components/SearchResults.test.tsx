@@ -1,5 +1,9 @@
 import userEvent from '@testing-library/user-event';
-import { createMockIconArray, mockIcon, mockIconArray } from '../../test/mocks';
+import {
+  createMockIcon,
+  createMockIconArray,
+  mockIconArray,
+} from '../../test/mocks';
 import { render } from '../../test/utils';
 import SearchResults from './SearchResults';
 import type { AutoSizerProps } from 'react-virtualized-auto-sizer';
@@ -14,9 +18,7 @@ jest.mock(
 describe('SearchResults', () => {
   const mockOnSelect = jest.fn();
   const results = [...mockIconArray];
-  const selected = {
-    ...mockIcon,
-  };
+  const selected = createMockIcon();
 
   it('renders Spinner when loading is true', () => {
     const { container } = render(
