@@ -105,6 +105,13 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
   const providers = getProviders(options);
   const tabProviders = [ALL_CONFIGURATIONS_PROVIDER, ...providers];
   const hideTabs = providers.length === 1;
+  const searchResultsProps = {
+    results: queryResults,
+    onSelect: setIcon,
+    selected,
+    loading,
+    query,
+  };
 
   return (
     <Card>
@@ -117,13 +124,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
           <Popup onClose={closePopup} isOpen={isPopupOpen}>
             <SearchBar value={query} onChange={onQueryChange} />
             {hideTabs ? (
-              <SearchResults
-                results={queryResults}
-                selected={selected}
-                onSelect={setIcon}
-                loading={loading}
-                query={query}
-              />
+              <SearchResults {...searchResultsProps} />
             ) : (
               <Tabs>
                 <TabList providers={tabProviders} onClick={onTabClick} />
@@ -131,11 +132,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
                   {tabProviders.map((provider) => (
                     <TabPanel key={provider} provider={provider}>
                       <SearchResults
-                        results={queryResults}
-                        selected={selected}
-                        onSelect={setIcon}
-                        loading={loading}
-                        query={query}
+                        {...searchResultsProps}
                         filter={provider}
                       />
                     </TabPanel>
