@@ -1,12 +1,12 @@
 import { Card } from '@sanity/ui';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { set, setIfMissing, unset } from 'sanity';
 import { ICON_HEIGHT, ICON_WIDTH, LOADING_TIMER_MS } from '../constants';
 import { ALL_CONFIGURATIONS_PROVIDER } from '../constants/config';
+import { useIconPicker } from '../hooks/useIconPicker';
 import { OptionsProvider } from '../hooks/useOptions';
 import { getProviders } from '../utils/helpers';
-import { getIcons } from '../utils/icons';
 import Menu, { Action } from './Menu';
 import Popup from './Popup';
 import SearchBar from './SearchBar';
@@ -15,37 +15,21 @@ import { TabList, TabPanel, Tabs } from './Tabs';
 import type { MenuClickCallback } from './Menu';
 import type { SearchBarOnChange } from './SearchBar';
 import type { SearchResultsOnSelectCallback } from './SearchResults';
-import type { IconObject, IconObjectArray, IconPickerOptions } from '../types';
+import type { IconObject, IconPickerOptions } from '../types';
 import type { ObjectInputProps } from 'sanity';
 
-function getIconByValue(name: string, icons: IconObjectArray) {
-  const found = icons.find((icon) => icon.name === name);
-  return found || null;
-}
-
 const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
-  const [selected, setSelected] = useState<IconObject | null>(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [queryResults, setQueryResults] = useState<IconObjectArray>([]);
-  const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(true);
   const options: IconPickerOptions = schemaType.options;
-
-  useEffect(() => {
-    if (!loading) {
-      setLoading(true);
-    }
-    const timeoutId = setTimeout(() => {
-      const icons = getIcons(options);
-      const results = icons.filter(
-        (icon) => icon.name.toLowerCase().indexOf(query) >= 0
-      );
-      setSelected(getIconByValue(value.name, icons));
-      setQueryResults(results);
-      setLoading(false);
-    }, LOADING_TIMER_MS);
-    return () => clearTimeout(timeoutId);
-  }, [query]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const {
+    query,
+    loading,
+    selected,
+    queryResults,
+    setQuery,
+    setLoading,
+    setSelected,
+  } = useIconPicker(value.name, options);
 
   const unsetIcon = () => {
     onChange(unset());
