@@ -1,5 +1,5 @@
 import { Button, Flex, Grid, Spinner, Text } from '@sanity/ui';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
 import styled from 'styled-components';
@@ -14,7 +14,10 @@ const Wrapper = styled.section`
   width: 100%;
   position: relative;
 `;
-export type SearchResultsOnSelectCallback = (icon: IconObject) => void;
+export type SearchResultsOnSelectCallback = (
+  icon: IconObject,
+  ele: HTMLButtonElement
+) => void;
 
 interface ISearchResults {
   results: IconObjectArray;
@@ -58,11 +61,14 @@ const SearchResults = ({
   }
 
   const createIconButton = (icon: IconObject) => {
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
     return (
       <Button
+        ref={buttonRef} // <--here
         key={icon.provider.concat(icon.name)}
         mode="ghost"
-        onClick={() => onSelect(icon)}
+        onClick={() => onSelect(icon, buttonRef.current!)}
         text={<icon.component />}
         style={{ marginTop: '5px' }}
         selected={
