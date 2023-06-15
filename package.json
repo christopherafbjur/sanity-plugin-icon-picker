@@ -105,7 +105,7 @@
     "sanity": "^3"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "sanityExchangeUrl": "https://www.sanity.io/plugins/icon-picker"
 }
