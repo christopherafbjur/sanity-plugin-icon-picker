@@ -11,7 +11,7 @@ export interface IconObject {
   provider: string;
   name: string;
   component: () => ReactElement;
-  tags: [string, string];
+  tags: string[];
 }
 
 export type ConfigurationIconObject = Omit<IconObject, 'provider'>;
