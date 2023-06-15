@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-icon-picker",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "An Icon Picker plugin for Sanity",
   "keywords": [
     "sanity",
@@ -65,7 +65,7 @@
     "sanity": "^3"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "^2.2.6",
+    "@sanity/pkg-utils": "^2.3.3",
     "@sanity/plugin-kit": "^3.1.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",

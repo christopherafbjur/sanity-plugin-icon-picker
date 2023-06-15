@@ -83,6 +83,21 @@ Filter out a subset of icons to be used by specifying a filter. A filter can be 
 }
 ```
 
+### Store SVG
+
+If you don't want to dynamically generate the icons in your front-end as described in [this example](#example-1-dynamically-generating-icon), you can opt in to storing the selected SVG icon as a string in your data ([usage example here](#example-2-stored-svg)).
+
+```js
+{
+    title: "Icon",
+    name: "icon",
+    type: "iconPicker",
+    options: {
+        storeSvg: true
+    }
+}
+```
+
 ### Configurations
 
 Extend the built in provider configurations by adding your own. Note that if you want to mix built-in provider configurations with your own, you need to [specify them manually](#providers) since all will not be used automatically if a configuration is available.
@@ -189,6 +204,8 @@ Then refer to the [old documentation](https://github.com/christopherafbjur/sanit
 
 ### How can I consume the data returned from Sanity Studio in my React app?
 
+#### Example 1: Dynamically generating icon
+
 Here's a really simple example of how you could consume the data to render a Font Awesome icon from it. Note that in this example I'm using the option `outputFormat: 'react'` for the icon picker in the studio as mentioned [here](https://github.com/christopherafbjur/sanity-plugin-icon-picker#output-format).
 
 ```js
@@ -209,6 +226,51 @@ export default function App() {
   return (
     <div className="App">
       <Icon />
+    </div>
+  );
+}
+```
+
+#### Example 2: Stored SVG
+
+If you've opted in to [store SVGs](#store-svg) in your data (`options.storeSvg`), you could present them in various ways:
+
+```js
+// Sanity data mock
+const data = {
+  _type: 'iconPicker',
+  name: 'alert-circle',
+  provider: 'fi',
+  svg: '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style="width: 1.5em; height: 1em;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+};
+
+export default function App() {
+  const encodedSvg = encodeURIComponent(data.svg);
+  const imgSrc = `data:image/svg+xml,${encodedSvg}`;
+
+  return (
+    <div className="App">
+      <img src={imgSrc} />
+    </div>
+  );
+}
+```
+
+```js
+import SVG from 'react-inlinesvg';
+
+// Sanity data mock
+const data = {
+  _type: 'iconPicker',
+  name: 'alert-circle',
+  provider: 'fi',
+  svg: '<svg fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>',
+};
+
+export default function App() {
+  return (
+    <div className="App">
+      <SVG src={data.svg} />
     </div>
   );
 }
