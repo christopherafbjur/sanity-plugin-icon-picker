@@ -2,10 +2,11 @@ import { Card } from '@sanity/ui';
 import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { set, setIfMissing, unset } from 'sanity';
-import { ICON_HEIGHT, ICON_WIDTH, LOADING_TIMER_MS } from '../constants';
+import { ICON_HEIGHT, ICON_WIDTH } from '../constants';
 import { ALL_CONFIGURATIONS_PROVIDER } from '../constants/config';
-import { useIconPicker } from '../hooks/useIconPicker';
 import { OptionsProvider } from '../hooks/useOptions';
+import { useQuery } from '../hooks/useQuery';
+import { useSelectedIcon } from '../hooks/useSelectedIcon';
 import { getProviders } from '../utils/helpers';
 import Menu, { Action } from './Menu';
 import Popup from './Popup';
@@ -21,15 +22,8 @@ import type { ObjectInputProps } from 'sanity';
 const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
   const options: IconPickerOptions = schemaType.options;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const {
-    query,
-    loading,
-    selected,
-    queryResults,
-    setQuery,
-    setLoading,
-    setSelected,
-  } = useIconPicker(value.name, options);
+  const { query, loading, results, setQuery } = useQuery(options);
+  const { selected, setSelected } = useSelectedIcon(value.name, results);
 
   const unsetIcon = () => {
     onChange(unset());
@@ -77,21 +71,12 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
     return new Error('Unsupported action');
   };
 
-  const onTabClick = () => {
-    if (!loading) {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, LOADING_TIMER_MS);
-    }
-  };
-
   const providers = getProviders(options);
   const tabProviders = [ALL_CONFIGURATIONS_PROVIDER, ...providers];
   const hideTabs = providers.length === 1;
   const searchResultsProps = {
-    results: queryResults,
     onSelect: setIcon,
+    results,
     selected,
     loading,
     query,
@@ -111,7 +96,7 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
               <SearchResults {...searchResultsProps} />
             ) : (
               <Tabs>
-                <TabList providers={tabProviders} onClick={onTabClick} />
+                <TabList providers={tabProviders} />
                 <>
                   {tabProviders.map((provider) => (
                     <TabPanel key={provider} provider={provider}>

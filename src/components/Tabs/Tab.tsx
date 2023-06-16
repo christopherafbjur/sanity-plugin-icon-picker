@@ -5,16 +5,12 @@ import { useTabs } from './useTabs';
 
 interface TabProps {
   provider: string;
-  onClick: () => void;
 }
-export const Tab = ({ provider, onClick }: TabProps) => {
+export const Tab = ({ provider }: TabProps) => {
   const options = useOptions();
   const { selectedTabId, setSelectedTabId } = useTabs();
 
-  const handleClick = (id: string) => {
-    setSelectedTabId(id);
-    onClick();
-  };
+  const handleClick = (id: string) => setSelectedTabId(id);
 
   const title = configurationTitleFromProvider(provider, options);
 
