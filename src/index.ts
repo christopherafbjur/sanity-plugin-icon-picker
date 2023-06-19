@@ -23,6 +23,11 @@ export const iconPicker = definePlugin(() => {
               name: 'name',
               type: 'string',
             }),
+            defineField({
+              title: 'Inline SVG',
+              name: 'svg',
+              type: 'string',
+            }),
           ],
         },
       ],
