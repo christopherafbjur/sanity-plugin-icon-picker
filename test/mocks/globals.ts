@@ -1,4 +1,4 @@
-export const setupGlobalResizeObserver = () => {
+export const setupGlobalResizeObserver = (): void => {
   global.ResizeObserver = jest.fn().mockImplementation(() => ({
     disconnect: jest.fn(),
     observe: jest.fn(),
@@ -6,7 +6,7 @@ export const setupGlobalResizeObserver = () => {
   }));
 };
 
-export const setupGlobalMatchMedia = () => {
+export const setupGlobalMatchMedia = (): void => {
   global.matchMedia = jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,

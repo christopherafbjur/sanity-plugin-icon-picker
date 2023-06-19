@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { render } from '../../../test/utils';
 import { OptionsProvider } from '../../hooks/useOptions';
-import { Tab, TabList, TabPanel, Tabs } from '.';
+import { TabList, TabPanel, Tabs } from '.';
 import type { ReactElement } from 'react';
 
 const tabsRender = (ui: ReactElement) =>
@@ -13,26 +13,10 @@ const tabsRender = (ui: ReactElement) =>
     ),
   });
 
-describe('Tab', () => {
-  it('calls onClick when tab rendered based on provider is clicked', async () => {
-    const user = userEvent.setup();
-    const mockOnClick = jest.fn();
-    const { getByRole } = tabsRender(
-      <Tab provider="f7" onClick={mockOnClick} />
-    );
-
-    const button = getByRole('tab', { name: /Framework7/i });
-
-    await user.click(button);
-    expect(mockOnClick).toHaveBeenCalled();
-  });
-});
-
 describe('TabList', () => {
   it('renders two tabs with correct titles', () => {
-    const mockOnClick = jest.fn();
     const { getByRole, getAllByRole } = tabsRender(
-      <TabList providers={['f7', 'sa']} onClick={mockOnClick} />
+      <TabList providers={['f7', 'sa']} />
     );
 
     expect(getAllByRole('tab').length).toBe(2);
@@ -76,12 +60,11 @@ describe('Tabs', () => {
   });
 
   it('displays the correct tab-panel based on the initially selected list-tab', () => {
-    const mockOnClick = jest.fn();
     const mockProviders = ['all-icons', 'f7', 'sa'];
 
     const { container } = tabsRender(
       <>
-        <TabList providers={mockProviders} onClick={mockOnClick} />
+        <TabList providers={mockProviders} />
         <>
           {mockProviders.map((provider) => (
             <TabPanel key={provider} provider={provider}>
@@ -102,12 +85,11 @@ describe('Tabs', () => {
   });
   it('displays and hides the correct tab-panels based on the selected list-tab', async () => {
     const user = userEvent.setup();
-    const mockOnClick = jest.fn();
     const mockProviders = ['all-icons', 'f7', 'sa'];
 
     const { container, getByRole } = tabsRender(
       <>
-        <TabList providers={mockProviders} onClick={mockOnClick} />
+        <TabList providers={mockProviders} />
         <>
           {mockProviders.map((provider) => (
             <TabPanel key={provider} provider={provider}>

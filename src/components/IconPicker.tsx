@@ -1,12 +1,13 @@
 import { Card } from '@sanity/ui';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { set, setIfMissing, unset } from 'sanity';
-import { ICON_HEIGHT, ICON_WIDTH, LOADING_TIMER_MS } from '../constants';
+import { ICON_HEIGHT, ICON_WIDTH } from '../constants';
 import { ALL_CONFIGURATIONS_PROVIDER } from '../constants/config';
 import { OptionsProvider } from '../hooks/useOptions';
+import { useQuery } from '../hooks/useQuery';
+import { useSelectedIcon } from '../hooks/useSelectedIcon';
 import { getProviders } from '../utils/helpers';
-import { getIcons } from '../utils/icons';
 import Menu, { Action } from './Menu';
 import Popup from './Popup';
 import SearchBar from './SearchBar';
@@ -15,37 +16,14 @@ import { TabList, TabPanel, Tabs } from './Tabs';
 import type { MenuClickCallback } from './Menu';
 import type { SearchBarOnChange } from './SearchBar';
 import type { SearchResultsOnSelectCallback } from './SearchResults';
-import type { IconObject, IconObjectArray, IconPickerOptions } from '../types';
+import type { IconObject, IconPickerOptions } from '../types';
 import type { ObjectInputProps } from 'sanity';
 
-function getIconByValue(name: string, icons: IconObjectArray) {
-  const found = icons.find((icon) => icon.name === name);
-  return found || null;
-}
-
 const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
-  const [selected, setSelected] = useState<IconObject | null>(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [queryResults, setQueryResults] = useState<IconObjectArray>([]);
-  const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(true);
   const options: IconPickerOptions = schemaType.options;
-
-  useEffect(() => {
-    if (!loading) {
-      setLoading(true);
-    }
-    const timeoutId = setTimeout(() => {
-      const icons = getIcons(options);
-      const results = icons.filter(
-        (icon) => icon.name.toLowerCase().indexOf(query) >= 0
-      );
-      setSelected(getIconByValue(value.name, icons));
-      setQueryResults(results);
-      setLoading(false);
-    }, LOADING_TIMER_MS);
-    return () => clearTimeout(timeoutId);
-  }, [query]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { query, loading, results, setQuery } = useQuery(options);
+  const { selected, setSelected } = useSelectedIcon(value.name, results);
 
   const unsetIcon = () => {
     onChange(unset());
@@ -93,18 +71,16 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
     return new Error('Unsupported action');
   };
 
-  const onTabClick = () => {
-    if (!loading) {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, LOADING_TIMER_MS);
-    }
-  };
-
   const providers = getProviders(options);
   const tabProviders = [ALL_CONFIGURATIONS_PROVIDER, ...providers];
   const hideTabs = providers.length === 1;
+  const searchResultsProps = {
+    onSelect: setIcon,
+    results,
+    selected,
+    loading,
+    query,
+  };
 
   return (
     <Card>
@@ -117,25 +93,15 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
           <Popup onClose={closePopup} isOpen={isPopupOpen}>
             <SearchBar value={query} onChange={onQueryChange} />
             {hideTabs ? (
-              <SearchResults
-                results={queryResults}
-                selected={selected}
-                onSelect={setIcon}
-                loading={loading}
-                query={query}
-              />
+              <SearchResults {...searchResultsProps} />
             ) : (
               <Tabs>
-                <TabList providers={tabProviders} onClick={onTabClick} />
+                <TabList providers={tabProviders} />
                 <>
                   {tabProviders.map((provider) => (
                     <TabPanel key={provider} provider={provider}>
                       <SearchResults
-                        results={queryResults}
-                        selected={selected}
-                        onSelect={setIcon}
-                        loading={loading}
-                        query={query}
+                        {...searchResultsProps}
                         filter={provider}
                       />
                     </TabPanel>
