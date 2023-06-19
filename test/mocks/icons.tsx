@@ -11,9 +11,7 @@ export const createMockIcon = (icon: MockIcon = {}) => ({
   ...icon,
 });
 
-export const mockIconArray = new Array(10)
-  .fill(null)
-  .map(() => createMockIcon());
-
-export const createMockIconArray = (numberOfIcons: number, icon: MockIcon) =>
-  new Array(numberOfIcons).fill(null).map(() => createMockIcon(icon));
+export const createMockIconArray = (
+  numberOfIcons: number,
+  icon: MockIcon = {}
+) => new Array(numberOfIcons).fill(null).map(() => createMockIcon(icon));
