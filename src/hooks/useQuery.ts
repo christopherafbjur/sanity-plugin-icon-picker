@@ -6,10 +6,10 @@ import type { IconObjectArray, IconPickerOptions } from '../types';
 import type { Dispatch, SetStateAction } from 'react';
 
 interface UseQueryProps {
-  (options: IconPickerOptions): UseQueryReturnValue;
+  (options: IconPickerOptions): UseQueryResult;
 }
 
-interface UseQueryReturnValue {
+interface UseQueryResult {
   query: string;
   loading: boolean;
   results: IconObjectArray;

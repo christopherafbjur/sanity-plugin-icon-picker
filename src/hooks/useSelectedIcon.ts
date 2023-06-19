@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { IconObject, IconObjectArray } from '../types';
 import type { Dispatch, SetStateAction } from 'react';
 
-interface UseSelectedIconReturnValue {
+interface UseSelectedIconResult {
   selected: IconObject | null;
   setSelected: Dispatch<SetStateAction<IconObject | null>>;
 }
@@ -15,7 +15,7 @@ function getIconByValue(name: string, icons: IconObjectArray) {
 export const useSelectedIcon = (
   iconName: string,
   results: IconObjectArray
-): UseSelectedIconReturnValue => {
+): UseSelectedIconResult => {
   const [selected, setSelected] = useState<IconObject | null>(null);
 
   useEffect(() => {
