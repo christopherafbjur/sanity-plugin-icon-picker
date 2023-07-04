@@ -153,6 +153,8 @@ import * as CarbonIcons from '@carbon/icons-react'
 
 ## Helper functions
 
+### Preview
+
 In order to render the icon component as preview media, we can import a helper method.
 
 ```js
@@ -179,6 +181,62 @@ We can then render the icon by passing the selected name and provider to this me
       }
 }
 ```
+
+### Preview with configurations
+
+If you're using your own [configurations](https://github.com/christopherafbjur/sanity-plugin-icon-picker#configurations) you need to pass the options object to the preview parameters. Here's an example:
+
+```js
+import React from 'react';
+import { preview } from 'sanity-plugin-icon-picker';
+import * as CarbonIcons from '@carbon/icons-react';
+
+const options = {
+  configurations: [
+    {
+      title: 'Carbon Icons',
+      provider: 'ci',
+      icons: (options) =>
+        Object.entries(CarbonIcons).map(([name, Component]) => ({
+          name,
+          component: () => <Component width="1.5em" height="1em" />,
+          tags: [name],
+        })),
+    },
+  ],
+};
+
+export const schemaTypes = [
+  {
+    title: 'Icons',
+    name: 'icons',
+    type: 'document',
+    fields: [
+      {
+        title: 'Icon',
+        name: 'icon',
+        type: 'iconPicker',
+        options,
+      },
+    ],
+    preview: {
+      select: {
+        provider: 'icon.provider',
+        name: 'icon.name',
+      },
+      prepare(icon) {
+        return {
+          title: icon.provider,
+          subtitle: icon.name,
+          media: preview({ ...icon, options }),
+        };
+      },
+    },
+  },
+];
+```
+
+### Migrations
 
 ```js
 import { migrateIconName } from 'sanity-plugin-icon-picker';
