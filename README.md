@@ -192,7 +192,8 @@ migrateIconName('alert-circle', 'fi', 'react');
 
 ## FAQ
 
-### Can I use this plugin for Sanity Studio v2?
+<details>
+  <summary>Can I use this plugin for Sanity Studio v2?</summary>
 
 Yes you can! Simply install the older version of this plugin
 
@@ -202,7 +203,10 @@ npm install sanity-plugin-icon-picker@2.1.0
 
 Then refer to the [old documentation](https://github.com/christopherafbjur/sanity-plugin-icon-picker/blob/72ba11830b73b729b6b3c1c254bde3c686032972/README.md) and follow everything except the install step.
 
-### How can I consume the data returned from Sanity Studio in my React app?
+</details>
+
+<details>
+<summary>How can I consume the data returned from Sanity Studio in my React app?</summary>
 
 #### Example 1: Dynamically generating icon
 
@@ -276,9 +280,20 @@ export default function App() {
 }
 ```
 
-### Changing output format doesn't change the data
+</details>
+
+<details>
+<summary>Changing output format doesn't change the data</summary>
 
 If you start adding icons to your data with for instance no `options.outputFormat` (default) set and then later decide that you want to use `options.outputFormat: true`, your data will not automagically update. You will either have to re-select each icon in your Studio or run a migration script to update all the icons to the correct output format. Here's an [example of such a migration script](https://gist.github.com/christopherafbjur/39e33e914de292fe8b5ae5cbc2ab82aa).
+
+</details>
+<details>
+<summary>Deploying NextJS embedded studio breaks studio</summary>
+
+It's been reported several times that in some cases when deploying a studio that uses this plugin breaks the studio. The quick fix for that is to use `swcMinify: false` in your NextJS config.
+
+</details>
 
 ## License
 
