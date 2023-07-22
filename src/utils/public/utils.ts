@@ -4,7 +4,7 @@ import type { IconObject, IconPickerOptions } from '../../types';
 import type { ReactElement } from 'react';
 
 type Preview = Pick<IconObject, 'provider' | 'name'> & {
-  options: IconPickerOptions;
+  options?: IconPickerOptions;
 };
 // eslint-disable-next-line react/display-name
 export const preview = ({
