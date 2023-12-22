@@ -57,4 +57,11 @@ describe('Menu', () => {
     await user.click(getByText('Delete'));
     expect(mockOnClick).toHaveBeenCalledWith(Action.delete);
   });
+
+  it('renders disabled state when readOnly is true', async () => {
+    const { getByText } = render(
+      <Menu onClick={mockOnClick} selected={null} readOnly={true} />
+    );
+    expect(getByText('Add icon').closest('button')).toBeDisabled();
+  });
 });
