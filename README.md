@@ -36,6 +36,18 @@ Use the type in your schemas.
 }
 ```
 
+If you use [`@sanity-typed`](https://github.com/saiichihashimoto/sanity-typed/tree/main/packages/types#sanity-typedtypes), import `iconPickerTyped` instead to get the correct types in your documents:
+
+```ts
+import { defineConfig } from '@sanity-typed/types';
+import { iconPickerTyped } from 'sanity-plugin-country-state-select';
+
+export default defineConfig({
+  // ...
+  plugins: [iconPickerTyped()],
+});
+```
+
 ## Options
 
 ### Providers
