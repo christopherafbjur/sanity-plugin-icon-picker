@@ -19,7 +19,12 @@ import type { SearchResultsOnSelectCallback } from './SearchResults';
 import type { IconObject, IconPickerOptions } from '../types';
 import type { ObjectInputProps } from 'sanity';
 
-const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
+const IconPicker = ({
+  schemaType,
+  value = {},
+  readOnly,
+  onChange,
+}: ObjectInputProps) => {
   const options: IconPickerOptions = schemaType.options;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { query, loading, results, setQuery } = useQuery(options);
@@ -88,7 +93,11 @@ const IconPicker = ({ schemaType, value = {}, onChange }: ObjectInputProps) => {
         <IconContext.Provider
           value={{ style: { width: ICON_WIDTH, height: ICON_HEIGHT } }}
         >
-          <Menu onClick={handleMenuClick} selected={selected} />
+          <Menu
+            onClick={handleMenuClick}
+            selected={selected}
+            readOnly={readOnly}
+          />
 
           <Popup onClose={closePopup} isOpen={isPopupOpen}>
             <SearchBar value={query} onChange={onQueryChange} />
