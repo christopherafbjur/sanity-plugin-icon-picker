@@ -60,7 +60,7 @@ describe('Menu', () => {
 
   it('renders disabled state when readOnly is true', () => {
     const { getByText } = render(
-      <Menu onClick={mockOnClick} selected={null} readOnly={true} />
+      <Menu onClick={mockOnClick} selected={null} readOnly />
     );
     expect(getByText('Add icon').closest('button')).toBeDisabled();
   });
