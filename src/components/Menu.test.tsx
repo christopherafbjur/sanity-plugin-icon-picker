@@ -58,7 +58,7 @@ describe('Menu', () => {
     expect(mockOnClick).toHaveBeenCalledWith(Action.delete);
   });
 
-  it('renders disabled state when readOnly is true', async () => {
+  it('renders disabled state when readOnly is true', () => {
     const { getByText } = render(
       <Menu onClick={mockOnClick} selected={null} readOnly={true} />
     );
