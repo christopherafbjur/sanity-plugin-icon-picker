@@ -14,14 +14,17 @@ export type MenuClickCallback = (action: Action) => void | Error;
 const Menu = ({
   onClick,
   selected,
+  readOnly,
 }: {
   onClick: MenuClickCallback;
   selected: IconObject | null;
+  readOnly?: boolean | undefined;
 }) => {
   return (
     <>
       {!selected && (
         <Button
+          disabled={readOnly}
           icon={AddIcon}
           fontSize={[1, 1, 2]}
           mode="ghost"
@@ -35,6 +38,7 @@ const Menu = ({
         <MenuButton
           button={
             <Button
+              disabled={readOnly}
               mode="ghost"
               padding={[2, 2, 3]}
               tone="default"
