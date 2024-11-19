@@ -16,12 +16,13 @@ const tabsRender = (ui: ReactElement) =>
 describe('TabList', () => {
   it('renders two tabs with correct titles', () => {
     const { getByRole, getAllByRole } = tabsRender(
-      <TabList providers={['f7', 'sa']} />
+      <TabList providers={['f7', 'sa', 'lu']} />
     );
 
-    expect(getAllByRole('tab').length).toBe(2);
+    expect(getAllByRole('tab').length).toBe(3);
     expect(getByRole('tab', { name: /Framework7/i })).toBeInTheDocument();
     expect(getByRole('tab', { name: /Sanity Icons/i })).toBeInTheDocument();
+    expect(getByRole('tab', { name: /Lucide Icons/i })).toBeInTheDocument();
   });
 });
 

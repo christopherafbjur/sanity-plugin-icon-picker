@@ -48,7 +48,7 @@ Define which icon providers you want to use by providing their provider id in th
     name: "icon",
     type: "iconPicker",
     options: {
-        providers: ["f7", "fa", "mdi", "sa", "hi", "fi", "si"]
+        providers: ["f7", "fa", "mdi", "sa", "hi", "fi", "lu", "si"]
     }
 }
 ```
@@ -149,6 +149,7 @@ import * as CarbonIcons from '@carbon/icons-react'
 | `Sanity Icons`          | `sa`   | https://www.sanity.io/                         |
 | `Hero Icons`            | `hi`   | https://github.com/tailwindlabs/heroicons      |
 | `Feather Icons`         | `fi`   | https://feathericons.com/                      |
+| `Lucide Icons`          | `lu`   | https://lucide.dev                             |
 | `Simple Icons`          | `si`   | https://simpleicons.org/                       |
 
 ## Helper functions
