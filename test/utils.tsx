@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@sanity/ui';
 import { buildTheme } from '@sanity/ui/theme';
-import { render, RenderResult } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
-import type { RenderOptions } from '@testing-library/react';
+import type { RenderOptions, RenderResult } from '@testing-library/react';
 import type { ReactElement } from 'react';
 
 interface AllProvidersProps {

@@ -1,8 +1,9 @@
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 import { createMockIcon, createMockIconArray } from '../../test/mocks';
 import { render } from '../../test/utils';
 import SearchResults from './SearchResults';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import type AutoSizer from 'react-virtualized-auto-sizer';
 
 jest.mock(
   'react-virtualized-auto-sizer',

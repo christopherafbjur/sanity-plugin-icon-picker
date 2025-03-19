@@ -2,7 +2,7 @@ import { Button, Flex, Grid, Spinner, Text } from '@sanity/ui';
 import { useEffect, useRef, useState } from 'react';
 import AutoSizer, { type Size } from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { ALL_CONFIGURATIONS_PROVIDER } from '../constants/config';
 import useMedia from '../hooks/useMedia';
 import { listToMatrix } from '../utils/helpers';
