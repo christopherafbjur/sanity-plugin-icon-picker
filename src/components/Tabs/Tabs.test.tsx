@@ -2,11 +2,11 @@ import userEvent from '@testing-library/user-event';
 import { render } from '../../../test/utils';
 import { OptionsProvider } from '../../hooks/useOptions';
 import { TabList, TabPanel, Tabs } from '.';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 const tabsRender = (ui: ReactElement) =>
   render(ui, {
-    wrapper: ({ children }: { children: ReactElement }) => (
+    wrapper: ({ children }: { children: ReactNode }) => (
       <OptionsProvider>
         <Tabs>{children}</Tabs>
       </OptionsProvider>

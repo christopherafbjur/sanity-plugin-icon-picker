@@ -1,8 +1,8 @@
 import { Button, Flex, Grid, Spinner, Text } from '@sanity/ui';
 import { useEffect, useRef, useState } from 'react';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import AutoSizer, { type Size } from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { ALL_CONFIGURATIONS_PROVIDER } from '../constants/config';
 import useMedia from '../hooks/useMedia';
 import { listToMatrix } from '../utils/helpers';
@@ -110,7 +110,7 @@ const SearchResults = ({
       )}
       {!loading && !!filtered.length && (
         <AutoSizer onResize={onResize}>
-          {({ height, width }) => (
+          {({ height, width }: Size) => (
             <List
               height={height}
               itemCount={filtered.length}

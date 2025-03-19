@@ -1,29 +1,35 @@
-import { studioTheme, ThemeProvider } from '@sanity/ui';
+import { ThemeProvider } from '@sanity/ui';
+import { buildTheme } from '@sanity/ui/theme';
 import { render } from '@testing-library/react';
 import React from 'react';
-import type { RenderOptions } from '@testing-library/react';
+import type { RenderOptions, RenderResult } from '@testing-library/react';
 import type { ReactElement } from 'react';
 
 interface AllProvidersProps {
-  children: React.ReactElement;
+  children: React.ReactNode;
   innerWrapper?: React.JSXElementConstructor<{
-    children: React.ReactElement;
+    children: React.ReactNode;
   }>;
 }
+
+const theme = buildTheme();
 
 const AllProviders = ({ children, innerWrapper }: AllProvidersProps) => {
   const InnerWrapper = innerWrapper;
 
   if (InnerWrapper)
     return (
-      <ThemeProvider theme={studioTheme}>
+      <ThemeProvider theme={theme}>
         <InnerWrapper>{children}</InnerWrapper>
       </ThemeProvider>
     );
-  return <ThemeProvider theme={studioTheme}>{children}</ThemeProvider>;
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
-const customRender = (ui: ReactElement, options: RenderOptions = {}) => {
+const customRender = (
+  ui: ReactElement,
+  options: RenderOptions = {}
+): RenderResult => {
   const { wrapper, ...rest } = options;
   return render(ui, {
     wrapper: (props) => <AllProviders {...props} innerWrapper={wrapper} />,
