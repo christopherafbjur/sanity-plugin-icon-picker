@@ -69,7 +69,7 @@ const SearchResults = ({
         key={icon.provider.concat(icon.name)}
         mode="ghost"
         onClick={() => onSelect(icon, buttonRef.current!)}
-        text={<icon.component />}
+        icon={<icon.component />}
         style={{ marginTop: '5px' }}
         selected={
           !!selected &&

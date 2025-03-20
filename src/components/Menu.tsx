@@ -39,10 +39,10 @@ const Menu = ({
           button={
             <Button
               disabled={readOnly}
+              icon={<selected.component />}
               mode="ghost"
               padding={[2, 2, 3]}
               tone="default"
-              text={<selected.component />}
             />
           }
           id="menu-button-example"
